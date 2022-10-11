@@ -85,7 +85,7 @@ import { DwrComponent } from './dwr/dwr.component';
 import { UserTargetComponent } from './user/user-target/user-target.component';
 import { LeavesComponent } from './user_leaves/leaves/leaves.component';
 import { ChangeStatusComponent } from './user_leaves/change-status/change-status.component';
-
+import { FollowupAddComponent } from './followup-add/followup-add.component';
 import { AddPrimaryOrderValueComponent } from './distribution/add-primary-order-value/add-primary-order-value.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { TravelListComponent } from './travel/travel-list/travel-list.component';
@@ -171,6 +171,7 @@ const routes: Routes = [
 
   { path: 'product-detail/:id', component: ProductDetailComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'user-add', component: UserAddComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'followup-add', component: FollowupAddComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'sale-user-list', component: SaleUserListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'target', component: TargetComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
 
@@ -411,6 +412,7 @@ const routes: Routes = [
     AddsurfaceorderComponent,
     BillingdocumentComponent,
     ShowroomEnquiryListComponent,
+    FollowupAddComponent,
 
   ],
   imports: [

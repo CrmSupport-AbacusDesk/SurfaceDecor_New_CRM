@@ -1,0 +1,151 @@
+<div class="main-container">
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Add Follow-up</h2>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <form #f="ngForm" (ngSubmit)=" f.valid && submitPopNGift()">
+    <div class="container-outer">
+      <!-- <div class="container">
+        <div class="sprate-box">
+          <div class="cs-heading">
+            <h2>Select Follow-up Type</h2>
+          </div>
+        </div>
+      </div> -->
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>Select Follow-up Type</h2>
+              </div>
+              <div class="select-one">
+                <mat-radio-group name="type" [(ngModel)]="data.type">
+                  <mat-radio-button value="Executive">Executive</mat-radio-button>
+                  <mat-radio-button value="ShowroomUser">Showroom User</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="data.type" class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>BASIC DETAILS</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="from-fields">
+                <div class="row pl10">
+                  <div class="col s4 pl0">
+                    <div class="row">
+                      <div class="col s12 pl0">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input date-column infix-bodr">
+                            <input matInput [matDatepicker]="picker1" min="{{today_date}}" placeholder="Select Date" name="followup_date" [(ngModel)]="data.followup_date">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                          </div>
+                          <div *ngIf="data.type == 'Executive'" class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-label>Select Executive</mat-label>
+                            <mat-select name="executive" placeholder="Select Executive" [(ngModel)]="data.executive"
+                              (ngModelChange)="get_company()"
+                              required>
+                              <mat-option value="Name1">Name 1</mat-option>
+                              <mat-option value="Name2">name 2</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="data.type == 'Executive'" class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-label>Select Company</mat-label>
+                            <mat-select name="Company" placeholder="Select Company" [(ngModel)]="data.Company"
+                              required>
+                              <mat-option value="Name1">Name 1</mat-option>
+                              <mat-option value="Name2">name 2</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        
+                            <div *ngIf="data.type != 'Executive'" class="control-field">
+                              <mat-form-field class="cs-input">
+                                <input matInput placeholder="Company Name" name="company_name" #company_name="ngModel"
+                                  [(ngModel)]="data.company_name" [ngClass]="{'has-error' : company_name.invalid } " required>
+                                <mat-autocomplete #auto="matAutocomplete">
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </div>
+                         
+                        
+                            <div  *ngIf="data.type != 'Executive'" class="control-field">
+                              <mat-form-field class="cs-input">
+                                <input matInput placeholder="Mobile" name="mobile" #mobile="ngModel"
+                                  [(ngModel)]="data.mobile" [ngClass]="{'has-error' : mobile.invalid } " required>
+                                <mat-autocomplete #auto="matAutocomplete">
+                                </mat-autocomplete>
+                              </mat-form-field>
+                            </div>
+                          
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-label>Followup Type</mat-label>
+                            <mat-select name="followup_type" placeholder="Select Type" [(ngModel)]="data.followup_type"
+                              required>
+                              <mat-option value="Meeting">Meeting</mat-option>
+                              <mat-option value="Call">Call</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+
+                   
+
+                   
+                  </div>
+
+                  <div class="col s8 pl0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+
+                        <textarea matInput placeholder="Description ..." class="h200" name="followup_description"
+                          #followup_description="ngModel" [(ngModel)]="data.followup_description"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="cs-btn fixedd mt32 text-right">
+              <div class="in-btn mr25">
+                <button mat-raised-button color="accent"
+                  [disabled]="urls.length == 0">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
