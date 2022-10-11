@@ -1,0 +1,207 @@
+
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button ><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Add Announcement</h2>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div>
+  <form #f="ngForm" (ngSubmit)="submit_announcement()" >
+    <div class="container-outer">
+      <div class="container" >
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>ADD ANNOUNCEMENT DETAILS</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="from-fields">
+                <div class="row pl10">
+
+                  <div class="col pl0" [ngClass]="!data.type || data.type == 'executive' ? 's6' : 's4'">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <input matInput placeholder="Subject . . ." name="subject" #subject="ngModel" [(ngModel)]="data.subject" [ngClass]="{'has-error' : subject.invalid } " required>
+                        <mat-autocomplete #auto="matAutocomplete">
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col pl0" [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label>Select Type</mat-label>
+                        <mat-select name="type" placeholder="Select Type" [(ngModel)]="data.type" (ngModelChange)="(data.type == 'distributor' || data.type == 'direct_dealer') ? get_state() : get_users_data('change')" required>
+                          <!-- <mat-option value="direct_dealer">Direct Dealer</mat-option> -->
+                          <!-- <mat-option value="distributor">Distributor</mat-option> -->
+                          <mat-option value="distributor">Dealer</mat-option>
+                          <mat-option value="executive">Sales Executive</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col s2 pl0" *ngIf="data.type == 'distributor'">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label>Select State</mat-label>
+                        <mat-select name="state" placeholder="state" [formControl]="selected_state_data" multiple required>
+                          <mat-option *ngFor="let state_data of dr_states " placeholder="state" (click)="get_users_data('change')" [value]="state_data">{{state_data}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col s2 pl0" *ngIf="data.type == 'distributor'">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label>Select Sales Group</mat-label>
+                        <mat-select name="Sales group" placeholder="Sales group" [formControl]="selected_sales_group" multiple required>
+                          <mat-option *ngFor="let sales_group of dr_sales_group " placeholder="Sales group" (click)="get_users_data('change')" [value]="sales_group">{{sales_group}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col pl0" *ngIf="user_data.length" [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'" > -->
+                  <div class="col pl0" *ngIf="data.type !='executive' && user_data.length " [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'" >
+
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label >Select User</mat-label>
+                        <mat-select name="user" placeholder="user" [formControl]="tmp_selected_executive_list" multiple required>
+                          <!-- <div class="search-block" >
+                            <input type="text" name="filter_user" placeholder="Search.." (keydown)="$event.stopPropagation()" (keyup.enter)="get_users_data(filter_user_data)" #filter_user="ngModel" [(ngModel)]="filter_user_data">
+                          </div> -->
+                          <mat-select-trigger>
+                            {{tmp_selected_executive_list.value.length ? final_selected_executive_list[0]['name'] : ''}}
+                            <span *ngIf="tmp_selected_executive_list.value?.length > 1">
+                              (+{{tmp_selected_executive_list.value.length - 1}} {{tmp_selected_executive_list.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+                          <!-- <mat-option (click)="temp()" >All</mat-option> -->
+                          <mat-option *ngFor="let list of user_data " placeholder="user" (click)="select_executive_for_announcement()" [value]="list">{{list.name}}</mat-option>
+                          <mat-option disabled *ngIf="user_data.length == 0"> No User Availble</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col pl0" *ngIf="data.type =='executive'   " [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'" >
+
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label >Select User</mat-label>
+                        <mat-select name="user" placeholder="user"  [formControl]="tmp_selected_executive_list" multiple required>
+                          <div class="search-block" >
+                            <input type="text" name="filter_user" placeholder="Search.." (keydown)="$event.stopPropagation()" (keyup)="get_users_data(filter_user_data)" #filter_user="ngModel" [(ngModel)]="filter_user_data">
+                          </div>
+                          <mat-select-trigger>
+                            {{tmp_selected_executive_list.value.length ? final_selected_executive_list[0]['name'] : ''}}
+                            <span *ngIf="tmp_selected_executive_list.value?.length > 1">
+                              (+{{tmp_selected_executive_list.value.length - 1}} {{tmp_selected_executive_list.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+                          <!-- <mat-option (click)="temp()" >All</mat-option> -->
+                          <mat-option *ngFor="let list of user_data " placeholder="user" (click)="select_executive_for_announcement()" [value]="list">{{list.name}}</mat-option>
+                          <mat-option disabled *ngIf="user_data.length == 0 && user_data.name == 'All'"> No User Availble</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+
+                  <div class="col pl0"  [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'"  *ngIf="false">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-label>Select user</mat-label>
+                        <mat-select name="user" placeholder="user" required>
+                          <div class="search-block">
+                            <input type="text" name="filter_user" placeholder="Search.." (keydown)="$event.stopPropagation()" (keyup)="get_users_data(filter_user_data)" #filter_user="ngModel" [(ngModel)]="filter_user_data">
+                          </div>
+                          <mat-option *ngFor="let list of user_data" placeholder="user">
+
+                            <mat-checkbox [checked]="final_selected_executive_list.length > 0 ? check_true_and_false(list.id) : false" (click)="select_executive_for_announcement(list)" > {{list.name}}</mat-checkbox>
+
+
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col s6 pl0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <textarea matInput placeholder="Message ..." class="h113" name="message" #message="ngModel" [(ngModel)]="data.message"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col s6 pl0">
+                    <div class="control-field mt18">
+                      <div class="details-info">
+                        <div class="basic-details">
+                          <div class="cs-heading">
+                            <h2>Selected Users</h2>
+                          </div>
+                          <div class="cs-chips" style="display: table-cell;" *ngIf="final_selected_executive_list.length">
+                            <span *ngFor="let list of final_selected_executive_list">{{list.name}}</span>
+                          </div>
+                          <div class="cs-chips" style="display: table-cell;" *ngIf="!final_selected_executive_list.length">
+                            <span>-- No User Selected --</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col mt20 s8">
+                    <div class="cs-file" >
+                      <ul class="product-images">
+                        <li class="multi-images" >
+                          <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                            <img [src]="val" alt="your image">
+                            <span class="cancel-icon">
+                              <a class="close"><i class="material-icons dp48" (click)="delete_img(i)">clear</i></a>
+                            </span>
+                          </label>
+                          <label class="cs-file-img default" *ngIf="true || urls.length != 1">
+                            <i class="material-icons">cloud_upload</i>
+                            <input type="file" name="image" placeholder="Upload file"accept=".png,.jpg,.jpeg" multiple style="display: none;"(change)="insertImage($event)">
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="cs-btn fixedd mt32 text-right">
+              <div class="in-btn mr25">
+                <button mat-raised-button color="accent">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+

@@ -1,0 +1,233 @@
+<div class="main-container">
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Complain Detail</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Basic Information</h2>
+              </div>
+              <div class="cs-figure">
+                <ul class="minus-top">
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Complain id</span>
+                        <p>{{complain_detail.complaint_ref_id}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Brand</span>
+                        <p>{{complain_detail.brand_name}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Product</span>
+                        <p>{{complain_detail.product_name}}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <ul class="minus-top">
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Created By</span>
+                        <p>{{complain_detail.created_by_name}} | {{complain_detail.created_by_type}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Complain Date</span>
+                        <p>{{complain_detail.date_created}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Subject</span>
+                        <p>{{complain_detail.complaint_subject}}</p>
+
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <ul class="minus-top">
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Quantity</span>
+                        <p>{{complain_detail.qty}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Description</span>
+                        <p>{{complain_detail.description?complain_detail.description:'--'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Status</span>
+                        <p>{{complain_detail.status}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+
+                </ul>
+                <ul class="minu-top">
+                  <li *ngIf="complain_detail.assigned_to_name">
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Assign</span>
+                        <p>{{complain_detail.assigned_to_name ? complain_detail.assigned_to_name:'--'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li *ngIf="complain_detail.status_remark">
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Remark</span>
+                        <p>{{complain_detail.status_remark}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info" *ngIf="complain_notresolve_images.length > 0">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <!-- <h2>Uploaded Document</h2> -->
+                <h2>Uploaded Gallery ({{active_tab}})</h2>
+                <div class="uppr-one m-right-data">
+                  <div class="tabs">
+                    <ul>
+                      <!-- <li>
+                        <a [ngClass]="active_tab == 'Image' ? '':'active' " (click)="active_tab = 'Image'">Images</a>
+                      </li> -->
+                      <!-- <li>
+                        <a [ngClass]=" active_tab == 'Videos' ? '' : 'active'" (click)="active_tab = 'Videos' ">Videos</a>
+                      </li> -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meet-gallery" *ngIf="active_tab == 'Image'">
+                <div class="img-video" *ngFor="let images of complain_notresolve_images">
+                  <img (click)="imageModel(images.doc)" src="{{images.doc}}">
+                  
+                </div>
+              </div>
+              <!-- <div class="meet-gallery" *ngIf="active_tab == 'Videos'">
+                <div class="img-video" *ngFor="let video of complain_detail_video">
+                  <video (playing)="onPlayingVideo($event)" width="100%" height="100%" controls>
+                    <source target="_blank" [src]="video.video_path" type="video/mp4">
+                  </video><br>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info" *ngIf="complain_resolve_images.length>0 || complain_detail_video.length>0">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Resolve Gallery {{active_tab_resolve}}</h2>
+                <div class="uppr-one m-right-data">
+                  <div class="tabs">
+                    <ul>
+                      <li>
+                        <a [ngClass]="active_tab_resolve == 'Image' ? '':'active' " (click)="active_tab_resolve = 'Image'">Images</a>
+                      </li>
+                      <li>
+                        <a [ngClass]=" active_tab_resolve == 'Videos' ? '' : 'active'" (click)="active_tab_resolve = 'Videos' ">Videos</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meet-gallery" *ngIf="active_tab_resolve == 'Image'">
+                <div class="img-video" *ngFor="let images of complain_resolve_images">
+                  <img (click)="imageModel(images.images)" src="{{images.images}}">
+                </div>
+              </div>
+              <div class="meet-gallery" *ngIf="active_tab_resolve == 'Videos'">
+                <div class="img-video" *ngFor="let video of complain_detail_video">
+                  <video (playing)="onPlayingVideo($event)" width="100%" height="100%" controls>
+                    <source target="_blank" [src]="video.video_path" type="video/mp4">
+                  </video><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col s12">
+          <div class="details-info" *ngIf="complain_detail_video.length>0">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Videos</h2>
+              </div>
+
+              <div class="meet-gallery">
+                <div class="img-video" *ngFor="let video of complain_detail_video">
+                  <video (playing)="onPlayingVideo($event)" width="100%" height="100%" controls>
+                    <source target="_blank" [src]="video.video_path" type="video/mp4">
+                  </video><br>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

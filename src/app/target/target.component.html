@@ -1,0 +1,210 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <!-- <img src="assets/img/distribution_icon.svg" class="h-icon"> -->
+      <div class="heading-text">
+        <h2> Company Target</h2>
+      </div>
+      
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button matTooltip="Refresh" (click)="get_target_list('refresh')"><i
+              class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      </div>
+    </div>
+   
+  </div>
+
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+        <div><p>Loading....</p></div>
+    </mat-spinner>
+</div>
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w130">Company Name</th>
+            <th class="w120">Brand</th>
+            <th class="w120">Month</th>
+            <th class="w120">Year</th>
+            <th class="w100">Target</th>
+            
+            <th class="w120">Achievement</th>
+            <th class="w120"> Remaining Achievement</th>
+            <th class="w50"> </th>
+
+
+           
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt" >
+        <table class="sno-border">
+          <tr>
+           
+           
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field >
+                  <mat-label>Select Company</mat-label>
+
+                  <mat-select name="company_id" placeholder="Company" #company_id="ngModel"  [(ngModel)]="search.company_id" (ngModelChange)="get_target_list()">
+                    <mat-option *ngFor="let brand_data of all_company_list ; let i = index" [value]="brand_data.id">{{brand_data.company_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field >
+                  <mat-label>Select Brand</mat-label>
+
+                  <mat-select name="brand" placeholder="Unit Of Measurement" #brand_id="ngModel"  [(ngModel)]="search.brand_id" (ngModelChange)="get_target_list()">
+                    <mat-option *ngFor="let brand_data of all_brands_list ; let i = index" [value]="brand_data.id">{{brand_data.brand_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field  >
+                  <mat-label>Select Month</mat-label>
+                  <mat-select name="month" #month="ngModel" [(ngModel)]="search.month" (ngModelChange)="get_target_list()">
+                     <mat-option  value="January">January</mat-option>
+                     <mat-option  value="February">February</mat-option>
+                     <mat-option  value="March">March</mat-option>
+                     <mat-option  value="April">April</mat-option>
+                     <mat-option  value="May">May</mat-option>
+                     <mat-option  value="June">June</mat-option>
+                     <mat-option  value="July">July</mat-option>
+                     <mat-option  value="August">August</mat-option>
+                     <mat-option  value="September">September</mat-option>
+                     <mat-option  value="October">October</mat-option>
+                     <mat-option  value="November">November</mat-option>
+                     <mat-option  value="December">December</mat-option>
+                     </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field >
+                  <mat-label>Select Year</mat-label>
+               <mat-select name="year" #year="ngModel" [(ngModel)]="search.year" (ngModelChange)="get_target_list()">
+                  <mat-option  value="2022">2022</mat-option>
+                  <mat-option  value="2023">2023</mat-option>
+                  <mat-option  value="2024">2024</mat-option>
+                  <mat-option  value="2025">2025</mat-option>
+
+
+                </mat-select>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w100"></th>
+          
+            <th class="w120">
+              
+             
+            </th>
+            <th class="w120">
+              
+             
+            </th>
+            <th class="w50">
+              
+             
+            </th>
+           
+
+
+
+           
+
+
+           
+
+        
+
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <ng-container >
+            <tr *ngFor="let data of target_list;let i = index">
+             
+             
+              <td class="w130">{{data.company_name ? data.company_name :'N/A'}}</td>
+              <td class="w120">{{data.brand_name}}</td>
+              <td class="w120">{{data.month}}</td>
+              <td class="w120">{{data.year}}</td>
+              <td class="w100">{{data.value}}</td>
+              <td class="w120">{{data.achievement}}-({{data.achievement_percentage}}%)</td>
+              <td class="w120">{{data.remaining_achievement}}</td>
+                  <td class="w50 text-center">
+
+
+             
+                  <button mat-button class="delete-mat" (click)="deleteTarget(data.id)"><i class="material-icons red-clr">delete_sweep</i></button>
+              </td>
+
+               
+                  
+
+                </tr>
+              </ng-container>
+
+              
+
+            </table>
+
+          </div>
+        </div>
+
+        <div class="data-not-available" *ngIf="data_not_found==true">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+
+                <div class="description">
+                  <div class="cs-heading">
+                    <h2>Company Target</h2>
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>data not Found</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="fix-btn">
+
+        <a  class="bottom-btn" matTooltip="Add New" matTooltipPosition="left" mat-raised-button (click)="targetModal()"><i class="material-icons">add</i></a>
+    </div>
+
+
+
+
+    </div>

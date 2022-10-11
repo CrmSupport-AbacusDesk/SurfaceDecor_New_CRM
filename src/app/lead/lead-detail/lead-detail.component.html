@@ -1,0 +1,213 @@
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div><p>Loading....</p></div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/lead-list" routerLinkActive="active"><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>{{lead_detail.company_name}}</h2>
+        <p class="light">{{lead_detail.dr_type}}</p>
+      </div>
+    </div>
+    
+    <div class="left-auto">
+      <div class="cs-btn text-right">
+        <div class="in-btn">
+          <button mat-raised-button color="accent" (click)="convert_lead()">Convert Lead</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-outer">
+    <div class="container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="profile-info">
+                <ul>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/company.svg" class="fix-img">
+                      <span>Company Name</span>
+                      <p>{{lead_detail.company_name && lead_detail.company_name!='' ? lead_detail.company_name : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.company_name,'companyname')" ><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/people.svg" class="fix-img">
+                      <span>Name</span>
+                      <p>{{lead_detail.name && lead_detail.name!='' ? lead_detail.name : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.name,'dr_name')" ><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/gmail.svg" class="fix-img">
+                      <span>Email</span>
+                      <p class="link-clr">{{lead_detail.email && lead_detail.email!='' ? lead_detail.email : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.email,'email')" ><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/mobile.svg" class="fix-img">
+                      <span>Mobile</span>
+                      <p>{{lead_detail.mobile && lead_detail.mobile!='' ? lead_detail.mobile : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.mobile,'mobile')" ><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Landline</span>
+                      <p>{{lead_detail.landline_no && lead_detail.landline_no!='' ? lead_detail.landline_no : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.landline_no,'landline_no')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/whatsapp.svg" class="fix-img">
+                      <span>Whatsapp No.</span>
+                      <p>{{lead_detail.whatsapp_no && lead_detail.whatsapp_no!='' ? lead_detail.whatsapp_no : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.whatsapp_no,'whatsapp_no')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="cs-box">
+                      <img src="assets/img/gst.svg" class="fix-img">
+                      <span>GST</span>
+                      <p>{{lead_detail.gst && lead_detail.gst!='' ? lead_detail.gst : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="editDilog(lead_detail.gst,'gst')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col s8">
+          <div class="sprate-box padding0">
+            <div class="full-address">
+              <div class="top-heading">
+                <h2>ADDRESS</h2>
+              </div>
+              <a mat-button class="address-edit" matTooltip="EDIT" color="accent" (click)="editAddress(lead_detail.country,lead_detail.state,lead_detail.district,lead_detail.city,lead_detail.pincode,lead_detail.address,'address')"><i class="material-icons">edit</i></a>
+              <div class="ds-from-fields">
+                <div class="cs-row">
+                  <div class="static-info">
+                    <p>Country</p>
+                    <p>{{lead_detail.country && lead_detail.country != '' ? lead_detail.country : '--'}}</p>
+                  </div>
+                  <div class="static-info">
+                    <p>State</p>
+                    <p>{{lead_detail.state && lead_detail.state != '' ? lead_detail.state : '--'}}</p>
+                  </div>
+                  <div class="static-info">
+                    <p>District</p>
+                    <p>{{lead_detail.district && lead_detail.district != '' ? lead_detail.district : '--'}}</p>
+                  </div>
+                  <div class="static-info">
+                    <p>City</p>
+                    <p>{{lead_detail.city && lead_detail.city != '' ? lead_detail.city : '--'}}</p>
+                  </div>
+                  <div class="static-info">
+                    <p>Pin Code</p>
+                    <p>{{lead_detail.pincode && lead_detail.pincode != '' ? lead_detail.pincode : '--'}}</p>
+                  </div>
+                </div>
+                <div class="cs-row">
+                  <div class="static-info">
+                    <p>address</p>
+                    <p>{{lead_detail.address && lead_detail.address != '' ? lead_detail.address : '--'}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        <div class="col s4">
+          <div class="sprate-box">
+            <div class="territory-info" *ngIf="sales_executive_update!='true'">
+              <div class="head " [ngClass]="{'active':active.user==true}">
+                <h2>Sales User</h2>
+                <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i class="material-icons">create</i></a>
+              </div>
+              
+              
+              <div class="cs-checkbox" >
+                <div class="checkbox-outer" style="min-height: 115px; max-height: 115px;">
+                  <section class="checkbox-inner bodr0">
+                    <mat-checkbox class="check-list bg-none check-none" value="1" *ngFor="let row of lead_detail.assign_user">
+                      <div class="name-outer">
+                        <div class="outer">
+                          <div class="inner">
+                            <div class="name-inner">
+                              {{row.sales_executive_name.charAt(0).toUpperCase()}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div   class="text-box">
+                        <h2>{{row.sales_executive_name}}</h2>
+                        <p>{{row.role_name}}</p>
+                      </div>
+                    </mat-checkbox>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="territory-info"  *ngIf="sales_executive_update=='true'">
+              <div class="head" [ngClass]="{'active':active.user==true}" >
+                <h2>Sales User</h2>
+                <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"  matRipple>search</i>
+                <input type="text" placeholder="search..." class="fix-search" (input)="getItemsList(search.search)" #search="ngModel" [(ngModel)]="search.search">
+                <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
+              </div>
+              
+              <div class="cs-logs">
+                <div class="cs-checkbox">
+                  <div class="checkbox-outer">
+                    <section class="checkbox-inner"   >
+                      <ng-container *ngFor="let list of asmList;let index=index" aria-required="true">
+                        <mat-checkbox class="check-list" [checked]="list.check" (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} | {{list.role_name}}</mat-checkbox>
+                      </ng-container>
+                    </section>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="cs-btn text-right mb15 mr10">
+                <div class="in-btn">
+                  <button mat-raised-button color="accent" (click)="update_assigned_executive(lead_detail.sales_executive)">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<div class="h50"></div>
+

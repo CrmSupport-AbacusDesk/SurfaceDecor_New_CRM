@@ -1,0 +1,208 @@
+<div class="main-container">
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Enquiry Detail</h2>
+      </div>
+
+    </div>
+    <div class="left-auto">
+      <!-- <div class="action-menu">
+        <button class="ml10" mat-raised-button color="primary" (click)="downloadEnquiryNote()">Print</button>
+      </div> -->
+      <button class="ml10" mat-raised-button [matMenuTriggerFor]="menu" color="primary" >Print</button>
+
+      <div class="action-menu">
+
+        <mat-menu #menu="matMenu" class="drop-down-menu">
+          <button mat-menu-item (click)="downloadEnquiryNote('with_rate')">
+            <span>Download With Rate</span>
+          </button>
+          <button mat-menu-item (click)="downloadEnquiryNote('without_rate')">
+            <span>Download Without Rate</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Basic Information</h2>
+              </div>
+              <div class="cs-figure">
+                <ul class="minus-top">
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Company Name</span>
+                        <p>{{enquiry_detail.dealer_name && enquiry_detail.dealer_name !='' ? enquiry_detail.dealer_name
+                          : enquiry_detail.other_name}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Created By</span>
+                        <p>{{enquiry_detail.created_by_name ? enquiry_detail.created_by_name : 'N/A'}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Enquiry Date</span>
+                        <p>{{enquiry_detail.date_created && enquiry_detail.date_created !='' ?
+                          (enquiry_detail.date_created | date :' d MMM, y hh:mm a') : '--'}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+
+                <ul class="minus-top">
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Enquiry Type</span>
+                        <p>{{enquiry_detail.type ? enquiry_detail.type : 'N/A'}}</p>
+
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Order No.</span>
+                        <p>{{enquiry_detail.order_no && enquiry_detail.order_no !='' ? enquiry_detail.order_no : 'N/A'}}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Enquiry No.</span>
+                        <p>{{enquiry_detail.id && enquiry_detail.id !='' ?'ENQ-'+(enquiry_detail.id)
+                          : 'N/A'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  
+
+                </ul>
+                <ul>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Customer Description</span>
+                        <p>{{enquiry_detail.customer_description && enquiry_detail.customer_description !='' ? enquiry_detail.customer_description
+                          : 'N/A'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Architect Description</span>
+                        <p>{{enquiry_detail.architect_description && enquiry_detail.architect_description !='' ? enquiry_detail.architect_description
+                          : 'N/A'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row mt25">
+        <div class="col s12">
+          <div class="cs-collapse">
+            <h2
+              style="display: inline-block; padding: 10px; border-radius: 0px 20px 20px 0px; margin-bottom: 14px; background-color:#275478; font-size: 13px; letter-spacing: 0.16em;line-height: 15px; text-align: left; text-transform: uppercase; color: #fff">
+              Enquiry Items</h2>
+
+            <div class="cs-table">
+              <table>
+                <tr>
+                  <th class="w40">S.No.</th>
+                  <th class="w80">Brand Name</th>
+                  <th class="w80">Product Name</th>
+                  <th class="w80">Panel Code</th>
+                  <th class="w80">Stock Quantity</th>
+                  <th class="w100">Discontinue</th>
+                  <th class="w50">Quantity</th>
+                  <th class="w50">Description</th>
+                </tr>
+                <tr *ngFor="let list of enquiry_items; let i=index">
+                  <td class="w40">{{i+1}}
+                    <button mat-button class="verify-mat">          
+                     
+                      <i *ngIf="list.order_item==true" matTooltip="This Item Is Already Ordered" matTooltipPosition="above" mat-raised-button class="material-icons verify-button">verified</i>
+                     
+                      <i *ngIf="list.order_item==false"  matTooltip="Item Is Not Ordered" matTooltipPosition="above" mat-raised-button class="material-icons cancel-button">cancel</i>
+                    </button>
+                  </td>
+                  <td class="w80">{{list.brand_name && list.brand_name != ''? list.brand_name : 'N/A'}}</td>
+                  <td class="w80">{{list.product_name && list.product_name != '' ? list.product_name : 'N/A' }}</td>
+                  <td class="w80">{{list.panel_code ?list.panel_code:'--'}}</td>
+                  <td class="w80">{{list.stock_qty }}</td>
+
+                  <td class="w100 ">{{list.status_code == 'DIS' || list.status_code == 'DIS AIM' || list.status_code == 'WRONG' || list.status_code == 'NONE' || list.status_code == 'LAX' || list.status_code == 'MTO' ? 'Yes':'No'}}</td>
+                  <td class="w50">{{list.qty}}</td>
+                  <td class="w50" style="word-break: break-all;">{{list.description ? list.description :'--'}}</td>
+                </tr>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info" *ngIf="enquiry_images.length > 0">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Gallery</h2>
+              </div>
+
+              <div class="meet-gallery">
+                <div class="img-video" *ngFor="let images of enquiry_images">
+                  <img (click)="imageModel(images.image)" src="{{images.image}}">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

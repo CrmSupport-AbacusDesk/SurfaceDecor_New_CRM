@@ -1,0 +1,213 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>Follow Ups</h2>
+      </div>
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="followUpList('refresh') "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      <div class="top-pagination">
+        <ul>
+  <li><p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; followUpList()" [disabled]="pagenumber <= 1" >
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"   min="1"  (keyup.enter)="start=(pagenumber*page_limit)-page_limit; followUpList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}}>
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; followUpList()" [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs ml15">
+        <ul>
+          <li><a class="pr50" [ngClass]="active_tab == 'pending' ? 'active' : ''" (click)="active_tab = 'pending';followUpList('pending');">Pending 
+            <span class="counter">{{followup_count.pending_followups}}</span>
+          </a></li>
+          <li><a class="pr50" [ngClass]="active_tab == 'upcoming' ? 'active' : ''" (click)="active_tab = 'upcoming';followUpList('upcoming');">Upcoming 
+            <span class="counter">{{followup_count.upcoming_followups}}</span>
+          </a></li>
+          <li><a class="pr50" [ngClass]="active_tab == 'done' ? 'active' : ''" (click)="active_tab = 'done';followUpList('done');">Complete
+            <span class="counter">{{followup_count.complete_followups}}</span>
+          </a></li>
+        </ul>
+      </div>
+      
+    
+    </div>
+  </div>
+
+  <div class="container-outer padding0">
+    <div class="container">
+      <div class="cs-table cs-table-scroll">
+        <div class="stickyTableHead" style="width: fit-content;">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w140">Date Created</th>
+                <th  class="w120">Sales User</th>
+                <th class="w180">Company Name</th>
+                <th class="w100">City</th>
+                <th class="w150">Contact Person Name</th>
+                <th class="w90">Mobile</th>
+                <th class="w120">Followup Date</th>
+                <th class="w120">Followup Type</th>
+                <th >Description</th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w140">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput [matDatepicker]="picker1" placeholder="Choose a date" name="date_created" [(ngModel)]="search.date_created" (dateChange)="followUpList(active_tab)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1 [(ngModel)]="search.date_created" ngDefaultControl></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th  class="w120" >
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Name...."  name="sales_user_name" [(ngModel)]="search.sales_user_name" (keyup.enter)="followUpList(active_tab)">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w180">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Name...."  name="dr_name "  [(ngModel)]="search.dr_name" (keyup.enter)="followUpList(active_tab)" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter City...."  name="city "  [(ngModel)]="search.city" (keyup.enter)="followUpList(active_tab)" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Name...."  name="contact_person"  [(ngModel)]="search.contact_person" (keyup.enter)="followUpList(active_tab)">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w90">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput type ="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Mobile no...."  name="mobile" minlength="10" maxlength="10" [(ngModel)]="search.mobile" (keyup.enter)="followUpList(active_tab)">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input"  >
+                      <input matInput [matDatepicker]="picker" placeholder="Date" name="followup_date" [(ngModel)]="search.followup_date" (dateChange)="con_date(search.followup_date)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120">
+                  <div class="th-search">
+                    <select (change)="followUpList(active_tab)" name="followup_types" [(ngModel)]="search.followup_types">
+                      <option value="" disabled>Select Followup Type</option>
+                      <option value="Call">Call</option>
+                      <option value="Meeting">Meeting</option>
+                      
+                    </select>
+                  </div>
+                </th>
+                <th ></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        
+      
+        <div class="table-container" style="width: fit-content;">
+          <div class="table-content">
+            <table>
+              <tr *ngFor= "let list of followup_list;let i=index " style="word-break:break-all">
+                
+                <td class="w140">{{list.date_created | date : 'dd MMM ,y , hh:mm aa'}}</td>
+                <td class="w120">{{list.sales_user_name}}</td>
+                <td class="w180" matTooltip="{{list.dr_name}}" matTooltipPosition="above">{{list.dr_name}}</td>
+                <td class="w100"> {{ list.dr_city && list.dr_city!=''?list.dr_city:'--'}}</td>
+                <td class="w150">{{list.contact_person}}</td>
+                <td class="w90">{{list.mobile}}</td>
+                <td class="w120">{{list.follow_up_date | date : 'd MMM ,y'}}</td>
+                <td class="w120">{{list.follow_up_type}}</td>
+                <td matTooltip="{{list.description}}" matTooltipPosition="above">{{list.description}}</td>
+              </tr>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w140"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w180"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td  ><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            
+            </table>
+            <div class="data-not-available"  *ngIf="data_not_found==true">
+              <div class="outer">
+                <div class="iinear">
+                  <div class="figure" matRipple>
+                    <div class="header">
+                      <img src="assets/img/data-not-available-header.svg" alt="">
+                    </div>
+          
+                    <div class="description">
+                      <div class="cs-heading">
+                        <h2>Follow Up</h2>
+                      </div>
+                      <div class="img">
+                        <i class="material-icons">error_outline</i>
+                      </div>
+                      <div class="psc">
+                        <p>Data Not Available</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="search-results"data-infinite-scroll debounce [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="followUpList(active_tab)" *ngIf="data_not_found!=true">
+          </div> -->
+          <div *ngIf="loader" class="lazy-loading" >
+            <img src="../../../assets/img/lazy_loader.gif" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+</div>
+

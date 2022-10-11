@@ -1,0 +1,239 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/distribution_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2> Announcement List</h2>
+      </div>
+    </div>
+     <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="get_announcement_list('refresh') "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+
+      <!-- <div class="top-pagination">
+        <ul>
+          <li><p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; distributorList()" [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; distributorList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}} >
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; distributorList()" [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+
+
+
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">&nbsp;</th>
+            <th class="w140">Announcement Date</th>
+            <th class="w180">Created By</th>
+            <th>Subject</th>
+            <th class="w150 text-center">Users</th>
+            <th class="w100 text-center">Read Count</th>
+            <th class="w100">Action</th>
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt" >
+         <table class="sno-border">
+          <tr>
+            <th class="w50"></th>
+            <th class="w140">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" [(ngModel)]="search.date_created" (dateChange)="onDate($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Created By. . ." type="text" name="created_by" [(ngModel)]="search.created_by" (keyup.enter)=" get_announcement_list()" >
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th>
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Subject" name="subject" [(ngModel)]="search.subject" (keyup.enter)="get_announcement_list()" >
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w150">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Company Name" name="company_name"  >
+                </mat-form-field>
+              </div> -->
+            </th>
+
+
+            <th class="w100">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="MObile Number/Landine Number" name="mobile"  >
+                </mat-form-field>
+              </div> -->
+            </th>
+            <th class="w100"></th>
+
+
+
+            <!-- <th class="w80">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Pin Code" name="pincode"  >
+                </mat-form-field>
+              </div>
+            </th>
+
+
+            <th class="w100">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="City" name="city"  >
+                </mat-form-field>
+              </div>
+            </th>
+
+
+
+            <th class="w150">
+              <div class="th-search">
+                <select  name="state" >
+                  <option value="">Select State</option>
+                  <option ></option>
+                </select>
+              </div>
+            </th>
+            <th class="w140"></th>
+
+            <th class="w110"></th>
+            <th class="w150"></th>
+
+            <th class="w110">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Days. ." type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  name="last_order_days_filter"  >
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w110"></th>
+            <th  class="w70"></th>
+            <th class="w180"></th>
+            <th class="w180"></th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Assigned Sales User. . ." name="assign_user"  >
+                </mat-form-field>
+              </div>
+            </th> -->
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <ng-container *ngFor="let data of announcement_list;let i = index">
+            <tr>
+              <td class="w50">{{i+1}}</td>
+              <td class="w140">
+                <a class="link-btn" mat-button (click)="announcementDetail(data.id)">{{data.date_created | date : 'd MMM, y'}}</a>
+              </td>
+              <!-- routerLink="/announcement-detail/{{data.id}}" routerLinkActive="active" -->
+              <td class="w180">{{data.created_by_name}}</td>
+              <td>{{data.subject}}</td>
+              <td class="w150 text-center">{{convert_integer(data.employee_count) + convert_integer(data.direct_dealer_count) + convert_integer(data.distributor_count)}}</td>
+              <td class="w100 text-center">{{data.read_count}}</td>
+              <td class="w100">
+                <div class="acton-btn">
+                  <a  class="view" mat-button routerLink="/announcement-detail/{{data.id}}">
+                    <i class="material-icons">remove_red_eye</i>
+                    <!-- view -->
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading"  *ngIf="loader">
+              <td class="w50"><div>&nbsp;</div></td>
+              <td class="w140"><div>&nbsp;</div></td>
+              <td class="w180"><div>&nbsp;</div></td>
+              <td><div>&nbsp;</div></td>
+              <td class="w150"><div>&nbsp;</div></td>
+              <td class="w100"><div>&nbsp;</div></td>
+              <td class="w100"><div>&nbsp;</div></td>
+
+            </tr>
+          </ng-container>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="data-not-available" *ngIf="data_not_found==true">
+    <div class="outer">
+      <div class="iinear">
+        <div class="figure" matRipple>
+          <div class="header">
+            <img src="assets/img/data-not-available-header.svg" alt="">
+          </div>
+
+          <div class="description">
+            <div class="cs-heading">
+              <h2>Announcement List</h2>
+            </div>
+            <div class="img">
+              <i class="material-icons">error_outline</i>
+            </div>
+            <div class="psc">
+              <p>data not Found</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="fix-btn">
+    <a *ngIf="true" class="bottom-btn"  matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/announcemnet-add"><i class="material-icons">add</i></a>
+  </div>
+</div>

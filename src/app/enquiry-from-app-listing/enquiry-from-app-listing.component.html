@@ -1,0 +1,322 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+
+    <div class="page-heading">
+
+      <!-- <img src="assets/img/distribution_icon.svg" class="h-icon"> -->
+      <div class="heading-text">
+        <h2> Enquiry List</h2>
+      </div>
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="get_enquiry_list('refresh') " matTooltip="Refresh"><i
+              class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      <div class="top-pagination">
+        <ul>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; get_enquiry_list()"
+              [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; get_enquiry_list()" [(ngModel)]="pagenumber"
+              min="1" max={{total_page}}>
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; get_enquiry_list()"
+              [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+
+
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w40 text-center">&nbsp;</th>
+            <th class="w140">Enquiry Date</th>
+            <th class="w180">Created By</th>
+            <th class="w140">Enquiry Id</th>
+            <th class="w140">Total Item</th>
+            <th class="w180">Enquiry Type</th>
+            <th class="w180">Company Name</th>
+            <!-- <th class="w180">Brand</th> -->
+            <!-- <th class="w200">Product</th> -->
+            <!-- <th class="w90">QTY</th> -->
+            <!-- <th class="w100">Stock Quantity</th> -->
+            <th class="w90">Order Id</th>
+            <th class="w90">Action</th>
+            <!-- <th class="w130">Description</th> -->
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt">
+
+        <table class="sno-border">
+          <tr>
+            <th class="w40">&nbsp;</th>
+            <th class="w140">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date" [(ngModel)]="search.date"
+                    (dateChange)="onDate($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Created by.." type="text" name="created_by"
+                    [(ngModel)]="search.created_by" (keyup.enter)=" get_enquiry_list()">
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w140">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Enquiry Id.." type="text" name="enquiry_id"
+                    [(ngModel)]="search.enquiry_id" (keyup.enter)=" get_enquiry_list()">
+                </mat-form-field>
+              </div>
+            </th> <!-- Enquiry Id -->
+            <th class="w140"></th>
+
+
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Enquiry Type...." type="text" name="enquiry_type"
+                    [(ngModel)]="search.enquiry_type" (keyup.enter)=" get_enquiry_list()">
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Company Name...." type="text" name="created_by"
+                    [(ngModel)]="search.company_name" (keyup.enter)=" get_enquiry_list()">
+                </mat-form-field>
+              </div>
+            </th>
+
+
+            <!-- <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Brand" name="brand" (keyup.enter)="get_enquiry_list()"
+                    [(ngModel)]="search.brand">
+                </mat-form-field>
+              </div>
+            </th> -->
+
+            <!-- <th class="w200">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Product" name="product" (keyup.enter)="get_enquiry_list()"
+                    [(ngModel)]="search.product">
+                </mat-form-field>
+              </div>
+            </th> -->
+
+            <!-- <th class="w9  0"></th> -->
+            <!-- <th class="w100"></th> -->
+
+
+            <th class="w90">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Order Id" name="order_id" (keyup.enter)=" get_enquiry_list()"
+                    [(ngModel)]="search.order_id">
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w90"></th>
+
+            <!-- <th class="w130"></th> -->
+
+
+            <!-- <th class="w130"> -->
+            <!-- <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="City" name="city" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.city" >
+                  </mat-form-field>
+                </div> -->
+            <!-- </th> -->
+
+
+
+            <!-- <th class="w130">
+
+              </th>
+              <th *ngIf="active_tab == 'All'" class="w100"></th>
+
+              <th *ngIf="active_tab != 'All'" class="w180"></th> -->
+            <!-- <th class="w150"></th>
+
+              <th class="w110">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Days. ." type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  name="last_order_days_filter" (keyup.enter)="distributorList()" [(ngModel)]="search_val.last_order_days_filter" >
+                  </mat-form-field>
+                </div>
+              </th>
+
+              <th class="w110"></th>
+              <th *ngIf="view_edit" class="w70"></th>
+              <th class="w180"></th>
+              <th class="w180"></th>
+              <th class="w180">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+                    <input matInput placeholder="Assigned Sales User. . ." name="assign_user" (keyup.enter)="distributorList()" [(ngModel)]="search_val.assign_user" >
+                  </mat-form-field>
+                </div>
+              </th> -->
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <ng-container *ngFor="let data of enquiry_list;let i = index">
+            <tr>
+              <td class="w40 text-center">{{i+1}}</td>
+              <td class="w140">{{data.date_created | date : 'd MMM, y'}}</td>
+              <!-- <td class="w180">{{data.created_by_type == 'Dr' ?  data.created_by_name : data.created_by_user_name}}</td> -->
+              <td class="w180">{{data.created_by_name && data.created_by_name != '' ? data.created_by_name
+                :data.created_by_user_name}}</td>
+              <td class="w140">
+                <a class="link-btn" mat-button (click)="enquiryDetail(data.id)">Enq-{{data.id}}</a>
+              </td>
+              <td class="w140">
+                {{data.total_qty}}  
+              </td>
+              <td class="w180">{{data.enquiry_for}}</td>
+              <td class="w180">{{data.company_name ? data.company_name : 'N/A'}}</td>
+
+              <!-- <td class="w180">{{data.brand_name}}</td> -->
+              <!-- <td class="w200">{{data.product_name}}</td> -->
+              <!-- <td class="w90">{{data.qty}}</td> -->
+              <!-- <td class="w90">
+                <a class="img-avtar">
+
+                    <img src="{{data.image && data.image!= null && data.image!= '' ? data.image : 'assets/img/NoPopNGift.png'}}"
+                    (click)="data.image && data.image!= null && data.image!= '' ? imageModel(data.image) : '' ">
+                </a>
+              </td> -->
+              <!-- <td class="w100">{{data.stock_quantity}}</td> -->
+              <td class="w90" *ngIf="data.order_id!='0'">
+                <a class="link-btn" mat-button (click)="orderDetail(data.order_id)">{{data.order_no}}</a>
+              </td>
+              <td class="w90" *ngIf="data.order_id=='0'">NA</td>
+              <td class="w90">
+                <div class="action-btn-group">
+
+                  <button mat-button class="delete-mat" (click)="delete_enquiry_row(data.id)"><i
+                      class="material-icons red-clr">delete_sweep</i>
+                  </button>
+                </div>
+              </td>
+              <!-- <td class="w130">{{data.description}}</td> -->
+            </tr>
+          </ng-container>
+
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading" *ngIf="loader">
+              <td class="w40 text-center">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w140">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w180">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w140">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w180">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w180">
+                <div>&nbsp;</div>
+              </td>
+              <!-- <td class="w100"><div>&nbsp;</div></td> -->
+              <td class="w90">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w90">
+                <div>&nbsp;</div>
+              </td>
+
+
+            </tr>
+          </ng-container>
+
+        </table>
+
+      </div>
+    </div>
+
+    <div class="data-not-available" *ngIf="data_not_found==true">
+      <div class="outer">
+        <div class="iinear">
+          <div class="figure" matRipple>
+            <div class="header">
+              <img src="assets/img/data-not-available-header.svg" alt="">
+            </div>
+
+            <div class="description">
+              <div class="cs-heading">
+                <h2>Enquiry</h2>
+              </div>
+              <div class="img">
+                <i class="material-icons">error_outline</i>
+              </div>
+              <div class="psc">
+                <p>data not Found</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

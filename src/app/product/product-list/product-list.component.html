@@ -1,0 +1,549 @@
+<div class="main-container">
+  <div class="" *ngIf="loader">
+    <div class="middle-container mb0">
+
+    </div>
+
+    <div class="container-outer">
+      <app-master-tab-list></app-master-tab-list>
+      <div class="container tab-container">
+        <div class="row">
+          <div class="col s12">
+            <div class="cs-table left-right-20">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w60">S No.</th>
+                    <th class="w180">Brand</th>
+                    <th class="w200">Product Name</th>
+                    <th class="w120">Design Code</th>
+                    <th class="w170">Panel Code</th>
+                    <th class="w120">Tax</th>
+                    <th class="w120">UOM</th>
+                    <th class="w170">Product Finish</th>
+                    <th class="w120 text-right">Price (Including Tax)</th>
+                    <th class="w100 text-right">Stock Quantity</th>
+                    <th class="w100 text-right">Quantity Updated On</th>
+                    <th class="w100 text-right">Showroom Code</th>
+                    <th class="w100 text-right">Showroom Price</th>
+                    <th class="w120 text-center">Status</th>
+                    <th class="w70 text-center">On/Off</th>
+
+                  </tr>
+                </table>
+              </div>
+              <div class="table-head bdrt">
+                <table>
+                  <tr>
+                    <th class="w60"></th>
+                    <th class="w180">
+                      <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Enter Brand...." [matAutocomplete]="category"
+                            (keyup.enter)="getSubCategoryList();getProductList()"
+                            (input)="category_array_filter(data.category,tmp_category)" name="category"
+                            #category="ngModel" [(ngModel)]="data.category">
+                          <mat-autocomplete #category="matAutocomplete">
+                            <mat-option *ngFor="let category of category_list"
+                              (click)="getSubCategoryList() || getProductList()" value="{{category.category}}">
+                              <small>{{category.category}}</small>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <!-- <th class="w170">
+                        <div class="th-search-acmt">
+                          <mat-form-field class="example-full-width cs-input select-input">
+                            <input matInput placeholder="Enter Sub Category..." [matAutocomplete]="subCategory" (keyup.enter)="getProductList()" (input)="sub_categoryy_array_filter(data.sub_category,tmp_subcategory)" name="subCategory" #subCategory="ngModel" [(ngModel)]="data.sub_category" >
+                            <mat-autocomplete #subCategory="matAutocomplete">
+                              <mat-option *ngFor="let subCategory of subCategory_list" (click)="getProductList()" value="{{subCategory.sub_category}}">
+                                <small>{{subCategory.sub_category}}</small>
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </th> -->
+                    <th class="w200">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+                          <input type="text" matInput placeholder="Enter Product Name...." name="type"
+                            (keyup.enter)="getProductList()" #type="ngModel" [(ngModel)]="data.product_name">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+
+                    <!-- <th class="w170">
+                        <div class="th-search-acmt">
+                          <mat-form-field>
+                            <input type="text"  matInput placeholder="Enter Product Code...." name="cattype" (keyup.enter)="getProductList()" #cattype="ngModel" [(ngModel)]="data.cat_no" >
+                            <mat-autocomplete #search="matAutocomplete" >
+                              <mat-option >
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </th> -->
+                    <th class="w120">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+
+                          <input type="text" matInput placeholder="Enter Design code..."
+                            (keyup.enter)="getProductList()" name="design" #design="ngModel"
+                            [(ngModel)]="data.design_code">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <!-- <th class="w170">&nbsp;</th> -->
+                    <th class="w170">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+
+                          <input type="text" matInput placeholder="Enter Panel code..." (keyup.enter)="getProductList()"
+                            name="panel" #panel="ngModel" [(ngModel)]="data.panel">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+
+                    <th class="w120"></th>
+                    <th class="w170">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+                          <input type="text" matInput placeholder="enter product finish"
+                            (keyup.enter)="getProductList()" name="product_finish" #product_finish="ngModel"
+                            [(ngModel)]="data.product_finish">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+
+                      </div>
+
+                    </th>
+                    <!-- <th class="w170">&nbsp;</th> -->
+                    <th class="w170 text-right"></th>
+                    <th class="w170 text-right"></th>
+                    <th class="w100"></th>
+                    <th class="w100"></th>
+                    <th class="w100"></th>
+                    <th class="w100"></th>
+                    <th class="w120 text-center"></th>
+                    <th class="w70 text-center"></th>
+                  </tr>
+                </table>
+              </div>
+              <div class="table-container">
+                <div class="table-content">
+                  <table>
+                    <tr *ngFor="let lead of skelton" class="sk-loading">
+                      <td class="w60">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w180">
+                        <div>&nbsp;</div>
+                      </td>
+                      <!-- <td class="w170"><div>&nbsp;</div></td> -->
+                      <td class="w200">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w170">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w120">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w120">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w170">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w120">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w170">
+                        <div>&nbsp;</div>
+                      </td>
+                      <!-- <td class="w170">
+                        <div>&nbsp;</div>
+                      </td> -->
+                      <td class="w100">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w100">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w100">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w100">
+                        <div>&nbsp;</div>
+                      </td>
+
+                      <td class="w120">
+                        <div>&nbsp;</div>
+                      </td>
+                      <td class="w70">
+                        <div>&nbsp;</div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+
+  <div *ngIf="!loader">
+    <div class="middle-container mb0">
+      <div class="page-heading">
+        <!-- <img src="assets/img/discount.svg" class="h-icon h20"> -->
+        <div class="heading-text">
+          <h2>Products</h2>
+          <!-- <p>Total Discount {{discountList.length}}</p> -->
+        </div>
+      </div>
+
+
+      
+      <div class="top-pagination">
+        
+        <div class="update-block" style="margin-right: 310px;">
+          <p>Stock Quantity</p>
+
+          <select name="discount_type" placeholder="Select Quantity" [(ngModel)]="data.upper_lower_type"
+            (ngModelChange)="updated_value = '0'">
+            <!-- <option disabled="">Select Discount Type</option> -->
+            <option value="greater_than">Greater Than</option>
+            <option value="less_than">Less Than</option>
+          </select>
+
+
+          <input type="tel" name="updated_discount" [(ngModel)]="data.updated_value">
+          <button mat-raised-button color="primary"
+            (click)="update_stock(data.updated_value,data.upper_lower_type); updated_value='0';upper_lower_type = 'not_select_anything'">Search</button>
+        </div>
+
+
+        <ul>
+          <li class="refresh-area">
+            <a class="refresh-btn" mat-raised-button matTooltip="Refresh" (click)="refresh()"><i class="material-icons">
+                refresh</i></a>
+          </li>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; getProductList()"
+              [disabled]="pagenumber == 1">
+              <i class="material-icons">keyboard_arrow_left</i></button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getProductList()" [(ngModel)]="pagenumber"
+              min="1" max={{total_page}}>
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; getProductList()"
+              [disabled]="pagenumber == total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- <div class="container-outer"> -->
+    <app-master-tab-list></app-master-tab-list>
+    <div class="container tab-container">
+      <div class="row">
+        <div class=" s12">
+          <!-- col -->
+          <div class="cs-table cs-table-scroll">
+            <div class="stickyTableHead" style="width: fit-content;">
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w60">S No.</th>
+                    <th class="w180">Brand</th>
+                    <!-- <th class="w170">Sub Category</th> -->
+                    <th class="w120">Product Name</th>
+                    <!-- <th class="w170">Product Code</th> -->
+                    <th class="w120">Design Code</th>
+                    <th class="w170">Panel Code</th>
+                    <!-- <th class="w170">Panel Code</th> -->
+                    <th class="w170">Product Finish</th>
+                    <th class="w100">Tax</th>
+                    <th class="w100">UOM</th>
+                    <!-- <th class="w170">Brand</th> -->
+                    <th class="w100 text-right">Price (Including Tax)</th>
+                    <th class="w100 text-right">Stock Quantity</th>
+                    <th class="w100 text-right">Quantity Updated On</th>
+                    <th class="w100 text-right">Showroom Code</th>
+                    <th class="w100 text-right">Showroom Price</th>
+                    <th class="w100 text-center">Status</th>
+                    <th class="w100 text-center">Discontinue</th>
+                    <th class="w70 text-center">On/Off</th>
+
+                  </tr>
+                </table>
+              </div>
+              <div class="table-head bdrt">
+                <table>
+                  <tr>
+                    <th class="w60"></th>
+                    <th class="w180">
+                      <div class="th-search-acmt">
+                        <mat-form-field class="example-full-width cs-input select-input">
+                          <input matInput placeholder="Enter Brand...." [matAutocomplete]="category"
+                            (keyup.enter)="getSubCategoryList();getProductList(); start=0; "
+                            (input)="category_array_filter(data.category,tmp_category)" name="category"
+                            #category="ngModel" [(ngModel)]="data.category">
+                          <mat-autocomplete #category="matAutocomplete">
+                            <mat-option *ngFor="let category of category_list"
+                              (click)="getSubCategoryList() || getProductList()" value="{{category.category}}">
+                              <small>{{category.category}}</small>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <!-- <th class="w170">
+                          <div class="th-search-acmt">
+                            <mat-form-field class="example-full-width cs-input select-input">
+                              <input matInput placeholder="Enter Sub Category..." [matAutocomplete]="subCategory" (keyup.enter)="getProductList()" (input)="sub_categoryy_array_filter(data.sub_category,tmp_subcategory)" name="subCategory" #subCategory="ngModel" [(ngModel)]="data.sub_category" >
+                              <mat-autocomplete #subCategory="matAutocomplete">
+                                <mat-option *ngFor="let subCategory of subCategory_list" (click)="getProductList()" value="{{subCategory.sub_category}}">
+                                  <small>{{subCategory.sub_category}}</small>
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </div>
+                        </th> -->
+                    <th class="w120">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+                          <input type="text" matInput placeholder="Enter Product Name...." name="type"
+                            (keyup.enter)="start=0; getProductList();" #type="ngModel" [(ngModel)]="data.product_name">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+
+                    <!-- <th class="w170">
+                          <div class="th-search-acmt">
+                            <mat-form-field>
+                              <input type="text"  matInput placeholder="Enter Product Code...." name="cattype" (keyup.enter)="getProductList()" #cattype="ngModel" [(ngModel)]="data.cat_no" >
+                              <mat-autocomplete #search="matAutocomplete" >
+                                <mat-option >
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </div>
+                        </th> -->
+                    <th class="w120">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+
+                          <input type="text" matInput placeholder="Enter Design code..."
+                            (keyup.enter)="start=0; getProductList();" name="design" #design="ngModel"
+                            [(ngModel)]="data.design_code">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <th class="w170">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+
+                          <input type="text" matInput placeholder="Enter Panel code..." (keyup.enter)="getProductList()"
+                            name="panel" #panel="ngModel" [(ngModel)]="data.panel">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </th>
+                    <!-- <th class="w170">&nbsp;</th> -->
+                    <th class="w170">
+                      <div class="th-search-acmt">
+                        <mat-form-field>
+                          <input type="text" matInput placeholder="enter product finish"
+                            (keyup.enter)="start=0; getProductList();" name="product_finish" #product_finish="ngModel"
+                            [(ngModel)]="data.product_finish">
+                          <mat-autocomplete #search="matAutocomplete">
+                            <mat-option>
+
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+
+                      </div>
+
+                    </th>
+                    <th class="w100"></th>
+                    <th class="w100"></th>
+                    <!-- <th class="w170">&nbsp;</th> -->
+                    <th class="w100 text-right"></th>
+                    <th class="w100 text-right"></th>
+                    <th class="w100 text-right"></th>
+                    <th class="w100 text-right"></th>
+                    <th class="w100 text-right"></th>
+                    <th class="w100 text-center">
+                      <div class="th-search">
+                        <select (change)="start=0; getProductList();" name="status" [(ngModel)]="data.status_code">
+                          <option *ngFor="let status of distinct_status_array">
+                            {{status.status_code}}
+                          </option>
+
+                        </select>
+                      </div>
+                    </th>
+                    <th class="w100">
+                      <div class="th-search">
+                        <select (change)="start=0; getProductList();" name="discontinues" [(ngModel)]="data.discontinues">
+                          <option value="All">All</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+
+                        </select>
+                      </div>
+                    </th>
+                    <th class="w70 text-center">
+                      <div class="th-search">
+                        <select (change)="start=0; getProductList();" name="status" [(ngModel)]="data.status">
+                          <option value="All">All</option>
+                          <option value="Active">Active</option>
+                          <option value="Deactive">Deactive</option>
+
+                        </select>
+                      </div>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="data-not-available" *ngIf="data_not_found==true">
+              <div class="outer">
+                <div class="iinear">
+                  <div class="figure" matRipple>
+                    <div class="header">
+                      <img src="assets/img/data-not-available-header.svg" alt="">
+                    </div>
+                    <div class="description">
+                      <div class="cs-heading">
+                        <h2>Product List</h2>
+                      </div>
+                      <div class="img">
+                        <i class="material-icons">error_outline</i>
+                      </div>
+                      <div class="psc">
+                        <p>data not Found</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-container" style="width: fit-content;">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let p of productlist; let i = index">
+                    <td class="w60">{{start+i+1}}</td>
+                    <td class="w180">
+                      <!-- <a class="link-btn" (click)="go_to('update_category',p.category_id)" > -->
+                      {{p.category}}
+                      <!-- </a> -->
+                    </td>
+                    <!-- <td class="w170"><a class="link-btn" (click)="go_to('update_subcategory',p.sub_category_id)" >{{p.sub_category}}</a></td> -->
+                    <td class="w120"><a *ngIf="view_edit" class="link-btn" mat-button
+                        (click)="productDetail(p.id)">{{p.product_name}}</a>
+                      {{!view_edit?p.product_name:''}}</td>
+                    <!--  routerLink="/product-detail/{{(p.id)}}" routerLinkActive="active" -->
+                    <td class="w120">{{p.design_code && p.design_code!='' ? p.design_code : '--' }}</td>
+                    <td class="w170">{{p.panel_code && p.panel_code!='' ? p.panel_code : '--' }}</td>
+                    <!-- <td class="w170">{{p.panel_code && p.panel_code!='' ? p.panel_code : '--' }}</td> -->
+                    <td class="w170">{{p.product_finish && p.product_finish!='' ? p.product_finish : '--' }}</td>
+                    <td class="w100">{{p.tax && p.tax!='' ? p.tax +' %' : '--' }}</td>
+                    <td class="w100">{{p.uom && p.uom!='' ? p.uom : '--' }}</td>
+
+                    <!-- <td class="w100">{{p.brand && p.brand!='' ? p.brand : '--' }}
+                          <div class="action-btns">
+                            <a *ngIf="view_edit" mat-button class="view" (click)="detailProduct(p.id)"><i class="material-icons">remove_red_eye</i> View</a>
+                            <button *ngIf="view_delete" mat-button class="delete" (click)="deleteProduct(p.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                          </div>
+                        </td> -->
+                    <td class="w100 text-right">&#8377; {{p.price}}</td>
+                    <td class="w100 text-right">{{p.stock_qty}}</td>
+                    <td class="w100 text-right">{{p.stock_qty_updated_on | date : 'd MMM, y'}}</td>
+                    <td class="w100 text-right">{{p.showroom_code}}</td>
+                    <td class="w100 text-right">{{p.showroom_price}}</td>
+                    <td class="w100 text-right">{{p.status_code}}</td>
+                    <td class="w100 text-right">{{p.status_code == 'DIS' || p.status_code == 'DIS AIM' || p.status_code
+                      == 'WRONG' || p.status_code == 'NONE' || p.status_code == 'LAX' || p.status_code == 'MTO' ?
+                      'Yes':'No'}}</td>
+
+                    <td *ngIf="view_edit" class="w70 text-center">
+                      <mat-slide-toggle [checked]="p.status == '1'" (click)="update_product_status(p.id)">
+                      </mat-slide-toggle>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+    <div>
+    </div>
+    <div class="fix-btn">
+
+    </div>
+
+  </div>
+</div>
+<div class="fix-btn">
+  <!-- <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/add-product"><i class="material-icons">add</i></a> -->
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+    (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+</div>
+<div class="h50"></div>

@@ -1,0 +1,332 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <!-- <img src="assets/img/distribution_icon.svg" class="h-icon"> -->
+      <div class="heading-text">
+        <h2> Complain List</h2>
+      </div>
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a  class="refresh-btn" mat-raised-button (click)="get_complain_list('refresh') "  matTooltip="Refresh" ><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      <div class="top-pagination">
+        <ul>
+          <li><p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; get_complain_list()" [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; get_complain_list()" [(ngModel)]="pagenumber"  min="1" max={{total_page}} >
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; get_complain_list()" [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs ml15">
+        <ul>
+          <li><a  class="pr50" [ngClass]="active_tab == 'All' ? 'active' : ''" (click)="active_tab = 'All';get_complain_list();">All<span class="counter">{{complaint_count.all_complaint__count}}</span></a></li>
+          <li><a  class="pr50" [ngClass]="active_tab == 'Pending' ? 'active' : ''" (click)="active_tab = 'Pending';get_complain_list();">Pending  <span class="counter">{{complaint_count.pending_complaint__count}}</span> </a></li>
+          <li><a  class="pr50" [ngClass]="active_tab == 'Approved' ? 'active' : ''" (click)="active_tab = 'Approved';get_complain_list();">Resolve <span class="counter">{{complaint_count.resolved_complaint__count}}</span> </a></li>
+          <li><a  class="pr50" [ngClass]="active_tab == 'Reject' ? 'active' : ''" (click)="active_tab = 'Reject';get_complain_list();">Cancel <span class="counter">{{complaint_count.reject_complaint__count}}</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w40 text-center">&nbsp;</th>
+            <th class="w140">Complain Date</th>
+            <th class="w180">Complain By</th>
+            <th class="w100">Complain ID</th>
+            <th class="w130">Company Name</th>
+            <th class="w120">Brand</th>
+            <th class="w120">Product</th>
+            <th class="w120">Quantity</th>
+            <th class="w100">Stock Quantity</th>
+            <th class="w120">Price</th>
+            <th class="w120">Total Amount</th>
+            <th class="w180">Subject</th>
+            <th class="w120">Complain Description</th>
+            <!-- <th class="w90">Document</th> -->
+            <th class="w130">Assign</th>
+            <!-- <th class="w130">Resolve Document</th> -->
+            <th class="w100 text-center" *ngIf="active_tab == 'All'">Status</th>
+            <th *ngIf="active_tab != 'Pending'" class="w180 text-center">Remark</th>
+            <th class="w80" *ngIf="active_tab == 'All' || active_tab == 'Pending'">Action</th>
+
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt" >
+        <table class="sno-border">
+          <tr>
+            <th class="w40 text-center"></th>
+            <th class="w140">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date" [(ngModel)]="search.date" (dateChange)="onDate($event)" >
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Complain by.." type="text" name="created_by" [(ngModel)]="search.created_by" (keyup.enter)=" get_complain_list()">
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w100">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="complain id" name="complaint_id" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.complaint_id" >
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="company name" name="company_name" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.company_name" >
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Enter Brand" name="brand_name" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.brand_name" >
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Enter Product" name="product_name" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.product_name" >
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120"></th>
+            <th class="w100"></th>
+            <th class="w120"></th>
+            <th class="w120"></th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Subject" name="subject" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.subject" >
+                </mat-form-field>
+              </div>
+              <!-- <div class="th-search">
+                <select (change)=" get_complain_list()" name="state" [(ngModel)]="search.state">
+                  <option value="">Subject</option>
+                  <option ></option>
+                  *ngFor="let val of state_values" {{val.state_name}}
+                </select>
+              </div> -->
+            </th>
+
+
+            <th class="w120">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="MObile Number/Landine Number" name="mobile" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.mobile" >
+                </mat-form-field>
+              </div> -->
+            </th>
+
+
+
+            <!-- <th class="w90"> -->
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Pin Code" name="pincode" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.pincode" >
+                </mat-form-field>
+              </div> -->
+            <!-- </th> -->
+
+
+            <th class="w130">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Assign" name="assign" (keyup.enter)=" get_complain_list()" [(ngModel)]="search.assign" >
+                </mat-form-field>
+              </div>
+            </th>
+
+
+
+            <!-- <th class="w130">
+
+            </th> -->
+            <th *ngIf="active_tab == 'All'" class="w100"></th>
+
+            <th *ngIf="active_tab != 'Pending'" class="w180"></th>
+            <th class="w80" *ngIf="active_tab == 'All' || active_tab == 'Pending'"></th>
+
+           <!-- <th class="w150"></th>
+
+            <th class="w110">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Days. ." type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  name="last_order_days_filter" (keyup.enter)="distributorList()" [(ngModel)]="search_val.last_order_days_filter" >
+                </mat-form-field>
+              </div>
+            </th>
+
+            <th class="w110"></th>
+            <th *ngIf="view_edit" class="w70"></th>
+            <th class="w180"></th>
+            <th class="w180"></th>
+            <th class="w180">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Assigned Sales User. . ." name="assign_user" (keyup.enter)="distributorList()" [(ngModel)]="search_val.assign_user" >
+                </mat-form-field>
+              </div>
+            </th> -->
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <ng-container *ngFor="let data of complaint_list;let i = index">
+            <tr>
+              <td class="w40 text-center">{{i+1}}</td>
+              <td class="w140">
+                <!-- <a class="link-btn" mat-button routerLink="/announcement-detail/{{data.id}}" routerLinkActive="active">{{data.date_created | date : 'd MMM, y'}}</a> -->
+                {{data.date_created | date : 'd MMM, y'}}
+              </td>
+              <td class="w180">{{data.created_by_type == 'Dr' ?  data.created_by_name : data.created_by_user_name}}</td>
+              <td class="w100">
+                <a  class="link-btn" (click)="complainDetail(data.id)" mat-button > {{data.complaint_ref_id}}</a>
+               </td>
+               <!--  {{data.complaint_ref_id}} -->
+              <td class="w130">{{data.company_name ? data.company_name :'N/A'}}</td>
+              <td class="w120">{{data.brand_name}}</td>
+              <td class="w120">{{data.product_name}}</td>
+              <td class="w120">{{data.qty}}</td>
+              <td class="w100">{{data.stock_qty}}</td>
+              <td class="w120"> &#8377; {{data.product_price ? data.product_price :'0'}}</td>
+              <td class="w120">{{data.total_amount}}</td>
+
+              <td class="w180">{{data.complaint_subject}}</td>
+              <td class="w120">{{data.description}}</td>
+              <!-- <td class="w90">
+                <a class="img-avtar">
+                  <img src="{{data.images && data.images!= null ? data.images : 'assets/img/NoPopNGift.png'}}" (click)="data.images && data.images!= null ? imageModel(data.images) : '' ">
+                </a>
+              </td> -->
+
+              <td class="w130" *ngIf="((enable_edit == data.id || data.assign_to_name== null) && data.status == 'Pending')">
+                <!-- <mat-select [id]="'sales_user_select'+data.id" name="selected_sales_user" placeholder="User List"  #selected_sales_user="ngModel"  [(ngModel)]="data.selected_sales_user" (ngModelChange)="assign_sales_user(data.selected_sales_user,data.id)" required> -->
+                  <mat-select [id]="'sales_user_select'+i" name="selected_sales_user" placeholder="User List"  #selected_sales_user="ngModel"  [(ngModel)]="data.selected_sales_user" (ngModelChange)="assign_sales_user(data.selected_sales_user,data.id)" required>
+
+                    <mat-option *ngFor="let sales_user of sales_user_list ; let i = index" [value]="sales_user.id">{{sales_user.name}}</mat-option>
+                  </mat-select>
+                </td>
+
+                <!-- <td class="w130" style="cursor: pointer;" *ngIf="enable_edit != data.id && data.assign_to_name!= null" (click)="data.status=='Pending'? enable_edit = data.id: ''"> -->
+                  <td class="w130" style="cursor: pointer;" *ngIf="(enable_edit != data.id && data.assign_to_name!= null) || data.status != 'Pending' " (click)="data.status=='Pending'? openSelector('sales_user_select'+i,data.id) : ''">
+
+                    {{data.assign_to_name && data.assign_to_name!= '' && data.assign_to_name!= null ?data.assign_to_name:'NA'}}
+                  </td>
+<!-- 
+                  <td class="w130 text-center">
+                    <a style="cursor: pointer" (click)=" data.executive_solved_images == 'exist' ? openDialog(data.id,'','for_view_images'):''" [ngClass]="data.executive_solved_images == 'exist' ? 'ankr-clr' : ''">{{data.executive_solved_images == 'exist'?'View':'NA'}}</a>
+                  </td> -->
+
+                  <td class="w100 text-center" [ngClass]="data.status == 'Pending' ? 'stock-pending': data.status == 'Approved' ? 'stock-green' : data.status == 'Reject'? 'stock-alert':''" *ngIf="active_tab == 'All'" >{{data.status && data.status!=''? (data.status == 'Approved' ? 'Resolve' : data.status == 'Reject' ? 'Cancel' :  data.status  ) : '--'}}
+
+                  </td>
+                  <td *ngIf="active_tab != 'Pending'" class="w180 text-center">{{data.status_remark && data.status_remark!='' ? data.status_remark : '--'}}</td>
+                  <td class="w80" *ngIf="active_tab == 'All' || active_tab == 'Pending'">
+                    <div class="acton-btn" *ngIf="data.status == 'Pending' && data.executive_solved_images == 'exist'">
+                      <a  mat-button class="view" (click)="openDialog(data.id,data.status,'for_status_change')" style="padding-left: 0px;" ><i class="material-icons">edit</i>  </a>
+                    </div>
+
+                  </td>
+
+                </tr>
+              </ng-container>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w40 text-center"><div>&nbsp;</div></td>
+                  <td class="w140"><div>&nbsp;</div></td>
+                  <td class="w180"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w180"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w100" *ngIf="active_tab == 'All'"><div>&nbsp;</div></td>
+                  <td class="w180" *ngIf="active_tab != 'Pending'"><div>&nbsp;</div></td>
+                  <td class="w80" *ngIf="active_tab == 'All' || active_tab == 'Pending'"><div>&nbsp;</div></td>
+                  <!-- <td *ngIf="active_tab != 'Pending'" class="w180"><div>&nbsp;</div></td>
+                  <td class="w80" *ngIf="active_tab == 'All' || active_tab == 'Pending'"></td> -->
+                </tr>
+              </ng-container>
+
+            </table>
+
+          </div>
+        </div>
+
+        <div class="data-not-available" *ngIf="data_not_found==true">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+
+                <div class="description">
+                  <div class="cs-heading">
+                    <h2>Complain</h2>
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>data not Found</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+
+
+    </div>

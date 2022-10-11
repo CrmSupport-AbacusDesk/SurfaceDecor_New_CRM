@@ -1,0 +1,24 @@
+<div class="edit-modal">
+  
+  <p class="heading">Please enter OTP Sent to +9560089685 </p>
+  <div mat-dialog-content style="padding: 0px 15px;">
+    <div class="from-fields">
+      <div class="row">
+        <div class="col s12 pl0">
+          <div class="control-field">
+            <mat-form-field class="cs-input">
+              <input matInput placeholder="Enter OTP" #otp="ngModel" [(ngModel)]="form.otp" name="otp" required>
+              <div class="alert alert-danger" *ngIf="form.otp!=data.otp && form.submitted==true">OTP did not match</div>
+              <div class="alert alert-danger" *ngIf="!form.otp && form.submitted==true">OTP required</div>
+              <div class="alert alert-danger" *ngIf="form.otp && form.otp.length!=6 && form.submitted==true">OTP Invalid</div>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Close</button>
+    <button mat-raised-button color="accent" (click)="convert()" type="submit">Save</button>
+  </div>
+</div>

@@ -1,0 +1,551 @@
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button routerLink="/sale-user-list" routerLinkActive="active"><i
+              class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>User Detail1</h2>
+      </div>
+    </div>
+
+
+    <div class="target">
+      <div class="pagination">
+
+
+        <div class="target-btn" *ngIf="detail.user_type == 'MARKET' || detail.user_type == 'Market'">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="container-outer">
+    <div class="container">
+      <div class="row">
+        <div class="col s8">
+          <div class="details-info">
+
+            <div class="basic-details">
+              <div class="profile-info">
+                <ul>
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/people.svg" class="fix-img">
+                      <span>Name</span>
+                      <p class="link-clr">{{detail.name}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.name,'name')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/company.svg" class="fix-img">
+                      <span>Type</span>
+                      <p>{{detail.user_type}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.user_type,'user_type')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/designation.svg" class="fix-img">
+                      <span>Designation</span>
+                      <p>{{detail.designation}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.access_level,'access_level')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/gmail.svg" class="fix-img">
+                      <span>Email</span>
+                      <p>{{detail.email}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.email,'email')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                </ul>
+
+                <ul>
+
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Mobile no</span>
+                      <p>{{detail.contact_01}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.contact_01,'contact_01')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+
+                  <li class="col s4" *ngIf="detail.user_type != 'Ware House'">
+                    <div class="cs-box">
+                      <img src="assets/img/building.svg" class="fix-img">
+                      <span>Working State</span>
+                      <p>{{detail.state_name}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.state_name,'working_state')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+
+                  <li class="col s4" *ngIf="detail.user_type == 'Ware House' && detail.access_level == '16'">
+                    <div class="cs-box">
+                      <img src="assets/img/warehouse.svg" class="fix-img">
+                      <span>Warehouse</span>
+                      <p>{{detail.ware_house_name && detail.ware_house_name!='' ? detail.ware_house_name : '--'}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.ware_house_id,'ware_house_name')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/building.svg" class="fix-img">
+                      <span>Employee Code</span>
+                      <p>{{detail.employee_id}}</p>
+
+                    </div>
+                  </li>
+
+                  <li class="col s4"
+                    *ngIf="detail.user_type == 'office' || detail.user_type == 'OFFICE' || detail.user_type == 'Office'">
+                    <div class="cs-box">
+                      <img src="assets/img/man.svg" class="fix-img">
+                      <span>Username</span>
+                      <p>{{detail.username}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.username,'username')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s4"
+                    *ngIf="detail.user_type == 'office' || detail.user_type == 'OFFICE' || detail.user_type == 'Office'">
+                    <div class="cs-box">
+                      <img src="assets/img/password.svg" class="fix-img">
+                      <span>Password</span>
+                      <p>{{detail.password}}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.password,'password')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                </ul>
+
+                <ul>
+
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Created By</span>
+                      <p>{{detail.created_by_name && detail.created_by_name != ''?detail.created_by_name :'--' }}</p>
+                    </div>
+                  </li>
+                  <li class="col s4" *ngIf="(detail.updated_at != '0000-00-00 00:00:00')">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Last Update Date</span>
+                      <p>{{detail.updated_at != '0000-00-00 00:00:00'?(detail.updated_at | date : 'MMM d, y') :'Not Yet
+                        Updated' }}</p>
+                    </div>
+                  </li>
+                  <li class="col s4" *ngIf="(detail.last_updated_by_name)">
+                    <div class="cs-box">
+                      <img src="assets/img/people.svg" class="fix-img">
+                      <span>Last Update By</span>
+                      <p>{{detail.last_updated_by_name?detail.last_updated_by_name:'Not Yet Updated'}}</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col s6 cs-figure">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s4">
+
+          <div class="sprate-box">
+            <!-- <a class="edit-item" matTooltip="EDIT" color="accent"><i
+              class="material-icons">edit</i></a> -->
+            <div class="cs-logs">
+              <div class="cs-heading">
+                <h2>User Profile</h2>
+                <label>
+                  <input type="file" accept=".png,.jpg,.jpeg" name="image" placeholder="Upload file" (change)="insertImage($event)" style="display: none;">
+                  Add New
+                </label>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="logs-outer padding0">
+                <div class="cs-image">
+                  <div class="vertical-img">
+                    <div class="sm-img">
+                      <ul>
+                        <li class="overlay-content" (click)="detail.user_profile && detail.user_profile != '' ? openImage(detail.user_profile):''">
+                          <img [src]="detail.user_profile && detail.user_profile != '' ? detail.user_profile : 'assets/img/NoPopNGift.png'">
+                          <p>{{user_profile}}</p>
+                          <!-- <a class="close" matRipple matTooltip="Delete"><i class="material-icons">delete_sweep</i></a> -->
+                          <div class="overlay">
+                          </div>
+                        </li>
+                       
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <form (ngSubmit)="updateDetail()">
+          <div class="col s8">
+            <div class="sprate-box padding0">
+              <a class="edit-item" matTooltip="EDIT" color="accent" (click)="editaddress()"><i
+                  class="material-icons">edit</i></a>
+              <div class="full-address">
+                <div class="top-heading">
+                  <h2>ADDRESS</h2>
+                </div>
+                <div class="nationality">
+                  <img src="assets/img/india.svg" alt="">
+                  <p>India</p>
+                </div>
+
+                <div class="ds-from-fields">
+                  <div class="cs-row">
+                    <div class="static-info">
+                      <p>address</p>
+                      <p>{{detail.street && detail.street!='' ? detail.street : '--'}}</p>
+                    </div>
+                  </div>
+
+                  <div class="cs-row">
+                    <div class="static-info">
+                      <p>State</p>
+                      <p>{{detail.permanent_address_state && detail.permanent_address_state!='' ?
+                        detail.permanent_address_state : '--'}}</p>
+                    </div>
+                    <div class="static-info">
+                      <p>District</p>
+                      <p>{{detail.district_name && detail.district_name!='' ? detail.district_name : '--'}}</p>
+                    </div>
+                    <div class="static-info">
+                      <p>City</p>
+                      <p>{{detail.city && detail.city!='' ? detail.city : '--'}}</p>
+                    </div>
+                    <div class="static-info">
+                      <p>Pin Code</p>
+                      <p>{{detail.pincode && detail.pincode!='' ? detail.pincode : '--'}}</p>
+                    </div>
+
+                    <!-- <div class="static-info">
+                      <p>Dealer Name</p>
+                      <p>{{detail.channel_partner && detail.channel_partner!='' ? detail.channel_partner : '--'}}</p>
+                    </div> -->
+
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="sprate-box padding0">
+              <div class="full-address">
+                <div class="top-heading">
+                  <h2>DEALERS</h2>
+                </div>
+                <div class="ds-from-fields">
+                  <div class="cs-row">
+                    <div class="static-info">
+                      <p>Dealer Name</p>
+                      <p>{{detail.channel_partner && detail.channel_partner!='' ? detail.channel_partner : '--'}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col s12">
+                <div class="cs-btn fixedd mt32 text-right">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+          <!-- <div class="col s8">
+            <div class="sprate-box padding0">
+              <div class="full-address">
+                <div class="top-heading">
+                  <h2>DEALERS</h2>
+                </div>
+                <div class="ds-from-fields">
+                  <div class="cs-row">
+                    <div class="static-info">
+                      <p>Dealer Name</p>
+                      <p>{{detail.channel_partner && detail.channel_partner!='' ? detail.channel_partner : '--'}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+        <div class="col s4" *ngIf="team_update==true">
+          <div class="territory-info">
+            <div class="head" [ngClass]="{'active':active.user==true}">
+              <h2>Reporting Manager</h2>
+              <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"
+                matRipple>search</i>
+              <input type="text" placeholder="search..." name="sales_executive" class="fix-search"
+                (input)="getItemsList(search.sales_executive)" #sales_executive="ngModel"
+                [(ngModel)]="search.sales_executive">
+              <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
+            </div>
+
+            <div class="cs-logs">       
+              <div class="cs-checkbox">
+                <div class="checkbox-outer">
+                  <section class="checkbox-inner">
+                    <ng-container *ngFor="let list of rsm_list;let index=index" aria-required="true">
+                      <mat-checkbox class="check-list" [checked]="list.check"
+                        (change)="product_Brand(list.id,index,$event,list)" value="{{list.name}}">{{list.name}} |
+                        {{list.role_name}}</mat-checkbox>
+                    </ng-container>
+                  </section>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col s12">
+              <div class="cs-btn  text-right pb15">
+                <div class="in-btn">
+                  <button mat-raised-button color="accent" (click)="update_assignusers()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col s4" *ngIf="detail.user_type != 'Ware House'">
+
+          <div class="sprate-box padding0" *ngIf="team_update==false">
+            <a class="edit-item" matTooltip="EDIT" color="accent" (click)="edit_assigned_team()"><i
+                class="material-icons">edit</i></a>
+            <div class="full-address">
+              <div class="top-heading">
+                <h2>Reporting Manager</h2>
+              </div>
+              <div class="cs-table">
+                <div class="table-head">
+                  <table>
+                    <tr>
+                      <th>Name</th>
+                      <th class="w100">Designation </th>
+                    </tr>
+                  </table>
+                </div>
+                <div class="table-container">
+                  <div class="table-content">
+                    <table>
+                      <tr *ngFor="let team of detail['assign_user']">
+                        <td>{{team.name}}</td>
+                        <td class="w100">{{team.role_name}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="sprate-box mt15" *ngIf="detail.user_type == 'Market' || detail.user_type == 'Showroom'">
+            <div class="territory-info" *ngIf="brands_update != 'true'">
+              <div class="head ">
+                <h2> Brands</h2>
+                <a class="edit-item" (click)="update_assigned_brands('true')"><i
+                  class="material-icons">create</i></a>
+              </div>
+              <!-- <mat-checkbox class="check-list" [checked]="data.checks" (change)="sale-user-detail(data)"
+                > {{data.brand_name}} </mat-checkbox>
+                (click)="update_brands(data.id)" -->
+                <div class="cs-checkbox" *ngIf="dr_brand_list.length!=0">
+                  <div class="checkbox-outer" style="min-height: 115px;">
+                      <section class="checkbox-inner bodr0">
+                          <mat-checkbox class="check-list bg-none check-none" value="1"
+                              *ngFor="let row of dr_brand_list">
+                              <div class="name-outer">
+                                  <div class="outer">
+                                      <div class="inner">
+                                          <div class="name-inner">
+                                              {{row.brand.charAt(0).toUpperCase()}}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="text-box">
+                                  <h2>{{row.brand}}</h2>
+                                  <!-- <p>{{row.role_name}}</p> -->
+                              </div>
+                          </mat-checkbox>
+                      </section>
+                  </div>
+              </div>
+              <!-- <div class="cs-btn text-right mb10 mr10">
+                <div class="in-btn sm-btn">
+                    <button mat-raised-button color="accent"
+                    (click)="update_brands()">Update</button>
+                </div>
+            </div> -->
+            </div>
+            <div class="territory-info" *ngIf="brands_update == 'true'">
+              <div class="head ">
+                <h2> Brands</h2>
+
+              </div>
+              <!-- <mat-checkbox class="check-list" [checked]="data.checks" (change)="sale-user-detail(data)"
+                > {{data.brand_name}} </mat-checkbox>
+                (click)="update_brands(data.id)" -->
+              <div class="cs-checkbox">
+
+                <div class="checkbox-outer">
+                  <section class="checkbox-inner">
+                    <ng-container *ngFor="let data of all_brands_list;let i = index" aria-required="true">
+                       <mat-checkbox class="check-list" [checked]="data.checks" (change)="brands(data)" [(ngModel)]="data.checks"> {{data.brand_name}} </mat-checkbox>
+
+                    </ng-container>
+                  </section>
+                </div>
+
+              </div>
+              <div class="cs-btn text-right mb10 mr10">
+                <div class="in-btn sm-btn">
+                    <button mat-raised-button color="accent"
+                    (click)="update_brands()">Update</button>
+                </div>
+            </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="col s4">
+          <div class="sprate-box padding0">
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt15"
+        *ngIf="detail.user_type == 'OFFICE' || detail.user_type == 'office' || detail.user_type =='Office'">
+
+
+        <div class="left-right-15">
+          <div class="cs-table">
+            <div class="stickyHead">
+
+              <div class="table-head">
+                <table>
+                  <tr>
+                    <th class="w50">S.No.</th>
+                    <th>Module Name</th>
+                    <th class="w120 text-center">View</th>
+                    <th class="w120 text-center">Edit</th>
+                    <th class="w120 text-center">Delete</th>
+                    <th class="w120 text-center">Add</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <div class="table-content">
+                <table>
+                  <tr *ngFor="let data of assign_module_data; let i = index">
+                    <td class="w50">{{i+1}}</td>
+                    <td>{{data.module_name == 'distribution dealer' ? 'Distributor Retail Partners' : (data.module_name
+                      == 'lead dealer' ? 'Lead Retail Partners' : data.module_name ) }}</td>
+                    <td class="w120 text-center">
+                      <mat-checkbox
+                        *ngIf="data.view!= '' &&  data.view  == false || data.view  == 'false' || data.view  == 'true' || data.view  == true"
+                        [checked]="data.view== 'true'" (change)="assign_module('view',$event,i)"></mat-checkbox>
+                      <mat-checkbox *ngIf="data.view== ''" [disabled]=true></mat-checkbox>
+
+                    </td>
+                    <td class="w120 text-center">
+                      <mat-checkbox
+                        *ngIf="data.edit!= '' &&  data.edit  == false || data.edit  == 'false' || data.edit  == 'true' || data.edit  == true"
+                        [checked]="data.edit== 'true'" (change)="assign_module('edit',$event,i)"></mat-checkbox>
+                      <mat-checkbox *ngIf="data.edit== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                    </td>
+
+
+                    <td class="w120 text-center">
+                      <mat-checkbox
+                        *ngIf="data.delete!= '' &&  data.delete  == false || data.delete  == 'false' || data.delete  == 'true' || data.delete  == true"
+                        [checked]="data.delete== 'true'" (change)="assign_module('delete',$event,i)"></mat-checkbox>
+                      <mat-checkbox *ngIf="data.delete== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                    </td>
+                    <td class="w120 text-center">
+                      <mat-checkbox
+                        *ngIf="data.add!= '' &&  data.add  == false || data.add  == 'false' || data.add  == 'true' || data.add  == true"
+                        [checked]="data.add== 'true'" (change)="assign_module('add',$event,i)"></mat-checkbox>
+                      <mat-checkbox *ngIf="data.add== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
+
+                    </td>
+
+
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+</div>
+
+<div class="h50"></div>

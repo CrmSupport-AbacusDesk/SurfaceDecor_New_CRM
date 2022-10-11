@@ -1,0 +1,48 @@
+<header >
+
+    <div class="logo">
+        <div class="outer">
+            <div class="inner">
+                <div class="profile-area">
+
+                    <div class="company-logo" *ngIf="login_data.view_dashboard=='1'">
+                        <!-- <img src="assets/img/p-logo-new-removebg-preview.png" style="height: 100%; width: 100%;"> -->
+                        <!-- <img src="assets/img/p-logo.png"> -->
+                        <img src="assets/img/surface-logo-without-dekor.jpeg">
+                    </div>
+                    <div class="company-logo" *ngIf="login_data.view_dashboard!='1'">
+                        <!-- <img src="assets/img/p-logo-new-removebg-preview.png" style="height: 100%; width:100%"> -->
+                        <!-- <img src="assets/img/p-logo.png"> -->
+                        <img src="assets/img/surface-logo-without-dekor.jpeg">
+                    </div>
+                </div>
+                <div id="nav-icon2" (click)="toggleNav()" matRipple *ngIf="login_data.view_dashboard=='1'">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text_url" style="text-align: center;width: 100%;">
+        <!-- <a style="color: white;" href="http://phpstack-83335-2192864.cloudwaysapps.com">Go To Loyalty Panel</a> -->
+    </div>
+
+    <div class="right-data">
+        <div class="outer">
+            <div class="inner">
+
+                <ul>
+                    <li><a class="logout" matRipple>
+                        <div (click)="logout()">
+                            <i class="material-icons">power_settings_new</i>
+                            logout
+                        </div></a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</header>

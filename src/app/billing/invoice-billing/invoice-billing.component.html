@@ -1,0 +1,747 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <div class="heading-text">
+        <h2>{{active_tab}} List</h2>
+        <p>Total {{active_tab}} - {{pagination_count}}</p>
+      </div>
+    </div>
+    <div class="left-auto">
+      <div class="from-fields cs-flex" style="margin-left: -100px;">
+        <div class="control-field mr10">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from" [(ngModel)]="search.date_from"
+              (dateChange)="onBetweenDate($event, 'date_from')" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="control-field mr10">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="pickers" placeholder="To" name="date_to" [(ngModel)]="search.date_to"
+              (dateChange)="onBetweenDate($event, 'date_to')" readonly>
+            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="cs-flex" *ngIf="search.date_from && search.date_to && (active_tab == 'Billing' || active_tab == 'Payment')">
+        <button mat-raised-button style="background-color: #275478; color: #fff"
+          (click)="active_tab == 'Billing' ? get_billing_data_list() : get_payment_data_list()">
+          Go
+        </button>
+      </div>
+
+      <div class="cs-flex" *ngIf="search.date_from == '' && search.date_to == '' && (active_tab == 'Billing' || active_tab == 'Payment')">
+        <button mat-raised-button style="background-color: #275478; color: #fff">
+          Go
+        </button>
+      </div>
+
+      <div class="cs-flex" *ngIf="search.date_from && search.date_to && (active_tab == 'Payment Return' ) ">
+        <button mat-raised-button style="background-color: #275478; color: #fff"
+          (click)="active_tab == 'Billing' ? get_billing_data_list() : get_payment_data_list()">
+          Go
+        </button>
+      </div>
+
+      <div class="cs-flex" *ngIf="search.date_from == '' && search.date_to == '' && (active_tab == 'Payment Return' ) ">
+        <button mat-raised-button style="background-color: #275478; color: #fff">
+          Go
+        </button>
+      </div>
+
+    </div>
+
+    <div class="uppr-one m-right-data">
+      <ul *ngIf="active_tab!='Payment Return'">
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button
+            (click)="active_tab == 'Billing' ? get_billing_data_list('refresh') : get_payment_data_list('refresh') "
+            matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      <ul *ngIf="active_tab=='Payment Return'">
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button
+            (click)="getPaymentReturn('refresh')"
+            matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+      <div class="top-pagination">
+        <ul>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" *ngIf="active_tab == 'Billing'"
+              (click)="start=start-page_limit; get_billing_data_list() " [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+            <button mat-button class="left-btn" *ngIf="active_tab == 'Payment'"
+              (click)="start=start-page_limit;  get_payment_data_list()" [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+            <button mat-button class="left-btn" *ngIf="active_tab == 'Payment Return'"
+            (click)="start=start-page_limit;  getPaymentReturn()" [disabled]="pagenumber <= 1">
+            <i class="material-icons">keyboard_arrow_left</i>
+          </button>
+          </li>
+          <li *ngIf="active_tab != 'Payment Return'">
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; active_tab = 'Billing'? get_billing_data_list() : get_payment_data_list()"
+              [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+          </li>
+          <li *ngIf="active_tab == 'Payment Return'">
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getPaymentReturn()"
+              [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+          </li>
+          <li>
+            <button mat-button class="right-btn" *ngIf="active_tab == 'Billing'"
+              (click)="start=start+page_limit;  get_billing_data_list() " [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+
+            <button mat-button class="right-btn" *ngIf="active_tab == 'Payment'"
+              (click)="start=start+page_limit;   get_payment_data_list()" [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+            <button mat-button class="right-btn" *ngIf="active_tab == 'Payment Return'"
+            (click)="start=start+page_limit;   getPaymentReturn()" [disabled]="pagenumber >= total_page">
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs ml15">
+        <ul>
+          <li><a class="" [ngClass]="active_tab == 'Billing' ? 'active' : ''"
+              (click)="active_tab = 'Billing';get_billing_data_list();">Billing</a></li>
+          <li><a class="" [ngClass]="active_tab == 'Payment' ? 'active' : ''"
+              (click)="active_tab = 'Payment';get_payment_data_list();">Payment</a></li>
+              <li><a class="" [ngClass]="active_tab == 'Payment Return' ? 'active' : ''"
+                (click)="active_tab='Payment Return';getPaymentReturn();">Payment Return</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- <div class="left-auto" >
+
+
+
+      <div class="update-block flat flat-block ml30">
+        <button mat-raised-button class="bg_color" ><i class="material-icons mr10">schedule</i> {{last_synchronised_data_date && last_synchronised_data_date != '' && last_synchronised_data_date != '0000-00-00 00:00:00' ?( last_synchronised_data_date | date : ' d MMM , y, hh:mm aa') : 'Not Updated Yet'}}</button>
+      </div>
+
+
+    </div> -->
+
+
+
+  </div>
+
+  <div class="container-outer padding0" *ngIf="active_tab=='Billing' || active_tab=='Payment'">
+    <div class="container">
+      <div class="cs-table cs-table-scroll">
+        <div class="stickyTableHead" style="width: fit-content;">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w60">S. No.</th>
+                <th class="w100">Date Created</th>
+                <th class="w180">Customer Name</th>
+                <th class="w100">Customer Code</th>
+                <th class="w100">Customer Number</th>
+                <th class="w120">{{active_tab == 'Billing'? 'Bill Date' : 'Payment Date'}}</th>
+                <th *ngIf="active_tab != 'Billing'" class="w100">Receipt No.</th>
+                <th class="w120" *ngIf="active_tab == 'Billing'">Bill Number</th>
+                <th *ngIf="active_tab == 'Billing'" class="w100">Status</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">Total Bill Item</th>
+                <th *ngIf="active_tab == 'Billing'" class="w80">Item Qty</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">Discount</th>
+                <!-- <th *ngIf="active_tab == 'Billing'" class="w110">Delivery Charge</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">Insurance</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">Other</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">CGST %</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">CGST AMT</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">SGST %</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">SGST AMT</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">IGST %</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">IGST AMOUNT</th>
+                <th *ngIf="active_tab == 'Billing'" class="w110">ROUNDING</th> -->
+                <th *ngIf="active_tab == 'Billing'" class="w110">Company name</th>
+                <th *ngIf="active_tab == 'Billing'" class="w100">Bill Amount</th>
+                <th class="w100">Payment Received</th>
+                <th *ngIf="active_tab != 'Billing'" class="w130">Company Name</th>
+                <th *ngIf="active_tab != 'Billing'" class="w90">Payment Mode</th>
+                <th *ngIf="active_tab != 'Billing'">Remarks</th>
+                <th *ngIf="active_tab == 'Billing'" class="w120">Pending Amount</th>
+                <th *ngIf="active_tab == 'Billing'" class="w202 text-center">Action</th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w60"></th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput [matDatepicker]="picker2" placeholder="Date Created" name="date_created"
+                        [(ngModel)]="search.date_created" (dateChange)="con_date_created(search.date_created)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w180">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Customer Name. . ." name="customer_name"
+                        [(ngModel)]="search.customer_name"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        placeholder="Code. . ." name="customer_code" [(ngModel)]="search.customer_code"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        placeholder="Mobile No. . ." name="customer_no" [(ngModel)]="search.customer_no"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date" [(ngModel)]="search.date"
+                        (dateChange)="con_date(search.date)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+
+
+
+                <th *ngIf="active_tab != 'Billing'" class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder=". . ." name="payment_id" [(ngModel)]="search.payment_id"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120" *ngIf="active_tab == 'Billing'">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder=". . ." name="bill_number" [(ngModel)]="search.bill_number"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                    <!-- onkeypress="return event.charCode >= 48 && event.charCode <= 57" -->
+                  </div>
+                </th>
+                <th *ngIf="active_tab == 'Billing'" class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="cs-input">
+                      <mat-label></mat-label>
+                      <mat-select name="selected_category_direct_dealer" [(ngModel)]="search.status">
+                        <mat-option value="paid" (click)="get_billing_data_list()">Paid</mat-option>
+                        <mat-option value="unpaid" (click)="get_billing_data_list()">Un-Paid</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w80">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder=". . ." name="item_qty" [(ngModel)]="search.item_qty" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        (keyup.enter)="active_tab == 'Billing'?get_billing_data_list():get_payment_data_list()">
+                    </mat-form-field>
+                   
+                  </div>
+                </th>
+
+                <!-- aamir changes here 2nd row -->
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <!-- <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th>
+                <th *ngIf="active_tab == 'Billing'" class="w110"></th> -->
+                <th *ngIf="active_tab == 'Billing'" class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Company Name. . ." name="surface_company_name"
+                        [(ngModel)]="search.surface_company_name" (keyup.enter)="get_billing_data_list();">
+                    </mat-form-field>
+                    <!-- onkeypress="return event.charCode >= 48 && event.charCode <= 57" -->
+                  </div>
+                </th>
+
+                <!-- aamir changes here 2nd row end here -->
+                <th *ngIf="active_tab == 'Billing'" class="w100"> &#8377;
+                  {{overall_total_sum.overall_total_billing_amount}}</th>
+                <th class="w100">&#8377; {{active_tab == 'Billing' ? overall_total_sum.overall_billing_receive_amount :
+                  overall_total_payment_amount}}</th>
+                <!-- aamir change payment tab table 2nd row -->
+                <th *ngIf="active_tab != 'Billing'" class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Company Name. . ." name="surface_company_name"
+                        [(ngModel)]="search.surface_company_name" (keyup.enter)="get_payment_data_list();">
+                    </mat-form-field>
+                    <!-- onkeypress="return event.charCode >= 48 && event.charCode <= 57" -->
+                  </div>
+                </th>
+                <th *ngIf="active_tab != 'Billing'" class="w90">
+                  <div class="th-search">
+                    <select (change)="get_payment_data_list()" name="payment_mode" [(ngModel)]="search.payment_mode">
+                      <option value="" disabled>Select Payment Mode</option>
+                      <option value="Bank">Bank</option>
+                      <option value="CN">CN</option>
+                      <option value="Cash">Cash</option>
+                    </select>
+                  </div>
+                </th>
+                <th *ngIf="active_tab != 'Billing'"></th>
+
+                <!-- aamir changes here payment  tab table 2nd row -->
+                <th *ngIf="active_tab == 'Billing'" class="w120">&#8377; {{overall_total_sum.overall_pending_balance}}
+                </th>
+                <th *ngIf="active_tab == 'Billing'" class="w202"></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="data-not-available"
+          *ngIf="active_tab == 'Billing' && billing_list.length ==0 && data_not_found==true ? true : (active_tab != 'Billing' && payment_list.length ==0 && data_not_found==true) ? true : false ">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+
+                <div class="description">
+                  <div class="cs-heading">
+                    <h2>{{active_tab == 'Billing' ? 'Billing' :'Payment'}}</h2>
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>Data Not Available</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="table-container" style="width: fit-content;">
+          <div class="table-content">
+            <table>
+              <tr *ngFor=" let billing_data of (active_tab == 'Billing' ? billing_list : payment_list);let i = index">
+                <td class="w60">{{start+i+1}}</td>
+                <td class="w100">{{billing_data.date_created | date : 'dd-MM-yyyy'}}</td>
+                <td class="w180"
+                  [ngClass]="active_tab == 'Billing' ? (billing_data.pending_balance!= '0' ? 'stock-alert' : 'stock-green'):''">
+                  {{billing_data.customer_name && billing_data.customer_name!= '' && billing_data.customer_name!= null ?
+                  (billing_data.customer_name | titlecase):'--'}}</td>
+                <td class="w100">{{billing_data.customer_code && billing_data.customer_code != '' &&
+                  billing_data.customer_code != null ? billing_data.customer_code : '--'}}</td>
+                  <td class="w100">{{billing_data.customer_no && billing_data.customer_no != '' &&
+                    billing_data.customer_no != null ? billing_data.customer_no : '--'}}</td>
+                <td *ngIf="active_tab == 'Billing'" class="w120">{{billing_data.billing_date &&
+                  billing_data.billing_date != '' && billing_data.billing_date != null && billing_data.billing_date !=
+                  '0000-00-00' ? (billing_data.billing_date | date :' d MMM, y '): '--'}}</td>
+                <td *ngIf="active_tab != 'Billing'" class="w120">{{billing_data.payment_date &&
+                  billing_data.payment_date != '' && billing_data.payment_date != null && billing_data.payment_date !=
+                  '0000-00-00' ? (billing_data.payment_date | date :' d MMM, y '): '--'}}</td>
+
+                <td *ngIf="active_tab != 'Billing'" class="w100">{{billing_data.receipt_no}}</td>
+                <td class="w120" *ngIf="active_tab == 'Billing'">
+                  <a class="link-btn" mat-button (click)="go_to(billing_data.id,'Billing')" routerLinkActive="active">
+                    {{billing_data.bill_number && billing_data.bill_number != '' && billing_data.bill_number != null ?
+                    billing_data.bill_number : '--'}}
+                  </a>
+                  <!-- <a mat-button class="view" (click)="go_to(billing_data.id,'Billing')"><i class="material-icons">remove_red_eye</i> View</a> -->
+
+                </td>
+                <td *ngIf="active_tab == 'Billing'" class="w100">{{active_tab == 'Billing' ?
+                  (convert_integer(billing_data.pending_balance)> 0 ? 'Unpaid' : 'Paid'):''}}</td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.total_billing_item &&
+                  billing_data.total_billing_item != '' && billing_data.total_billing_item != null ?
+                  billing_data.total_billing_item : '--'}}</td>
+                <td *ngIf="active_tab == 'Billing'" class="w80">{{billing_data.total_billing_item_qty &&
+                  billing_data.total_billing_item_qty != '' && billing_data.total_billing_item_qty != null ?
+                  billing_data.total_billing_item_qty : '--'}}</td>
+                <!-- aamir changes here 3rd row table billing -->
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.discount}} </td>
+                <!-- <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.delievery_charge}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.insurance}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.other}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.cgst}}</td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.cgst_amount}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.sgst}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.sgst_amount}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.igst}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.igst_amount}} </td>
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.rounding}} </td> -->
+                <td *ngIf="active_tab == 'Billing'" class="w110">{{billing_data.company_name}} </td>
+                <!-- aamir changes here 3rd row table billing end here -->
+
+                <td *ngIf="active_tab == 'Billing'" class="w100">&#8377; {{billing_data.total_billing_amount &&
+                  billing_data.total_billing_amount != '' && billing_data.total_billing_amount != null ?
+                  billing_data.total_billing_amount : '--'}}</td>
+                <td *ngIf="active_tab == 'Billing'" class="w100">&#8377; {{billing_data.billing_receive_amount &&
+                  billing_data.billing_receive_amount != '' && billing_data.billing_receive_amount != null ?
+                  billing_data.billing_receive_amount : '--'}}</td>
+                <td *ngIf="active_tab != 'Billing'" class="w100">&#8377;
+                  {{billing_data.payment_amount && billing_data.payment_amount != '' && billing_data.payment_amount !=
+                  null ? billing_data.payment_amount : '--'}}
+                  <!-- <a  class="link-btn" mat-button (click)="go_to(billing_data.receipt_no,'Payment')"  routerLinkActive="active">
+
+                  </a>  -->
+                  <!-- <a mat-button class="view" (click)="go_to(billing_data.receipt_no,'Payment')"><i class="material-icons">remove_red_eye</i> View</a> -->
+
+                </td>
+                <!-- aamir change payment tab table 3rd row start here -->
+                <td *ngIf="active_tab != 'Billing'" class="w130">
+                  {{billing_data.surface_company?billing_data.surface_company:'--'}} </td>
+                <td *ngIf="active_tab != 'Billing'" class="w90">
+                  {{billing_data.payment_mode?billing_data.payment_mode:'--'}} </td>
+                <td *ngIf="active_tab != 'Billing'" matTooltip=" {{billing_data.remark}}" matTooltipPosition="above">
+                  {{billing_data.remark?billing_data.remark:'--'}} </td>
+                <!-- aamir change payment tab table 3rd row end here -->
+                <td *ngIf="active_tab == 'Billing'" class="w120">&#8377; {{billing_data.pending_balance &&
+                  billing_data.pending_balance != '' && billing_data.pending_balance != null ?
+                  billing_data.pending_balance : '--'}}
+                  <!-- <a mat-button class="view" (click)="go_to(billing_data.id,'Billing')"><i class="material-icons">remove_red_eye</i> View</a> -->
+                </td>
+                <td *ngIf="active_tab == 'Billing'" class="w202">
+                  <div class="acton-btn">
+                    <button *ngIf="login_id == '1' && billing_data.billing_receive_amount == '0'" mat-button class="delete-mat" (click)="delete_billing_row(billing_data.id)"><i
+                        class="material-icons red-clr">delete_sweep</i>
+                    </button>
+                    <a class="view" mat-button (click)="go_to(billing_data.id,'Billing')">
+                      <i class="material-icons">remove_red_eye</i>
+                      <!-- view -->
+                    </a>
+                     <a *ngIf="view_add"mat-button (click)="go_to_add_document(billing_data.id)"><i class="material-icons">add</i></a>
+
+                  </div>
+                </td>
+
+              </tr>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading" *ngIf="loader">
+                  <td class="w60">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w180">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab != 'Billing'" class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w120" *ngIf="active_tab == 'Billing'">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w80">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w110">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w130" *ngIf="active_tab != 'Billing'">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w90" *ngIf="active_tab != 'Billing'">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab != 'Billing'">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w120">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td *ngIf="active_tab == 'Billing'" class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="container-outer padding0" *ngIf="active_tab=='Payment Return'">
+    <div class="container">
+      <div class="cs-table cs-table-scroll">
+        <div class="stickyTableHead" style="width: fit-content;">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w60">S. No.</th>
+                <th class="w100">Date Created</th>
+                <th class="w180">Customer Name</th>
+                <th class="w100">Customer Code</th>
+                <th class="w100">Customer Number</th>
+                <th class="w120">Payment Date</th>
+                <th  class="w100">Receipt No.</th>
+                <th class="w100">Payment Received</th>
+                <th  class="w130">Company Name</th>
+                <th  class="w90">Payment Mode</th>
+                <th >Remarks</th>
+              </tr>
+            </table>
+          </div>
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w60"></th>
+                <th class="w100">  <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input">
+                    <input matInput [matDatepicker]="picker2" placeholder="Date Created" name="date_created"
+                      [(ngModel)]="search.date_created" (dateChange)="con_date_created2(search.date_created)" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div></th>
+                <th class="w180">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Customer Name. . ." name="customer_name"
+                        [(ngModel)]="search.customer_name"
+                        (keyup.enter)="getPaymentReturn()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        placeholder="Code. . ." name="customer_code" [(ngModel)]="search.customer_code"
+                        (keyup.enter)="getPaymentReturn()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                        placeholder="Code. . ." name="customer_no" [(ngModel)]="search.customer_no"
+                        (keyup.enter)="getPaymentReturn()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput [matDatepicker]="picker" placeholder="Payment Date" name="date" [(ngModel)]="search.date"
+                        (dateChange)="con_date2(search.date)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th  class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder=". . ." name="payment_id" [(ngModel)]="search.payment_id"
+                        (keyup.enter)="getPaymentReturn()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">&#8377;{{  this.payment_return_object.overall_total_payment_amount }}</th>
+                <!-- aamir change payment tab table 2nd row -->
+                <th  class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Company Name. . ." name="surface_company_name"
+                        [(ngModel)]="search.surface_company_name" (keyup.enter)="getPaymentReturn();">
+                    </mat-form-field>
+                    <!-- onkeypress="return event.charCode >= 48 && event.charCode <= 57" -->
+                  </div>
+                </th>
+                <th  class="w90">
+                  <div class="th-search">
+                    <select (change)="getPaymentReturn()" name="payment_mode" [(ngModel)]="search.payment_mode">
+                      <option value="" disabled>Select Payment Mode</option>
+                      <option value="Bank">Bank</option>
+                      <option value="CN">CN</option>
+                      <option value="Cash">Cash</option>
+                    </select>
+                  </div>
+                </th>
+                <th></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="data-not-available"
+          *ngIf="active_tab == 'Payment Return' && paymentReturnArray.length ==0 && data_not_found==true ? true :false">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+
+                <div class="description">
+                  <div class="cs-heading">
+                    <h2>Payment Return List</h2>
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>Data Not Available</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="table-container" style="width: fit-content;">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let list of paymentReturnArray; let i=index">
+                <td class="w60">{{start+i+1}}</td>
+                <td class="w100">{{list.date_created | date : 'dd-MM-yyyy'}}</td>
+                <td class="w180">{{list.customer_name}}</td>
+                <td class="w100">{{list.customer_code}}</td>
+                <td class="w100">{{list.customer_no}}</td>
+                <td class="w120">{{list.payment_date | date:'d-MMM-yyyy'}}</td>
+                <td class="w100">{{list.receipt_no}}</td>
+                <td class="w100">{{list.payment_amount}}</td>
+                <td class="w130">{{list.surface_company}}</td>
+                <td class="w90">{{list.payment_mode}}</td>
+                <td>{{list.remark}}</td>
+              </tr>
+
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading" *ngIf="loader">
+                  <td class="w60">
+                    <div>&nbsp;</div>
+                  </td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                   <td class="w180"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w120"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w90"><div>&nbsp;</div></td>
+                  <td><div>&nbsp;</div></td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="download_excel()"><img src="assets/img/excel.svg"></a>
+    <!-- <a *ngIf="view_add" class="bottom-btn"  matTooltip="Upload Excel" matTooltipPosition="above" mat-raised-button (click)="upload_excel()"><i class="material-icons">cloud_upload</i></a> -->
+
+  </div>
+
+</div>

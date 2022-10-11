@@ -1,0 +1,209 @@
+<div class="main-container pb0" >
+  <div class="middle-container mb0" style="padding-right: 0px;">
+    <div class="page-heading">
+      <img src="assets/img/order_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Pop And Gifts Orders</h2>
+      </div>
+    </div>
+
+    <div class="uppr-one m-right-data mr50">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button matTooltip="Refresh" (click)="poporderList('refresh')"><i class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+
+      <div class="top-pagination">
+        <ul>
+          <li><p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; poporderList()" [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; poporderList()" [(ngModel)]="pagenumber"  min="1" max={{total_page}} >
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; poporderList()" [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="cs-table cs-table-scroll">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="tab-space">
+        <div class="tabs">
+          <ul>
+            <li>
+              <a class="pr50" [ngClass]="{'active': view_tab=='all'}" (click)="filter_order_data('all')">All
+                <span class="counter">{{order_count.all_count}}</span>
+              </a>
+            </li>
+            <li>
+              <a class="pr50" [ngClass]="{'active': view_tab=='Pending'}" (click)="filter_order_data('Pending')">Pending
+                <span class="counter">{{order_count.pending_count}}</span>
+              </a>
+            </li>
+            <li>
+              <a class="pr50" [ngClass]="{'active': view_tab=='Approved'}" (click)="filter_order_data('Approved')">Approved
+                <span class="counter">{{order_count.approved_count}}</span>
+              </a>
+            </li>
+            <li>
+              <a class="pr50" [ngClass]="{'active': view_tab=='PDispatch'}" (click)="filter_order_data('PDispatch')"> Partially Dispatched
+                <span class="counter">{{order_count.pdispatch_count}}</span>
+              </a>
+            </li>
+            <li>
+              <a class="pr50" [ngClass]="{'active': view_tab=='Dispatch'}" (click)="filter_order_data('Dispatch')">Complete Dispatch
+                <span class="counter">{{order_count.dispatch_count}}</span>
+              </a>
+            </li>
+            <li>
+              <a class="pr50"[ngClass]="{'active': view_tab=='Reject'}" (click)="filter_order_data('Reject')">Reject
+                <span class="counter">{{order_count.reject_count}}</span>
+              </a>
+            </li>
+            <!-- <li><a [ngClass]="{'active': view_tab=='Hold'}" (click)="filter_order_data('Hold')">Hold</a></li> -->
+
+          </ul>
+        </div>
+      </div>
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w150">Date</th>
+            <th >Created By</th>
+            <th class="w120">Order ID</th>
+            <th  class="w90 text-center">Total QTY</th>
+            <th text-center *ngIf="view_tab=='all'" class="w90 text-center">Status</th>
+            <th class="w120 text-center">Order Points</th>
+            <th class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'">Received</th>
+            <th class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'">Received On</th>
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt" >
+        <table class="sno-border">
+          <tr>
+            <th class="w150">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" (click)="picker.open()" [(ngModel)]="search_val.date_created" (dateChange)="onDate($event)" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th>
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Created By. . ." name="created_by" [(ngModel)]="search_val.created_by" (keyup.enter)="poporderList()">
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w120">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Order Id. . ." (keyup.enter)="poporderList()" [(ngModel)]="search_val.order_id" >
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w90"></th>
+            <th class="w90" *ngIf="view_tab=='all'"></th>
+            <th class="w120"></th>
+            <th class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'"></th>
+
+            <th class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'"></th>
+
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <tr *ngFor="let list of pop_order_list;let i=index;">
+
+            <td  class="w150">{{list.date_created | date : 'd MMM ,y, hh:mm aa'}}</td>
+            <td>{{list.created_by_name}}</td>
+            <td class="w120"><a *ngIf="view_edit" class="link-btn" mat-button (click)="popDetail(list.id)">{{list.order_no}}</a> {{!view_edit?list.order_no:''}}</td>
+            <!-- routerLink="/pop-n-gift-detail/{{list.id}}" routerLinkActive="active" -->
+            <td class="w90 text-center">{{list.order_total_item}}</td>
+            <td  class="w90 text-center" *ngIf="view_tab=='all'">{{list.order_status && list.order_status!= ''? (list.order_status == 'PDispatch'? 'Partial Dispatch' : list.order_status) :'--' }}</td>
+            <td  class="w120 text-center">{{list.order_total_points}}</td>
+            <td class="w100 text-center" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'">
+              <button mat-button class="verify-mat">
+                <i *ngIf="list.partially_recieved_by_dealer_flag == '1' || list.fully_recieved_by_dealer_flag == '1'" class="material-icons verify-button">verified</i>
+                <i *ngIf="list.partially_recieved_by_dealer_flag == '0' && list.fully_recieved_by_dealer_flag == '0'" class="material-icons cancel-button">cancel</i>
+              </button>
+            </td>
+
+            <td class="w100" *ngIf="(view_tab=='PDispatch' || view_tab=='Dispatch')">{{list.recieved_on && list.recieved_on != '0000-00-00 00:00:00' ? (list.recieved_on |  date : 'd MMM ,y, hh:mm aa') : 'N/A'}}</td>
+
+          </tr>
+          <div class="data-not-available" *ngIf="data_not_found==true">
+            <div class="outer">
+              <div class="iinear">
+                <div class="figure" matRipple>
+                  <div class="header">
+                    <img src="assets/img/data-not-available-header.svg" alt="">
+                  </div>
+                  <div class="description">
+                    <div class="cs-heading">
+                      <h2>Pop & Gift Order List</h2>
+                    </div>
+                    <div class="img">
+                      <i class="material-icons">error_outline</i>
+                    </div>
+                    <div class="psc">
+                      <p>data not Found</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading"  *ngIf="loader">
+              <td class="w150"><div>&nbsp;</div></td>
+              <td><div>&nbsp;</div></td>
+              <td class="w120"><div>&nbsp;</div></td>
+
+
+              <td  class="w90"><div>&nbsp;</div></td>
+              <td text-center *ngIf="view_tab=='all'" class="w90 text-center"><div>&nbsp;</div></td>
+              <td class="w120"><div>&nbsp;</div></td>
+              <td class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'"><div>&nbsp;</div></td>
+              <td class="w100" *ngIf="view_tab=='PDispatch' || view_tab=='Dispatch'"><div>&nbsp;</div></td>
+
+            </tr>
+          </ng-container>
+
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  
+
+
+
+
+
+</div>

@@ -1,0 +1,144 @@
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+        <div>
+            <p>Loading....</p>
+        </div>
+    </mat-spinner>
+</div>
+
+  <div class="middle-container">
+    <div class="page-heading" >
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button ><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Announcement Detail</h2>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-outer">
+    <div class="container" >
+
+      <div class="row" >
+        <div class="col" [ngClass]="announcement_images && announcement_images.length > 0 ? 's8' : 's12'">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>Basic Details</h2>
+              </div>
+
+
+              <div class="cs-figure">
+                <ul>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Announcement Date</span>
+                        <p>{{announcement_data.date_created | date:'d MMM y'}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Announced By</span>
+                        <p>{{announcement_data.created_by_name}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Announcement Subject</span>
+                        <p>{{announcement_data.subject}}</p>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
+
+                <ul>
+                  <li>
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Announcement Message</span>
+                        <p>{{announcement_data.msg}}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+
+
+                <ul>
+
+                  <li>
+                    <span>Send To</span>
+                    <div class="cs-chips" >
+                      <span *ngFor="let val of announcement_data.users; let i = index" >{{val.name}}</span>
+                    </div>
+                    <span *ngIf="!announcement_data.users">N/A</span>
+                  </li>
+
+                  <li>
+                    <span>Read By</span>
+                    <div class="cs-chips" >
+                      <span *ngFor="let val of announcement_data.read_by; let i = index" >{{val.name}}</span>
+                    </div>
+                    <span *ngIf="!announcement_data.users">N/A</span>
+                  </li>
+
+                </ul>
+
+
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col s4" *ngIf="announcement_images && announcement_images.length > 0 ? true : false">
+          <div class="details-info">
+            <div class="basic-details">
+              <div class="cs-heading">
+                <h2>ATTACHMENT FILE</h2>
+              </div>
+
+              <div class="cs-file" *ngIf="announcement_images && announcement_images.length > 0 ? true : false">
+                <!-- <p>ATTACHMENT</p> -->
+                <ul class="product-images">
+                  <li class="multi-images">
+
+                    <label class="cs-file-img" *ngFor="let val of announcement_images">
+                      <img (click)="imageModel(val)" src="{{val}}">
+
+                    </label>
+
+                    <label class="cs-file-img" *ngFor="let val of [].constructor(return_loading_image_length())">
+                      <img src="assets/img/loading-waiting.gif">
+                    </label>
+
+
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>

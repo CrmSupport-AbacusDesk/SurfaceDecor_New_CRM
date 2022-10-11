@@ -1,0 +1,783 @@
+<div class="main-container dashboard pt80" ng-init="order_dashboard()">
+    <div *ngIf="loader" class="cs-loader">
+        <mat-spinner class="loader">
+            <div>
+                <p>Loading....</p>
+            </div>
+        </mat-spinner>
+    </div>
+    <div class="container-outer">
+        <div class="container">
+            <div class="row top-info">
+                <!-- <figure class="col s12 m3">
+                    <div class="box">
+                        <h1>Total Pending Order Value</h1>
+                        <div class="bxe">
+                            <div class="outer">
+                                <div class="inner">
+                                    <h2>
+                                        <a > &#x20B9; {{count.dashboard_data.total_pending_order_value}}</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bt-bg">
+                            <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                        </div>
+                    </div>
+                </figure> -->
+
+                <figure class="col s12 m3">
+                    <div class="box">
+                        <h1>Total Dispatch Quantity</h1>
+                        <div class="bxe">
+                            <div class="outer">
+                                <div class="inner">
+                                    <h2>
+                                        <a title="See Total Dispatch Quantity" (click)="openDialog3()">
+                                            {{count.dashboard_data.total_dispatch_quantity}}</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bt-bg">
+                            <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                        </div>
+                    </div>
+                </figure>
+                <figure class="col s12 m3">
+                    <div class="box">
+                        <h1>Total Dispatch Value</h1>
+
+                        <div class="bxe">
+                            <div class="outer">
+                                <div class="inner">
+                                    <h2>
+                                        <a title="See Total Dispatch Value" (click)="openDialog2()"> &#x20B9;
+                                            {{count.dashboard_data.total_dispatch_value}}</a>
+                                    </h2>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bt-bg">
+                            <img src="assets/img/icon-retailer.png" alt="" style="width: 150px;">
+                        </div>
+                    </div>
+                </figure>
+
+                <figure class="col s12 m3">
+                    <div class="box">
+                        <h1>Total Outstanding </h1>
+                        <div class="bxe">
+                            <div class="outer">
+                                <div class="inner">
+                                    <h2>
+                                        <!-- <a routerLink="/order-list">{{count.primary_order}}</a> -->
+                                        <a title="See Total Company Wise Outstanding" (click)="openDialog()"> &#x20B9;
+                                            {{count.dashboard_data.total_outstanding_balance}}</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bt-bg">
+                            <img src="assets/img/icon-order.png" alt="" style="width: 150px;">
+                        </div>
+                    </div>
+                </figure>
+
+                <figure class="col s12 m3">
+                    <div class="box">
+                        <h1>Total Overdue </h1>
+                        <div class="bxe">
+                            <div class="outer">
+                                <div class="inner">
+                                    <h2>
+                                        <!-- <a routerLink="/order-list">{{count.primary_order}}</a> -->
+                                        <a title="See Total Overdue" (click)="openDialog4()"> &#x20B9;
+                                            {{count.dashboard_data.total_overdue_balance}}</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bt-bg">
+                            <img src="assets/img/icon-order.png" alt="" style="width: 150px;">
+                        </div>
+                    </div>
+                </figure>
+
+            </div>
+
+
+            <div class="row mt-15 graph-info">
+                <div class="col s12 figure">
+                    <div style="display: block">
+                        <!-- <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType"></canvas> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col s12 mb15">
+                    <div class="ds-box theme-bg ">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="ds-box green" style="border: 1px solid transparent">
+                                    <div class="ds-head"
+                                        style="display: flex; justify-content: space-between;align-items: center;background-color: #9b2450;">
+                                        <div>Company Target Data</div>
+
+                                        <!-- <div>
+                                      <select style="padding: 3px 5px; border-radius: 7px;" name="targetbrand" #targetbrand="ngModel"  [(ngModel)]="filter_days_type" (change)="companytarget_data()" required>
+                                        <option value="Today">Today</option>
+                                        <option value="Month">Current Month</option>
+                                      </select>
+                                    </div> -->
+
+                                    </div>
+
+                                    <div class="data-table padding0">
+
+                                        <div class="row">
+                                            <div class="col s12">
+                                                <table>
+                                                    <tr>
+                                                        <th class="wp20 text-center"
+                                                            style="background-color:lightyellow;height:50px;"><img
+                                                                width="180px" height="50px"
+                                                                src="assets/img/surface-logo-without-dekor.jpeg" /></th>
+                                                        <th class="wp40 text-center" colspan="4"
+                                                            style="background-color:skyblue;height:50px;">Today
+                                                            {{today_date}}</th>
+                                                        <th class="wp40 text-center" colspan="4"
+                                                            style="background-color:lightpink;height:50px;">
+                                                            {{monthName}} {{year}} </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center" style="background-color:lightyellow;">
+                                                            Company Names</th>
+                                                        <th class="text-center" style="background-color:skyblue;">Today
+                                                            Target</th>
+                                                        <th class="text-center" style="background-color:skyblue;">Today
+                                                            Achievement</th>
+                                                        <th class=" text-center" style="background-color:skyblue;">Today
+                                                            Achievement %</th>
+                                                        <th class=" text-center" style="background-color:skyblue;">Today
+                                                            Difference</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Total Target</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Total Achievement</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Total Achievement %</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Difference</th>
+
+                                                    </tr>
+                                                    <tr *ngFor="let data of company_target">
+                                                        <td class="text-center"><a style="cursor:pointer;color:#0a58ca;"
+                                                                (click)="targetmodal(data.company_id)">
+                                                                <span style="font-weight: bold; font-size: 17px; ">
+                                                                    {{data.company_name}}
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px; word-break:break-all;">
+
+                                                                {{!data.today_target ? 0:(data.today_target)}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center" >
+                                                            <span
+                                                                style="font-weight: bold; font-size: 14px; word-break:break-all;">
+                                                                {{data.today_achievement ? data.today_achievement : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+
+                                                                {{data.today_achievement_percentage ?
+                                                                (data.today_achievement_percentage+'%') : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center" [ngStyle]="data.today_achievement > data.today_target ? {'background-color' :'#8AFF8A' }: null">
+                                                            <span
+                                                                
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                                {{!data.today_remaining_achievement
+                                                                ?0:(data.today_remaining_achievement) }}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+
+                                                                {{data.target ? data.target : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center" >
+                                                            <span
+                                                                style="font-weight: bold; font-size: 14px;  word-break:break-all;">
+                                                                {{data.achievement ? data.achievement : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                                {{data.achievement_percentage ?
+                                                                (data.achievement_percentage+'%') : 0+'%'}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center" [ngStyle]="data.achievement > data.target ? {'background-color' :'#8AFF8A' }: null">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                                {{data.remaining_achievement ?
+                                                                data.remaining_achievement : 0}}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;">total
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_today_target}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_today_achivement}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            </td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{today_remaining_achievement}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_month_target}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_month_achivement}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 15px;  word-break:break-all;">
+                                                          </td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_month_remaining_achievement}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <!-- <div class="col s6">
+                                        <table>
+                                            <tr>
+                                              <th class="wp100 text-center">Comapny Name</th>
+                                              <th class="wp100 text-center">Total Target</th>
+                                              <th class="wp100 text-center">Total Achievement</th>
+                                              <th class="wp100 text-center">Difference</th>
+            
+                                             
+                                            </tr>
+                                            <tr *ngFor="let data of company_target">
+                                                <td class="text-center"><a style="cursor:pointer;color:#0a58ca;" (click)="targetmodal(data.company_id)">
+                                                  <span style="font-weight: bold; font-size: 20px; ">
+                                                    {{data.company_name }}
+                                                  </span>
+                                                </a>
+                                                </td>
+                                                <td class="text-center">
+                                                  <span  style="font-weight: bold; font-size: 20px;">
+                      
+                                                    {{data.target ? data.target : 0}}
+                                                  </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span  style="font-weight: bold; font-size: 20px;">
+                                                    {{data.achievement ? data.achievement : 0}}-({{data.achievement_percentage ? data.achievement_percentage : 0+'%'}})
+                                                    </span>
+                                                  </td>
+                                                  <td class="text-center">
+                                                    <span  style="font-weight: bold; font-size: 20px;">
+                                                    {{data.remaining_achievement ? data.remaining_achievement : 0}}
+                                                    </span>
+                                                  </td>
+                                              </tr>
+                                          </table>
+                                    </div> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                                                <!-- <div class="row"> -->
+                <div class="col s12 mb15" style="display: flex;justify-content: space-between;">
+                    <div class="ds-box theme-bg" style="width: 68%;height: 100%;">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="ds-box green" style="border: 1px solid transparent">
+                                    <div class="ds-head"
+                                        style="display: flex; justify-content: space-between;align-items: center;background-color: #9b2450;">
+                                        <div>Company Sales Data</div>
+
+                                        <!-- <div>
+                                      <select style="padding: 3px 5px; border-radius: 7px;" name="targetbrand" #targetbrand="ngModel"  [(ngModel)]="filter_days_type" (change)="companytarget_data()" required>
+                                        <option value="Today">Today</option>
+                                        <option value="Month">Current Month</option>
+                                      </select>
+                                    </div> -->
+
+                                    </div>
+
+                                    <div class="data-table-sales padding0">
+
+                                        <div class="row">
+                                            <div class="col s12">
+                                                <table>
+                                                    <tr>
+                                                        <th class="wp20 text-center"
+                                                            style="background-color:lightyellow;height:50px;"><img
+                                                                width="120px" height="40px"
+                                                                src="assets/img/surface-logo-without-dekor.jpeg" /></th>
+                                                        <th class="wp40 text-center" colspan="4"
+                                                            style="background-color:skyblue;height:50px;">Today
+                                                            {{today_date}}</th>
+                                                        <th class="wp40 text-center" colspan="4"
+                                                            style="background-color:lightpink;height:50px;">
+                                                            {{monthName}} {{year}} </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center" style="background-color:lightyellow;">
+                                                            Company Names</th>
+                                                        <th class="text-center" style="background-color:skyblue;">Today
+                                                            Total Sales</th>
+                                                        <th class="text-center" style="background-color:skyblue;">
+                                                            Today Sales Amount</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Monthly Sales</th>
+                                                        <th class=" text-center" style="background-color:lightpink;">
+                                                            Monthly Sales Amount</th>
+                                                    </tr>
+                                                    <tr *ngFor="let data of company_sales_target">
+                                                        <td class="text-center">
+                                                                <!-- <span style="font-weight: bold; font-size: 14px;"> -->
+                                                                    <a style="cursor:pointer;color:#0a58ca;"
+                                                                (click)="targetsalemodal(data.company_id)">
+                                                                <span style="font-weight: bold; font-size: 17px; ">
+                                                                    {{data.company_name}}
+                                                                </span>
+                                                            </a>
+                                                                    <!-- {{data.company_name}}
+                                                                </span> -->
+                                                            
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px; word-break:break-all;">
+
+                                                                {{!data.today_sale ? 0:(data.today_sale)}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 14px; word-break:break-all;">
+                                                                {{data.today_sale_amount ? data.today_sale_amount : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+
+                                                                {{data.monthly_sale ?
+                                                                data.monthly_sale : 0}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                style="font-weight: bold; font-size: 16px;  word-break:break-all;">
+
+                                                                {{data.monthly_sale_amount ?
+                                                                data.monthly_sale_amount : 0}}
+                                                            </span>
+                                                        </td>
+                                                       
+                                                     
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 14px;">total sales
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_sales_today_target}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{today_total_sales_amt}}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_month_qty ?
+                                                                total_month_qty : '0' }}</td>
+                                                        <td class="text-center"
+                                                            style="background-color:rgb(252, 218, 155); font-weight: bold; font-size: 16px;  word-break:break-all;">
+                                                            {{total_month_sal_amt}}</td>
+                                                       
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <!-- <div class="col s6">
+                                        <table>
+                                            <tr>
+                                              <th class="wp100 text-center">Comapny Name</th>
+                                              <th class="wp100 text-center">Total Target</th>
+                                              <th class="wp100 text-center">Total Achievement</th>
+                                              <th class="wp100 text-center">Difference</th>
+            
+                                             
+                                            </tr>
+                                            <tr *ngFor="let data of company_target">
+                                                <td class="text-center"><a style="cursor:pointer;color:#0a58ca;" (click)="targetmodal(data.company_id)">
+                                                  <span style="font-weight: bold; font-size: 20px; ">
+                                                    {{data.company_name }}
+                                                  </span>
+                                                </a>
+                                                </td>
+                                                <td class="text-center">
+                                                  <span  style="font-weight: bold; font-size: 20px;">
+                      
+                                                    {{data.target ? data.target : 0}}
+                                                  </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span  style="font-weight: bold; font-size: 20px;">
+                                                    {{data.achievement ? data.achievement : 0}}-({{data.achievement_percentage ? data.achievement_percentage : 0+'%'}})
+                                                    </span>
+                                                  </td>
+                                                  <td class="text-center">
+                                                    <span  style="font-weight: bold; font-size: 20px;">
+                                                    {{data.remaining_achievement ? data.remaining_achievement : 0}}
+                                                    </span>
+                                                  </td>
+                                              </tr>
+                                          </table>
+                                    </div> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- </div>
+                    <div class="col s12 mb15"> -->
+                    <div class="ds-box theme-bg " style="width: 30%;height: 100%;">
+                                <div>
+                                    <div class="ds-head"
+                                        style="display: flex; justify-content: space-between;align-items: center;">
+                                        <div>Order Data</div>
+
+                                        <div>
+                                            <select style="padding: 3px 5px; border-radius: 7px;" name="brand"
+                                                #brand="ngModel" [(ngModel)]="filter_days_type"
+                                                (change)="order_data_method()" required>
+                                                <option value="Today">Today</option>
+                                                <option value="Week">Current Week</option>
+                                                <option value="Month">Current Month</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="row top-info" style="display: flex;">
+                                  <figure class="col s12 m3 mt5" style="margin-left: 0px;">
+                                      <div class="box">
+                                          <h1>Total Orders</h1>
+                                          <div class="bxe">
+                                              <div class="outer">
+                                                  <div class="inner">
+                                                      <h2>
+                                                          <a >  {{filter_wise_dashboard_order_data.total_order_count ? filter_wise_dashboard_order_data.total_order_count : 0}}</a>
+                                                      </h2>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="bt-bg">
+                                              <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                                          </div>
+                                      </div>
+                                  </figure>
+                                  <figure class="col s12 m3 mt5">
+                                      <div class="box">
+                                          <h1>Total Quantity</h1>
+                                          <div class="bxe">
+                                              <div class="outer">
+                                                  <div class="inner">
+                                                      <h2>
+                                                          <a >  {{filter_wise_dashboard_order_data.total_order_item_qty ? filter_wise_dashboard_order_data.total_order_item_qty : 0}}</a>
+                                                      </h2>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="bt-bg">
+                                              <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                                          </div>
+                                      </div>
+                                  </figure>
+                                  <figure class="col s12 m3 mt5">
+                                      <div class="box">
+                                          <h1>Total Order Value</h1>
+                                          <div class="bxe">
+                                              <div class="outer">
+                                                  <div class="inner">
+                                                      <h2>
+                                                          <a >  &#8377; {{filter_wise_dashboard_order_data.total_order_value ? filter_wise_dashboard_order_data.total_order_value : 0}}</a>
+                                                      </h2>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="bt-bg">
+                                              <img src="assets/img/icon-lead.png" alt="" style="width: 150px;">
+                                          </div>
+                                      </div>
+                                  </figure>
+                                </div> -->
+
+                                    <!-- <div class="ds-body">
+  
+                                    <div class="cs-table horizontal-scroll">
+                                        <div class="table-head">
+                                            <table>
+                                                <tr>
+                                                    <th class="w110">Total Orders</th>
+                                                    <th class="w150">Total Quantity</th>
+                                                    <th class="w130">Total Order Value</th>
+                                                </tr>
+                                            </table>
+                                        </div>
+  
+                                        <div class="table-container">
+                                            <div class="table-content">
+                                                <table>
+                                                    <tr>
+                                                      <td class="w110"><span style="font-weight: bold;">
+                                                          {{filter_wise_dashboard_order_data.total_order_count ? filter_wise_dashboard_order_data.total_order_count : 0}}
+                                                      </span></td>
+                                                      <td class="w150">
+                                                          <span style="font-weight: bold;">
+                                                              {{filter_wise_dashboard_order_data.total_order_item_qty ? filter_wise_dashboard_order_data.total_order_item_qty : 0}}
+                                                          </span>
+                                                         </td>
+                                                      <td class="w130">
+                                                          <span style="font-weight: bold;">
+                                                              &#8377; {{filter_wise_dashboard_order_data.total_order_value ? filter_wise_dashboard_order_data.total_order_value : 0}}
+                                                          </span>
+                                                         </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                    <div class="Order-data-table padding0">
+                                        <table>
+                                            <!-- <tr class="h50">
+                                                
+                                            </tr> -->
+                                            <tr class="h60">
+                                                <th class="text-center">Total Orders</th>
+                                                <td class="text-center">
+                                                    <span style="font-weight: bold; font-size: 20px; ">
+                                                        {{filter_wise_dashboard_order_data.total_order_count ?
+                                                            filter_wise_dashboard_order_data.total_order_count : 0}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr  class="h60">
+                                                <th class="text-center">Total Quantity</th>
+                                                <td class="text-center">
+                                                    <span style="font-weight: bold; font-size: 20px;">
+
+                                                        {{filter_wise_dashboard_order_data.total_order_item_qty ?
+                                                        filter_wise_dashboard_order_data.total_order_item_qty : 0}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr  class="h60">
+                                                <th class="text-center">Total Order Value</th>
+                                                <td class="text-center">
+                                                    <span style="font-weight: bold; font-size: 20px;">
+                                                        &#8377; {{!filter_wise_dashboard_order_data.total_order_value ?
+                                                        0 :(filter_wise_dashboard_order_data.total_order_value |
+                                                        number:'1.0-0' )}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    <!-- </div> -->
+                <!-- </div> -->
+                <div class="col s12 m4">
+                    <!-- <div class="ds-box pink" style="height: 650px;"> -->
+                    <div class="ds-box pink">
+                        <div class="ds-head">
+                            Latest Checkin
+                        </div>
+                        <!-- <div class="ds-body" style="height: 650px;"> -->
+                        <div class="ds-body">
+                            <div class="cs-information">
+                                <div class="cs-border" *ngFor="let row of count.checkin_row">
+                                    <div class="top-srip">
+                                        <ul>
+                                            <li>
+                                                <p><span>Date :</span> {{row.visit_start | date: 'dd/MMM/yy' }}</p>
+                                            </li>
+                                            <li>
+                                                <p><span>Start :</span>{{row.visit_start | date: 'h:mm a' }}</p>
+                                            </li>
+                                            <li *ngIf="row.visit_end!='0000-00-00 00:00:00'">
+                                                <p><span>End :</span> {{row.visit_end | date: 'h:mm a' }}</p>
+                                            </li>
+                                            <li *ngIf="row.visit_end=='0000-00-00 00:00:00'">
+                                                <p><span>End :</span> N.A.</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-content">
+                                        <div class="alfa-digit" *ngIf="row.d_name!=''">
+                                            {{row.d_name.charAt(0).toUpperCase()}}</div>
+                                        <div class="content">
+                                            <p ng-click="dr_detail(row.dr_id,row.dr_type)">{{row.d_name}}</p>
+                                            <span>Executive : {{row.user_name}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="remark">
+                                        <strong>Remark : </strong>{{row.remark ? row.remark : 'N.A.'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4">
+                    <!-- <div class="ds-box green" style="height: 650px;"> -->
+                    <div class="ds-box green">
+                        <div class="ds-head">
+                            Latest Order
+                        </div>
+                        <!-- <div class="ds-body" style="height: 650px;"> -->
+                        <div class="ds-body">
+                            <div class="cs-information">
+                                <div class="cs-border primary" *ngFor="let row of count.primaryorder">
+                                    <div class="top-srip">
+                                        <ul>
+                                            <li>
+                                                <p><span>Date :</span> {{row.date_created | date: 'MMM d, y'}}</p>
+                                            </li>
+                                            <li class="amount">
+                                                <p><span>Amount :</span> &#x20B9; {{row.order_total}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-content" style="margin-bottom: 0px;">
+                                        <div class="alfa-digit">{{row.user_name != '' && row.user_name != null ?
+                                            row.user_name.charAt(0).toUpperCase() :
+                                            row.dr_name.charAt(0).toUpperCase()}}</div>
+                                        <div class="content">
+                                            <p> {{row.user_name != '' && row.user_name != null ? row.user_name :
+                                                row.dr_name}}</p>
+                                            <!-- <p *ngIf="row.type == 1"> Distributor : {{row.dr_name}}</p> -->
+                                            <a routerLink="/order-detail/{{row.id}}"
+                                                style="color: #2f00ec;">{{row.order_no}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m4" *ngIf="false">
+                    <div class="ds-box orange">
+                        <div class="ds-head">
+                            Absent Executives Information ( {{today_date}} )
+                        </div>
+
+                        <div class="dss-body">
+                            <ng-container *ngFor="let attendece_data of user_attendence_summary">
+                                <div class="dss-body-1" *ngIf="attendece_data.attendence == 'Absent'">
+                                    <div class="dss-head">
+                                        <h3>{{attendece_data.name}}</h3>
+                                        <p>{{attendece_data.role_name}}</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col s12 m4">
+                    <!-- <div class="ds-box green" style="height: 650px;"> -->
+                    <div class="ds-box green">
+                        <div class="ds-head">
+                            Attendence Information ( {{today_date}} )
+                        </div>
+                        <!-- <div class="ds-body" style="height: 650px;"> -->
+                        <div class="ds-body">
+                            <div class="heighligt-order">
+                                <p><span style="cursor: pointer; background: #fe4342;"
+                                        (click)="attendence_type = 'All'; absent_executive_data(); "></span> All</p>
+                                <p><span class="primary" style="cursor: pointer;"
+                                        (click)="attendence_type = 'Present'; absent_executive_data();"></span> Present
+                                </p>
+                                <p><span class="secondary" style="cursor: pointer;"
+                                        (click)="attendence_type = 'Absent'; absent_executive_data();"></span>Absent</p>
+                            </div>
+                            <div class="cs-information">
+                                <div class="cs-border" *ngFor="let attendece_data of user_attendence_summary"
+                                    [ngClass]="attendece_data.attendence == 'Absent' ? 'secondary' : 'primary'">
+                                    <div class="top-srip">
+                                        <ul>
+                                            <li>
+                                                <p><span>Attendence :</span> {{attendece_data.attendence}}</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex-content" style="margin-bottom: 0px;">
+                                        <div class="alfa-digit">{{attendece_data.name.charAt(0).toUpperCase()}}</div>
+                                        <div class="content">
+                                            <p>{{attendece_data.name}}</p>
+                                            <p>{{attendece_data.role_name}}</p>
+                                            <!-- <a routerLink="/sale-user-detail/{{attendece_data.id}}"  style="color: #2f00ec;">{{row.order_no}}</a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="h50"></div>
+</div>

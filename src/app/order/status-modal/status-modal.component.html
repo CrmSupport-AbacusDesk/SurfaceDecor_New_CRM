@@ -1,0 +1,1712 @@
+<div *ngIf="loader" class="cs-loader">
+  <mat-spinner class="loader">
+    <div>
+      <p>Loading....</p>
+    </div>
+  </mat-spinner>
+</div>
+
+<div class="edit-modal" *ngIf="status_flag=='no_data'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?order_status_change(data.reason,data.order_status):''">
+
+    <p class="heading">Update Order Status</p>
+    <!-- {{data.order_status}} -->
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field col s12">
+            <mat-form-field class="cs-input">
+              <mat-select name="order_status" placeholder="Order Status" #order_status="ngModel"
+                [(ngModel)]="data.order_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : order_status.invalid }" required="true">
+                <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending'">
+                  Accept
+                </mat-option>
+                <!-- <mat-option  value="PDispatch"*ngIf="tmpOrderStatus != 'readyToDispatch' && tmpOrderStatus != 'Approved' && tmpOrderStatus != 'Hold' && tmpOrderStatus != 'Pending'">
+                  Partial Dispatch
+                </mat-option> -->
+                <mat-option value="Dispatch" *ngIf="tmpOrderStatus == 'readyToDispatch'">
+                  Complete Dispatch
+                </mat-option>
+                <mat-option value="Reject" *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Approved'">
+                  Reject
+                </mat-option>
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!order_status.valid && update_basic.submitted">
+                Order Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="control-field col s12" *ngIf="data.order_status == 'Reject'">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Reason is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="edit-modal" *ngIf="status_flag=='Change Status from pop and gift'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_pop_order_status(data.reason,data.order_status):''">
+    <p class="heading">Update POP Status</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field col s12">
+            <mat-form-field class="cs-input">
+              <mat-select name="order_status" placeholder="Order Status" #order_status="ngModel"
+                [(ngModel)]="data.order_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : order_status.invalid }" required="true">
+                <mat-option value="Approved" *ngIf="tmpOrderStatus == 'Pending'">
+                  Accept
+                </mat-option>
+                <mat-option value="Hold" *ngIf="tmpOrderStatus == 'Approved'">
+                  Hold
+                </mat-option>
+                <mat-option value="Reject"
+                  *ngIf="tmpOrderStatus == 'Pending' || tmpOrderStatus == 'Approved' || tmpOrderStatus == 'Hold'">
+                  Reject
+                </mat-option>
+
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!order_status.valid && update_basic.submitted">
+                Order Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+
+
+          <div class="row" *ngIf="data.order_status == 'Reject'">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Reason is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+
+
+
+<div class="image-layout" *ngIf="status_flag=='image_model_open' || status_flag=='complain detail modal'">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="false">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <img src="{{data.image}}">
+</div>
+
+<div class="image-layout" *ngIf="status_flag=='image_model_open' || status_flag=='user target modal'">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="false">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <img src="{{data.image}}">
+</div>
+<div class="image-layout" *ngIf="status_flag=='billing_detail'">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="false">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <img src="{{serve.billing_image_url+data.image}}">
+</div>
+
+
+
+<!-- <div class="edit-modal" *ngIf="status_flag=='complain detail modal'">
+  <div class="cs-modal">
+    <div class="heading">
+      <button mat-button color="warn" class="close-btn" [mat-dialog-close]="false"><i
+          class="material-icons">clear</i></button>
+    </div>
+    <div mat-dialog-content>
+      <div class="fancy-box">
+        <div class="form-area">
+          <img src="{{data.image}}" style="width:100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="edit-modal" *ngIf="status_flag=='Change Status from checkin'">
+  <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_checkin_status()">
+    <p class="heading">Are You Sure ?</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="checkin_verification_remark" placeholder="Remark"
+                  #checkin_verification_remark="ngModel" [(ngModel)]="data.checkin_verification_remark"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="accent" type="submit"> Yes </button>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false"> No </button>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='expense_detail_page'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_expense_status(data.reason,data.expense_status):''">
+    <p class="heading">Update Expense Status</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field"
+            [ngClass]="data.change_status_of == 'accounts'  && data.expense_status == 'Approved' ? 'col s6':'col s12'">
+            <mat-form-field class="cs-input">
+              <mat-select name="expense_status" placeholder="Expense Status" #expense_status="ngModel"
+                [(ngModel)]="data.expense_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : expense_status.invalid }" required="true">
+                <mat-option value="Approved">
+                  Approved
+                </mat-option>
+                <mat-option value="Reject">
+                  Reject
+                </mat-option>
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!expense_status.valid && update_basic.submitted">
+                Expense Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="control-field col s6"
+            *ngIf="data.change_status_of == 'accounts'  && data.expense_status == 'Approved'">
+            <mat-form-field class="cs-input">
+              <mat-label>Approved Amount</mat-label>
+              <input onkeypress="return event.charCode>=48 && event.charCode<=57" matInput name="approved_amount"
+                #approved_amount="ngModel" [(ngModel)]="data.approved_amount" required>
+              <div class="alert alert-danger" *ngIf="conInt(data.approved_amount) >  conInt(data.expense_amount)">
+                Amount should be less than or equal to {{data.expense_amount}}
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Remark" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Remark is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit"
+        [disabled]="data.change_status_of == 'accounts'  && data.expense_status == 'Approved' && conInt(data.approved_amount) >  conInt(data.expense_amount)">Save</button>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='travel_plan_detail_page'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_travel_plan_status(data.reason,data.travel_status):''">
+    <p class="heading">Update Travel Plan Status</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field col s12">
+            <mat-form-field class="cs-input">
+              <mat-select name="travel_status" placeholder="Travel Plan Status" #travel_status="ngModel"
+                [(ngModel)]="data.travel_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : travel_status.invalid }" required="true">
+                <mat-option value="Approved">
+                  Approved
+                </mat-option>
+                <mat-option value="Reject">
+                  Reject
+                </mat-option>
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!travel_status.valid && update_basic.submitted">
+                Travel Plan Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="control-field col s12" *ngIf="data.travel_status == 'Reject'">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Remark" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Remark is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='distributor_detail_page'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_billing_details():''">
+    <p class="heading">Update Billing Details</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+          <div class="col s3">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Credit Limit" name="credit_limit" #credit_limit="ngModel"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57" [(ngModel)]="data.credit_limit">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s3">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Credit Period (in Days)" name="credit_period"
+                  #credit_period="ngModel" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  [(ngModel)]="data.credit_period">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s2">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Opening Balance" name="credit_opening_balance"
+                  #credit_opening_balance="ngModel" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  [(ngModel)]="data.credit_opening_balance">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s2">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Party Code" name="dr_code" #dr_code="ngModel"
+                  [(ngModel)]="data.dr_code">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s2">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <mat-select name="display_billing_status" placeholder="Display Status" #display_billing_status="ngModel"
+                  [(ngModel)]="data.display_billing_status" (ngModelChange)="data_category.stock_incoming_days = ''">
+                  <mat-option disabled="">Select Display Status</mat-option>
+                  <mat-option value="0">No</mat-option>
+                  <mat-option value="1">Yes</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='area_target_survey_report'">
+  <p class="heading">Target Information</p>
+  <div mat-dialog-content class="pt16">
+    <div class="cs-figure">
+      <ul>
+        <li>
+          <div class="outer">
+            <div class="inner">
+              <span>Company Name</span>
+              <p>{{selected_survey_report_basic_info.company_name && selected_survey_report_basic_info.company_name!=''
+                ? selected_survey_report_basic_info.company_name : '--'}}</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="outer">
+            <div class="inner">
+              <span>Contact Person</span>
+              <p>{{selected_survey_report_basic_info.name && selected_survey_report_basic_info.name!='' ?
+                selected_survey_report_basic_info.name : '--'}}</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="outer">
+            <div class="inner">
+              <span>Mobile No</span>
+              <p>{{selected_survey_report_basic_info.mobile && selected_survey_report_basic_info.mobile!='' ?
+                selected_survey_report_basic_info.mobile : '--'}}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cs-table" style="margin: 10px -24px 0px;">
+      <div class="stickyHead">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">Sr.No</th>
+              <th class="w110">State</th>
+              <th>District</th>
+              <th class="w160">Territory</th>
+              <th class="w130">Gravity Target</th>
+              <th class="w130">Party Target</th>
+              <th class="w130">Party Sale</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w50"></th>
+            <th class="w110"></th>
+            <th></th>
+            <th class="w160"></th>
+            <th class="w130">{{overall_all_total.total_company_target}}</th>
+            <th class="w130">{{overall_all_total.total_party_target}}</th>
+            <th class="w130">{{overall_all_total.total_party_sale}}</th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <tr *ngFor="let area_data of selected_survey_report_area_info; let i = index;">
+              <td class="w50">{{i+1}}</td>
+              <td class="w110">{{area_data.state | uppercase}}</td>
+              <td>{{area_data.district}}</td>
+              <td class="w160">{{area_data.area_name}}</td>
+              <td class="w130">&#8377; {{area_data.company_target}}</td>
+              <td class="w130">&#8377; {{area_data.your_target && area_data.your_target!='' ? area_data.your_target :
+                '--'}}</td>
+              <td class="w130">&#8377; {{area_data.current_sale && area_data.current_sale!='' ? area_data.current_sale :
+                '--'}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='dashboard'">
+  <div class="heading flex-item-head">
+    <p>{{this.data.data_type == 'total' ? 'All Areas' : 'Assigned Areas'}}</p>
+    <div class="left-auto">
+      <div class="uppr-one m-right-data">
+        <div class="top-pagination">
+          <ul>
+            <li>
+              <p>Pages {{pagenumber}} Of {{total_page}}</p>
+            </li>
+            <li>
+              <button mat-button class="left-btn" (click)="start=start-page_limit; get_targt_vs_achievement_list()"
+                [disabled]="pagenumber <= 1">
+                <i class="material-icons">keyboard_arrow_left</i>
+              </button>
+            </li>
+            <li>
+              <input type="text" placeholder="GO TO" name="pagenumber"
+                (keyup.enter)="start=(pagenumber*page_limit)-page_limit; get_targt_vs_achievement_list()"
+                [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+            </li>
+
+            <li>
+              <button mat-button class="right-btn" (click)="start=start+page_limit; get_targt_vs_achievement_list()"
+                [disabled]="pagenumber >= total_page">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="cs-table" style="margin: 0px -24px 0px;">
+      <div class="stickyTableHead">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">S No</th>
+              <th class="w150">State</th>
+              <th class="w150">District</th>
+              <th class="w150">Area </th>
+              <th class="w140">Target Potential</th>
+              <th class="w140">Assign Target</th>
+              <th> Company Name</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w50"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w150"></th>
+            <th class="w140"></th>
+            <th class="w140"></th>
+            <th> </th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <tr *ngFor="let target_data of area_target_list; let i = index;">
+              <td class="w50">{{start+i+1}}</td>
+              <td class="w150">
+                {{target_data.state}}
+              </td>
+              <td class="w150">
+                {{target_data.district}}
+              </td>
+              <td class="w150">
+                {{target_data.area_name}}
+              </td>
+              <td class="w140">&#8377; {{target_data.fixed_target}}</td>
+              <td class="w140">
+                &#8377; {{target_data.monthly_target}}
+              </td>
+              <td>
+                <span>
+                  {{target_data.company_name && target_data.company_name!= '' && target_data.company_name!= null ?
+                  target_data.company_name : '--'}}
+                </span>
+              </td>
+            </tr>
+
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
+
+
+<div class="edit-modal" *ngIf="status_flag=='plumber-meet-list-page' || status_flag=='plumber-meet-detail-page'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_plumber_meet_status(data.reason,data.plumber_meet_status):''">
+    <p class="heading">Update Carpenter Meet Status</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field col s12">
+            <mat-form-field class="cs-input">
+              <mat-select name="plumber_meet_status" placeholder="Carpenter Meet Status" #plumber_meet_status="ngModel"
+                [(ngModel)]="data.plumber_meet_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : plumber_meet_status.invalid }" required="true">
+                <mat-option value="Pending">
+                  Pending
+                </mat-option>
+                <mat-option value="Approved">
+                  Approved
+                </mat-option>
+                <mat-option value="Reject">
+                  Reject
+                </mat-option>
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!plumber_meet_status.valid && update_basic.submitted">
+                Expense Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Remark" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+              </mat-form-field>
+              <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                Remark is Required....
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit"
+        [disabled]="!(data.plumber_meet_status == 'Approved') && !(data.plumber_meet_status == 'Reject')">Save</button>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="edit-modal" *ngIf="status_flag=='order_detail_page'">
+  <div class="heading flex-item-head">
+    <p>Master Cart - Secondary Box Data</p>
+    <div class="left-auto">
+      <div class="uppr-one m-right-data">
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="cs-table" style="margin: 0px -24px 0px;">
+      <div class="stickyTableHead">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">S No</th>
+              <th class="w150 text-center">Secondary Code</th>
+              <th>Item Name</th>
+              <th class="w150 text-center">Total Item (Secondary) </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <tr *ngFor="let secondary_box_data of secondary_box_detail_list; let i=index">
+              <td class="w50">{{i+1}}</td>
+              <td class="w150 text-center">{{secondary_box_data.secondary_qr_code}}</td>
+              <td>{{secondary_box_data.product_name}}</td>
+              <td class="w150 text-center">{{secondary_box_data.item_qty}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
+
+
+
+  <div  class="edit-modal" *ngIf="status_flag=='warehouse_to_warehouse_summary_detail'">
+  <div class="heading flex-item-head">
+    <p>Master Box Product Details</p>
+    <div class="left-auto">
+      <div class="uppr-one m-right-data">
+
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="cs-table" style="margin: 0px -24px 0px;">
+      <div class="stickyTableHead">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">S No</th>
+              <th class="">Product Name</th>
+              <th class="w200">Qty Received</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w50"></th>
+            <th class=""></th>
+            <th class="w200"></th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <tr *ngFor="let product_data of warehouse_to_warehouse_transfer_summary_product_detail; let i = index;">
+              <td class="w50">{{i+1}}</td>
+              <td class="">{{product_data.product_name | titlecase}}</td>
+              <td class="w200">{{product_data.total_qty}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+  </div>
+
+  <div class="edit-modal" *ngIf="status_flag=='add_product_page' && this.data.category == 'add_new_category'">
+    <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?( this.data.category == 'add_new_category' ? add_new_category() : add_new_sub_category()):''">
+    <p class="heading">Add New Brand</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+          <div class="control-field col s12" *ngIf="this.data.category == 'add_new_category'">
+            <mat-form-field class="cs-input">
+              <mat-label>Brand Name</mat-label>
+              <input matInput name="new_category_name" #new_category_name="ngModel" [(ngModel)]="data.new_category_name"
+                required>
+              <div class="alert alert-danger" *ngIf="!new_category_name.valid && new_category_name.touched">
+                Brand is required...
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="control-field col s6" *ngIf="this.data.category != 'add_new_category'">
+            <mat-form-field class="cs-input">
+              <mat-label>Brand Name</mat-label>
+              <input matInput name="category" #category="ngModel" [(ngModel)]="data.category" required disabled>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col s4">
+            <div class="cs-file">
+              <ul class="product-images">
+                <li class="multi-images">
+
+                  <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                    <img [src]="val" alt="your image">
+                    <span class="cancel-icon">
+                      <a class="close"><i class="material-icons dp48" (click)="delete_img(i)">clear</i></a>
+                    </span>
+                  </label>
+
+                  <label class="cs-file-img default" *ngIf="urls.length != 1">
+                    <i class="material-icons">cloud_upload</i>
+                    <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple
+                      style="display: none;" (change)="insertImage($event)">
+                  </label>
+                </li>
+              </ul>
+              <p>Upload Image</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="false">Save</button>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="edit-modal"
+  *ngIf="status_flag=='product_listing_page' && ((this.data.selected_cetegory_id && this.data.selected_cetegory_id != '0') || (this.data.selected_sub_category_id && this.data.selected_sub_category_id != '0'))">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?( (this.data.selected_cetegory_id && this.data.selected_cetegory_id != '0') ? add_new_category() : add_new_sub_category()):''">
+    <p class="heading">Update Brand</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+          <div class="control-field col s12"
+            *ngIf="(this.data.selected_cetegory_id && this.data.selected_cetegory_id != '0')">
+            <mat-form-field class="cs-input">
+              <mat-label>Brand Name</mat-label>
+              <input matInput name="category" #category="ngModel" [(ngModel)]="data.category" required>
+              <div class="alert alert-danger" *ngIf="!category.valid && category.touched">
+                Brand is required...
+              </div>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col s4">
+            <div class="cs-file">
+              <ul class="product-images">
+                <li class="multi-images">
+
+                  <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                    <img [src]="val" alt="your image">
+                    <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple
+                      style="display: none;" (change)="insertImage($event)">
+                    <span class="cancel-icon">
+                      <!-- <a class="close"><i class="material-icons dp48">clear</i></a> -->
+                    </span>
+                  </label>
+
+                  <label class="cs-file-img default" *ngIf="urls.length == 0">
+                    <i class="material-icons">cloud_upload</i>
+                    <!-- <input type="file" name="image" placeholder="Upload file"accept=".png,.jpg,.jpeg" multiple style="display: none;"(change)="insertImage($event)"> -->
+                  </label>
+                </li>
+              </ul>
+              <p>Upload Image</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="false">Save</button>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="edit-modal" *ngIf="status_flag=='complain_list_for_status_change'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_complain_status(data.reason,data.complain_status):''">
+    <p class="heading">Update Complain Status</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="control-field">
+            <mat-form-field class="cs-input">
+              <mat-select name="complain_status" placeholder="Complain Status" #complain_status="ngModel"
+                [(ngModel)]="data.complain_status" (ngModelChange)=" data.reason=''"
+                [ngClass]="{'has-error' : complain_status.invalid }" required="true">
+                <mat-option value="Approved">
+                  Resolve
+                </mat-option>
+                <mat-option value="Reject">
+                  Cancel
+                </mat-option>
+              </mat-select>
+              <div class="alert alert-danger" *ngIf="!complain_status.valid && update_basic.submitted">
+                Complain Status is Required....
+              </div>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Remark" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Remark is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="edit-modal" *ngIf="status_flag=='add_multiple_contact'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?add_multiple_contacts():''">
+    <p class="heading">Add Contact</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+          <div class="col s6">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Person Name" name="contact_person" #contact_person="ngModel"
+                  [(ngModel)]="data.contact_person" required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s6">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Person Mobile" name="mobile" #mobile="ngModel" minlength="10"
+                  maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  [(ngModel)]="data.mobile" required>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+  </div>
+
+
+  <div class="edit-modal" *ngIf="status_flag=='edit_multiple_contact'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_multiple_contacts():''">
+    <p class="heading">Update Contact</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+          <div class="col s6">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Person Name" name="contact_person" #contact_person="ngModel"
+                  [(ngModel)]="data.contact_person" required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col s6">
+            <div class="control-field">
+              <mat-form-field class="cs-input">
+                <input type="text" matInput placeholder="Person Mobile" name="mobile" #mobile="ngModel" minlength="10"
+                  maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  [(ngModel)]="data.mobile" required>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+    </div>
+
+<!-- aamir changes here -->
+<div class="edit-modal" *ngIf="status_flag=='save_button_modal_quantity'">
+  <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_quantity_item()">
+    <p class="heading">Are You Sure ?</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="user_verification_remark" placeholder="Remark"
+                  #user_verification_remark="ngModel" [(ngModel)]="data.user_verification_remark"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="accent" type="submit"> Yes </button>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false"> No </button>
+    </div>
+  </form>
+  </div>
+<!-- aamir changess here -->
+
+<!-- view button order item model -->
+  <div class="edit-modal" *ngIf="status_flag=='view_order_item_table'">
+  <div class="collapse-body pt0">
+    <div class="cs-form">
+
+      <div class="cs-table left-right-20">
+        <div class="table-head">
+          <table class="sno-border">
+            <tr>
+              <th class="w40 text-center">S.no.</th>
+              <th class="w100 text-center">Date</th>
+              <!-- <th class="w100 text-center">Brand Name</th>
+              <th class="w100 text-center">Item Name</th> -->
+
+              <th class="w100 text-center">Updated by</th>
+
+              <th class="w100 text-center">Remark</th>
+              <!-- <th class="w80">QTY</th>
+                        <th class="w100">Action</th>
+                        <th class="w100">Dispatch Qty</th>
+                        <th class="w95">Pending Qty</th>
+                        <th class="w80">MRP</th>
+                        <th class="w90">Sub-Total</th>
+                        <th class="w110">Discount</th>
+                        <th class="w90 text-right"> Amount</th>
+                        <th class="w90">Status</th> -->
+
+            </tr>
+          </table>
+        </div>
+
+        <div class="table-container">
+          <div class="table-content">
+            <table class="sno-border">
+              <tr *ngFor="let list of update_log_listing_array;  let i =index">
+                <td class="w40 text-center">{{i+1}}</td>
+                <td class="w100 text-center">{{list.changed_time ? (list.changed_time | date: 'd MMM y'): '--'}}</td>
+                <!-- <td class="w100 text-center">{{list.brandname ? list.brandname :'--'}}</td>
+                <td class="w100 text-center">{{list.itemname ? list.itemname : '--'}}</td> -->
+                <td class="w100 text-center">{{list.changed_by ? list.changed_by :'--'}}</td>
+                <td class="w100 text-center">{{list.reason ? list.reason : '--'}}</td>
+                <!-- <td class="w80">
+                               --
+                            </td>
+                            <td class="w100">
+                               --
+                            </td>
+                            <td class="w80">--</td>
+                            <td class="w100">--</td>
+                            <td class="w95">--</td>
+                            <td class="w80"></td>
+                            <td class="w90"></td>
+                            <td class="w110 ">--</td>
+                            <td class="w90 text-right">--</td>
+                            <td class="w90">--</td> -->
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div mat-dialog-actions>
+          <!-- <button mat-raised-button	 color="accent" type="submit"> Yes </button> -->
+          <button mat-raised-button color="warn" [mat-dialog-close]="false"> close </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+<!-- view button order item model end here -->
+
+  <div class="edit-modal" *ngIf="status_flag=='complain_list_for_view_images'">
+  <div class="cs-modal">
+    <div class="heading">
+      <button mat-button color="warn" class="close-btn" [mat-dialog-close]="false"><i
+          class="material-icons">clear</i></button>
+    </div>
+    <div mat-dialog-content>
+      <div class="fancy-box">
+        <div class="form-area" *ngFor="let image_data of complaint_images_data">
+          <img *ngIf="image_data.doc_type != 'video'" src="{{image_data.images}}" style="width:100%;">
+          <video *ngIf="image_data.doc_type == 'video'" (playing)="onPlayingVideo($event)" width="100%" height="100%"
+            controls>
+            <source target="_blank" [src]="image_data.video_path" type="video/mp4">
+          </video><br>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<!-- aamir changes -->
+<!-- <div class="edit-modal" *ngIf="status_flag=='no_data'">
+  <form validate #update_basic="ngForm" name="update_basic"
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?order_status_change(data.reason,data.order_status):''">
+
+    <p class="heading">Update Order Status{{data.order_status}}</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+
+
+          <div class="row">
+            <div class="control-field col s12" *ngIf="data.order_status == 'Reject'">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="reason" placeholder="Reason" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Reason is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="accent" type="submit">Save</button>
+    </div>
+  </form>
+</div> -->
+
+<div class="edit-modal" *ngIf="status_flag=='close_order'">
+  <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="closeOrder()">
+    <p class="heading">Are You Sure You want to Close this Order?</p>
+    <div mat-dialog-content>
+      <div class="from-fields">
+        <div class="row">
+          <div class="row">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                <textarea class="h100" matInput name="remark" placeholder="Remark"
+                  #remark="ngModel" [(ngModel)]="data.remark"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="accent" type="submit"> Yes </button>
+      <button mat-raised-button color="warn" [mat-dialog-close]="false"> No </button>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="edit-modal" *ngIf="status_flag=='product_image'">
+  <div class="cs-modal">
+    <div class="heading">
+      <button mat-button color="warn" class="close-btn" [mat-dialog-close]="false"><i
+          class="material-icons">clear</i></button>
+    </div>
+    <div mat-dialog-content>
+      <div class="fancy-box">
+        <div class="form-area">
+          <img src="{{serve.product_image_url+data.image}}" style="width:100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="image-layout" *ngIf="status_flag=='product_image'">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="false">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <img src="{{serve.product_image_url+data.image}}">
+ 
+</div>
+
+<div class="image-layout" *ngIf="status_flag=='user_image'">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="false">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <img src="{{data.image}}">
+</div>
+
+<!-- ///////////// old bill distribution detail page /////////////////// -->
+<div class="edit-modal" *ngIf="status_flag=='old_bill_distribution_page' " >
+    <div class="heading flex-item-head">
+    <p>Financial Year 2021-2022 Bills</p>
+    <div class="left-auto">
+      <div class="uppr-one m-right-data">
+
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="cs-table" style="margin: 0px -24px 0px;">
+      <div class="stickyTableHead">
+        <div class="table-head">
+          <table>
+            <tr>
+              <th class="w50">S No</th>
+              <th class="">Bill NO.</th>
+              <th class="w120">Bill Date</th>
+              <th class="w100">Amount</th>
+              <th class="w100">Company Name</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- <div class="table-head bdrt">
+        <table>
+          <tr>
+            <th class="w50"></th>
+            <th class=""></th>
+            <th class="w120"></th>
+            <th class="w100"></th>
+          </tr>
+        </table>
+      </div> -->
+
+      <div class="table-container">
+        <div class="table-content">
+          <table>
+            <tr *ngFor="let val of old_bill_data_array; let i=index" >
+              <td class="w50">{{i+1}}</td>
+              <td class="">{{val.bill_number}}</td>
+              <td class="w120">{{val.billing_date | date : 'dd-MM-yyyy'}}</td>
+              <td class="w100">{{val.total_billing_amount}}</td>
+              <td class="w100">{{val.company_name}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</div>
+
+
+<!-- /////////////////////////////////////outstanding button///////////////////////////////////////////////////////// -->
+<div class="edit-modal" *ngIf="status_flag=='out_standing_distribution_page' " >
+  <div class="heading flex-item-head">
+  <p>Company Wise Outstanding</p>
+  <div class="left-auto">
+    <div class="uppr-one m-right-data">
+
+    </div>
+  </div>
+</div>
+<div mat-dialog-content>
+
+  <div class="cs-table" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Company Name</th>
+            <th class="w120">Outstanding Balance</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of outstanding_array; let i=index" >
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.company_name}}</td>
+            <td class="w120">{{val.outstanding_balance}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+</div>
+</div>
+
+<!-- /////////////////////////////////Company Wise Outstanding Dashboard Page/////////////////////////////////////////// -->
+<div class="edit-modal" *ngIf="status_flag=='dashboard_outstanding_tab' ">
+  <div class="heading flex-item-head">
+  <p>Total Company Wise Outstanding</p>
+  <div class="left-auto">
+    <div class="uppr-one m-right-data">
+
+    </div>
+  </div>
+  <div class="tabs right-tab ml15">
+    <ul class="dflex1">
+      <li><a [ngClass]="{'active': view_tab=='company_wise'}" (click)="view_tab='company_wise'; totalCompanyOutstandingData();">Company Wise</a></li>
+      <li><a [ngClass]="{'active': view_tab=='dealer'}" (click)="view_tab='dealer';totalDealersOutstandingData()">Dealer Wise</a></li>
+  </ul>
+  </div>
+</div>
+
+<div mat-dialog-content>
+
+  <div class="cs-table" *ngIf="view_tab=='company_wise'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Company Name</th>
+            <th class="w120">Outstanding Balance</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalOutstandingArray; let i=index" >
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.company_name}}</td>
+            <td class="w120">&#8377; {{val.outstanding_balance}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+  <div class="cs-table" *ngIf="view_tab=='dealer'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Customer Name</th>
+            <th class="w120">Outstanding Balance</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalDealersOutstandingArray; let i=index" >
+            
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.customer_name}}</td>
+            <td class="w120">&#8377;{{val.outstanding_balance}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='company_wise'" (click)="downloadCompany_Wise_Outstanding()">
+    Download Excel Company Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='dealer'" (click)="downloadDealer_Wise_Outstanding()">
+    Download Excel Dealer Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+</div>
+</div>
+
+<!-- //////////////////////////////////////////// Dashboard Page Total Dispatch Value ///////////////////////////////////////////////// -->
+ 
+<div class="edit-modal" *ngIf="status_flag=='dashboard_dispatch_value_tab'">
+  <div class="heading flex-item-head">
+  <p>Total Dispatch Value</p>
+  <div class="left-auto">
+    <div class="uppr-one m-right-data">
+
+    </div>
+  </div>
+  <div class="tabs right-tab ml15">
+    <ul class="dflex1">
+      <li><a [ngClass]="{'active': view_tab=='company_wise'}" (click)="view_tab='company_wise';totalCompanyWiseDispatchValueData(); ">Company Wise</a></li>
+      <li><a [ngClass]="{'active': view_tab=='dealer'}" (click)="view_tab='dealer';totalDealerDispatchValueData();">Dealer Wise</a></li>
+  </ul>
+  </div>
+</div>
+
+<div mat-dialog-content>
+
+  <div class="cs-table" *ngIf="view_tab=='company_wise'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Company Name</th>
+            <th class="w120">Total Dispatch Value</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalCompanyWiseDisaptchValueArray; let i=index" >
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.company_name}}</td>
+            <td class="w120">&#8377; {{val.total_dispatch_value}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+  <div class="cs-table" *ngIf="view_tab=='dealer'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Customer Name</th>
+            <th class="w120">Total Dispatch Value</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+   
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalDealerWiseDisaptchValueArray; let i=index" >
+          
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.customer_name}} </td>
+            <td class="w120">&#8377;{{val.total_dispatch_value}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+   
+  </div>
+  
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='company_wise'" (click)="downloadCompany_Wise_Dispatch_Value()">
+    Download Excel Company Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='dealer'" (click)="downloadDealer_Wise_Dispatch_Value()">
+    Download Excel Dealer Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+</div>
+</div>
+
+<!-- //////////////////////////////////////////// Dashboard Page Total Dispatch Quantity///////////////////////////////////////////////// -->
+ 
+<div class="edit-modal" *ngIf="status_flag=='dashboard_dispatch_quantity_tab'">
+  <div class="heading flex-item-head">
+  <p>Total Dispatch Quantity</p>
+  <div class="left-auto">
+    <div class="uppr-one m-right-data">
+
+    </div>
+  </div>
+  <div class="tabs right-tab ml15">
+    <ul class="dflex1">
+      <li><a [ngClass]="{'active': view_tab=='company_wise'}" (click)="view_tab='company_wise';totalCompanyWiseDispatchQuantityData() ">Company Wise</a></li>
+      <li><a [ngClass]="{'active': view_tab=='dealer'}" (click)="view_tab='dealer';totalDealerDispatchQuantityData()">Dealer Wise</a></li>
+  </ul>
+  </div>
+</div>
+
+<div mat-dialog-content>
+
+  <div class="cs-table" *ngIf="view_tab=='company_wise'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Company Name</th>
+            <th class="w120">Total Dispatch Quantity</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalCompanyWiseDisaptchQuantiyArray; let i=index" >
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.company_name}}</td>
+            <td class="w120"> {{val.total_dispatch_quantity}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+   
+  </div>
+  <div class="cs-table" *ngIf="view_tab=='dealer'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Customer Name</th>
+            <th class="w120">Total Dispatch Quantity</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+   
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalDealerWiseDisaptchQuantityArray; let i=index">
+           
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.customer_name}}</td>
+            <td class="w120">{{val.total_dispatch_quantity}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='company_wise'" (click)="downloadCompany_Wise_Dispatch_Quantity()">
+    Download Excel Company Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='dealer'" (click)="downloadDispatchQuantityExcelDealerWise()">
+    Download Excel Dealer Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+</div>
+</div>
+
+<!-- //////////////////////////////////////////// Dashboard Page Total Overdue Tab///////////////////////////////////////////////// -->
+ 
+<div class="edit-modal" *ngIf="status_flag=='dashboard_overdue_tab'">
+  <div class="heading flex-item-head">
+  <p>Total Overdues</p>
+  <div class="left-auto">
+    <div class="uppr-one m-right-data">
+
+    </div>
+  </div>
+  <div class="tabs right-tab ml15">
+    <ul class="dflex1">
+      <li><a [ngClass]="{'active': view_tab=='company_wise'}" (click)="view_tab='company_wise';totalCompanyWiseOverdueData() ">Company Wise</a></li>
+      <li><a [ngClass]="{'active': view_tab=='dealer'}" (click)="view_tab='dealer';totalDealerOverdueData()">Dealer Wise</a></li>
+  </ul>
+  </div>
+</div>
+
+<div mat-dialog-content>
+
+  <div class="cs-table" *ngIf="view_tab=='company_wise'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Company Name</th>
+            <th class="w100">Credit Period</th>
+            <th class="w100">Credit Opening Balance</th>
+            <th class="w120">Overdue Balance</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div class="table-head bdrt">
+      <table>
+        <tr>
+          <th class="w50"></th>
+          <th class=""></th>
+          <th class="w120"></th>
+          <th class="w100"></th>
+        </tr>
+      </table>
+    </div> -->
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalCompanyWiseOverdueArray; let i=index" >
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.surface_company_name}}</td>
+            <td class="w100">{{val.credit_period}}</td>
+            <td class="w100">{{val.credit_opening_balance}}</td>
+            <td class="w120">&#8377; {{val.overdue_balance}}</td>
+          
+          </tr>
+        </table>
+      </div>
+    </div>
+   
+  </div>
+  <div class="cs-table" *ngIf="view_tab=='dealer'" style="margin: 0px -24px 0px;">
+    <div class="stickyTableHead">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">S No</th>
+            <th class="">Dealer Name</th>
+            <th class="w100">Credit Period</th>
+            <th class="w100">Credit Opening Balance</th>
+            <th class="w120">Overdue Balance</th>
+           
+          </tr>
+        </table>
+      </div>
+    </div>
+
+   
+
+    <div class="table-container">
+      <div class="table-content">
+        <table>
+          <tr *ngFor="let val of totalDealersOverdueArray; let i=index" >
+           
+            <td class="w50">{{i+1}}</td>
+            <td class="">{{val.dealer_name}}</td>
+            <td class="w100">{{val.credit_period}}</td>
+            <td class="w100">{{val.credit_opening_balance}}</td>
+            <td class="w120">&#8377; {{val.total_overdue_balance}}</td>
+          
+          </tr>
+        
+        </table>
+      </div>
+    </div>
+   
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='company_wise'" (click)="downladCompanyWiseOverdueDataExcel()">
+    Download Excel Company Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+  <button mat-raised-button color="accent" *ngIf="view_tab=='dealer'" (click)="downloadtotalDealerOverdueDataExcel()">
+    Download Excel Dealer Wise
+    <img src="assets/img/excel.svg" height="20px">
+  </button>
+</div>
+</div>

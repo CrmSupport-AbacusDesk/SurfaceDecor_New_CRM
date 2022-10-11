@@ -1,0 +1,132 @@
+<div class="main-container" >
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn">
+          <a mat-button ><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Add Announcement</h2>
+      </div>
+    </div>
+  </div>
+
+  <form name="noticeform" #noticeform="ngForm" (ngSubmit)=" noticeform.valid">
+  <div class="container-outer">
+    <div class="container" >
+      <div class="row">
+        <div class="col s12">
+          <div class="sprate-box">
+            <div class="cs-heading">
+              <h2>ANNOUNCEMENT / NOTICE</h2>
+
+              <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+            </div>
+            <mat-divider class="left-right-15 mt10"></mat-divider>
+            <div class="from-fields">
+              <div class="row pl0">
+                <div class="col p30 s6">
+                  <div class="row pl0">
+                    <div class="col pl0 s12">
+                      <div class="control-field">
+                        <mat-form-field class="cs-input" [ngClass]="{'has-error' : noticeform.submitted && subject?.invalid} ">
+                          <input matInput placeholder="Subject" name="subject" [(ngModel)]="announcementData.subject" #subject="ngModel" required>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col pl0 s12">
+                      <div class="control-field">
+                        <mat-form-field class="cs-input">
+                        <textarea matInput placeholder="Type Here ..." class="h113" name="message" [(ngModel)]="announcementData.message" #message="ngModel" required></textarea>
+                        </mat-form-field>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col p50 s6">
+                  <div class="cs-file" >
+                    <p>Upload Image</p>
+                    <ul class="product-images">
+                      <li class="multi-images">
+                        <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                          <img height="75" width="75" [src]="val"  alt="">
+                          <span  class="cancel-icon">
+                            <a class="close" (click)="delete_img(i)"><i class="material-icons dp48">clear</i></a>
+                          </span>
+                        </label>
+
+                        <label class="cs-file-img default">
+                          <i class="material-icons">cloud_upload</i>
+                          <input type="file" (change)="insertImage($event)" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" multiple style="display: none;">
+                        </label>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+
+              <mat-divider class="left-right-15 mt10 mb10 "></mat-divider>
+              <div class="cs-heading">
+                <h2>Filter Your Data</h2>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="row mt10">
+                <div class="col pl0" [ngClass]="!data.type || data.type == 'executive' ? 's3' : 's2'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input">
+                      <mat-label>Select Type</mat-label>
+                      <mat-select name="type" placeholder="Select Type" [(ngModel)]="data.type" (ngModelChange)="(data.type == 'distributor' || data.type == 'direct_dealer') ? get_state() : ''" required>
+                        <mat-option value="distributor">Dealer</mat-option>
+                        <mat-option value="executive">Sales Executive</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col s2 pl0" *ngIf="data.type == 'distributor'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input">
+                      <mat-label>Select State</mat-label>
+                      <mat-select name="state" placeholder="state" [(ngModel)]="announcementData.selected_state_data" multiple required>
+                        <mat-option *ngFor="let state_data of dr_states " placeholder="state" [value]="state_data">{{state_data}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="col s2 pl0" *ngIf="data.type == 'distributor'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input">
+                      <mat-label>Select Sales Group</mat-label>
+                      <mat-select name="Sales group" placeholder="Sales group" [(ngModel)]="announcementData.selected_sales_group" multiple required>
+                        <mat-option *ngFor="let sales_group of dr_sales_group " placeholder="Sales group" [value]="sales_group">{{sales_group}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col s12">
+          <div class="cs-btn fixedd mt32 text-right">
+            <div class="in-btn">
+              <button mat-raised-button color="accent" type="submit">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+  </div>
+
+<div class="h50"></div>
+

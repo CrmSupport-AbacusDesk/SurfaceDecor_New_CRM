@@ -1,0 +1,80 @@
+<div class="cs-table cs-table-scroll no-tab">
+<div class="edit-modal">
+    <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="(update_basic.valid && update_basic.submitted)?update_order():''">
+
+        <p class="heading">Update Dispatch Quantity</p>
+        <!-- <a mat-raised-button class="b1" color="accent" (click)="select_all()">Add All Item</a> -->
+
+
+        <div mat-dialog-content>
+            <div class="from-fields">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="cs-table left-right-20">
+                            <div class="table-head">
+                                <table class="sno-border">
+                                    <tr>
+                                        <th class="w40 text-center"></th>
+                                        <th>Product Description</th>
+                                        <th class="w80">Order QTY</th>
+                                        <th class="w100">Pending QTY</th>
+                                        <th class="w100">Dispatched QTY</th>
+                                        <th class="w100">Dispatch QTY</th>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="table-container">
+                                <div class="table-content">
+                                    <table class="sno-border">
+                                        <tr [hidden]="!list.pending_qty || list.pending_qty==0"
+                                            *ngFor="let list of order_item; let i=index">
+                                            <td class="w40 text-center">{{i+1}}</td>
+                                            <td *ngIf="this.status_flag != 'Change Status from pop and gift'">
+                                                {{list.brand}} {{list.product_name}} </td>
+                                            <!-- {{list.cat_no}} -  - {{list.color}} -->
+                                            <td *ngIf="this.status_flag == 'Change Status from pop and gift'">
+                                                {{list.gift_name}}</td>
+                                            <td class="w80">{{list.qty}}</td>
+                                            <td class="w100">{{list.pending_qty}}</td>
+                                            <td class="w100">{{list.dispatch_qty?list.dispatch_qty:'0'}}</td>
+                                            <td class="w100">
+                                                <div class="td-input active">
+                                                    <input type="text" class="input-bdr"
+                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                                        name="dispatchQty{{i}}" #dispatchQty="ngModel"
+                                                        [(ngModel)]="list.dispatchQty" (keyup)="check_qty(i,list.dispatchQty);">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                          <!-- <td>{{"show remark : "+show_remark}}</td> -->
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="show_remark==true">
+            <div class="control-field col s12">
+              <mat-form-field class="cs-input">
+                  <textarea class="h100"  style="width: 940px;padding-left: 10px; padding-top: 10px; font-size: 15px; font-family: sans-serif; font-weight: 500;"  name="reason" placeholder="Enter Remark" #reason="ngModel"
+                  [(ngModel)]="data.reason" [ngClass]="{'has-error' : reason.invalid } " required="true"></textarea>
+                <div class="alert alert-danger" *ngIf="!reason.valid && update_basic.submitted">
+                  Reason is Required....
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="accent" [disabled]="disable" type="submit">Save</button>
+        </div>
+    </form>
+</div>
+</div>

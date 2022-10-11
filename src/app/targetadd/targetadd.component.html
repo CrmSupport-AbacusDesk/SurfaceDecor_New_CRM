@@ -1,0 +1,94 @@
+<div class="edit-modal">
+  <p class="heading">User Target</p>
+  
+  <div mat-dialog-content style="padding: 0px 15px;">
+    <div class="from-fields">
+      <div class="row">
+        <div class="col s6">
+          <div class="control-field">
+            <mat-form-field class="cs-input">
+              <mat-label>Select Company</mat-label>
+              <mat-select name="company_id" placeholder="Company" #company_id="ngModel"  [(ngModel)]="data.company_id" required>
+                <mat-option disabled="">Select Company</mat-option>
+                <mat-option *ngFor="let data3 of all_company_list ; let i = index" [value]="data3.id">{{data3.company_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>                  
+        </div>
+        <div class="col s6">
+          <div class="control-field">
+            <mat-form-field class="cs-input">
+              <mat-label>Select Brands</mat-label>
+              
+              <mat-select name="brand" placeholder="Unit Of Measurement" #brand="ngModel"  [(ngModel)]="data.brand"(keyup.enter)="getallbrand(data.brand)" multiple required>
+                <mat-option (keyup.enter)="getallbrand(data.brand)"(click)="getallbrand(data.brand)"*ngFor="let brand_data of all_brands_list ; let i = index" [value]="brand_data.id">{{brand_data.brand_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>                  
+        </div>
+      <div class="row">
+        
+        <div class="col s3">
+          <div class="control-field">
+            <mat-form-field class="cs-input" >
+              <mat-label>Year</mat-label>
+              <mat-select name="Year" [(ngModel)]="data.year" (ngModelChange)="data.value = '';data.month='';">
+                <mat-option value="{{current_year}}">{{current_year}}</mat-option>
+                <mat-option value="{{one_year_from_now}}">{{one_year_from_now}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>                  
+        </div>
+        
+        <div class="col s3">
+          <div class="control-field">
+            <mat-form-field class="cs-input" >
+              <mat-label>Month</mat-label>
+              <mat-select  name = "Month"[(ngModel)]="data.month" (ngModelChange)="data.value = ''" [disabled]='!data.year'>
+                <mat-option [disabled]=disable_month(data.year,0) value='Janaury'>Janaury</mat-option>
+                <mat-option [disabled]=disable_month(data.year,1) value='February'>February</mat-option>
+                <mat-option [disabled]=disable_month(data.year,2) value='March'>March</mat-option>
+                <mat-option [disabled]=disable_month(data.year,3) value='April'>April</mat-option>
+                <mat-option [disabled]=disable_month(data.year,4) value='May'>May</mat-option>
+                <mat-option [disabled]=disable_month(data.year,5) value='June'>June</mat-option>
+                <mat-option [disabled]=disable_month(data.year,6) value='July'>July</mat-option>
+                <mat-option [disabled]=disable_month(data.year,7) value='August'>August</mat-option>
+                <mat-option [disabled]=disable_month(data.year,8) value='September'>September</mat-option>
+                <mat-option [disabled]=disable_month(data.year,9) value='October'>October</mat-option>
+                <mat-option [disabled]=disable_month(data.year,10) value='November'>November</mat-option>
+                <mat-option [disabled]=disable_month(data.year,11) value='December'>December</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>                  
+        </div>
+        
+        <div class="col s2">
+          <div class="control-field flex-column">
+            <mat-form-field class="cs-input" >
+              <mat-label>Quantity</mat-label>
+              <input matInput type="text" onkeypress="return event.charCode>=48 && event.charCode<=57" name="value" [(ngModel)]="data.value" required> 
+            </mat-form-field>
+           
+          </div>
+        </div>
+        <div class="col s2">
+          <div class="control-field flex-column mt20">
+            
+            <a class="add-list ml10" mat-raised-button [disabled]="!(data.month && data.value && data.year  && data.brand && data.value!='')">
+              <i class="material-icons" (click)="(data.month && data.value && data.year && data.brand )?add_target():''">add</i>
+            </a>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+    
+      
+      
+      
+    </div>
+  </div>
+  
+  
+ 
+</div>

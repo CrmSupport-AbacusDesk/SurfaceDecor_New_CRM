@@ -1,0 +1,446 @@
+<div class="main-container">
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Order</h2>
+        <p>Add New Order</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <div class="container tab-container">
+      <!-- <div class="row"> -->
+        <div *ngIf="loader">
+          <mat-spinner class="loader">
+              <div>
+                  <p>Loading....</p>
+              </div>
+          </mat-spinner>
+      </div>
+      <form name="detail" #f="ngForm" (ngSubmit)="f.valid && submitDetail()">
+        <div class="row">
+          <div class="col s12">
+            <div class="col s12">
+
+              <div class="sprate-box">
+                <div class="cs-heading">
+                  <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+                </div>
+                <p>Add Order</p>
+                <mat-divider class="left-right-15 mt10"></mat-divider>
+
+                <div class="row mb20">
+                  <div class="col s6">
+                    <div class="from-fields">
+                      <div class="control-field">
+                        <mat-form-field class="cs-input">
+                          <mat-select name="dealer" placeholder="Select Dealer" [(ngModel)]="data.dealer"
+                            #dealer="ngModel"  (ngModelChange)=" getcreditdetail(data.dealer);cart_array = [];totalQty=0;grand_total=0;sub_total=0; " required=true>
+                            <mat-option disabled value="">Select Dealer</mat-option>
+                            <div class="search-block">
+                              <input type="search" name="dr_namee" placeholder="Search.." (input)="dr_data(data.dealertest)" #dealertest="ngModel" [(ngModel)]="data.dealertest">
+                            </div>
+                            <mat-option *ngFor="let list of dr_list"
+                              value="{{list.id}}">{{list.company_name}}</mat-option>
+                          </mat-select>
+
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+                </div>
+                <ng-container *ngIf="assignedBrandExist=='Not Exist'">
+                  <div class="data-not-available" >
+                    <div class="outer">
+                      <div class="iinear">
+                        <div class="figure" matRipple>
+                          <div class="header">
+                            <img src="assets/img/data-not-available-header.svg" alt="">
+                          </div>
+        
+                          <div class="description">
+                            <div class="cs-heading">
+                              <h2>Brand</h2>
+                            </div>
+                            <div class="img">
+                              <i class="material-icons">error_outline</i>
+                            </div>
+                            <div class="psc">
+                              <p>Not Assigned</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          </ng-container>
+                <ng-container *ngIf="categorylist.length>0">
+                  <div class="row">
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-select name="category" placeholder="Select Brand" [(ngModel)]="data.category"
+                              #category="ngModel">
+                              <mat-option disabled value="">Select Brand</mat-option>
+                              <div class="search-block">
+                                <input type="search" name="dr_namee" placeholder="Search.." (input)="getcreditdetail(data.dealer)" #brand_namee="ngModel" [(ngModel)]="item.brand_name">
+                              </div>
+                              <mat-option (click)="getitembrandwise()" *ngFor="let list1 of categorylist"
+                                value="{{list1.category}}">{{list1.category}}</mat-option>
+                            </mat-select>
+
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-select name="cat_no" placeholder="Select Item Name" [(ngModel)]="data.cat_no"
+                              #cat_no="ngModel">
+                              <mat-option disabled value="">Select Item Name{{data.cat_no}}</mat-option>
+                              <div class="search-block">
+                                <input type="search" name="item_name" placeholder="Search.." (input)="getitembrandwise()"
+                                  #item_name="ngModel" [(ngModel)]="data.item_name">
+                              </div>
+                              <mat-option (click)="getitemdetail()" *ngFor="let list3 of PRODUCTlist"
+                                value="{{list3.id}}">{{list3.product_name}}</mat-option>
+                            </mat-select>
+
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <mat-select name="panel_code" placeholder="Select Panel Code" [(ngModel)]="data.panel_code"
+                              #panel_code="ngModel">
+                              <mat-option disabled value="">Select Panel Code{{data.panel_code}}</mat-option>
+                              <div class="search-block">
+                                <input type="search" name="panel_namee" placeholder="Search.." (input)="filter_panel(item.panel_name)" #item_namee="ngModel" [(ngModel)]="item.panel_name">
+                              </div>
+                              <mat-option (click)="getitemdetail()" *ngFor="let list2 of PRODUCTlist"
+                                value="{{list2.panel_code}}">{{list2.panel_code}}</mat-option>
+                            </mat-select>
+
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                  <div class="row" *ngIf="data.category && data.panel_code && data.cat_no">
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="tel" name="qty" matInput placeholder="Enter Qty" #qty="ngModel"
+                              [(ngModel)]="product.qty" (ngModelChange)="data.cartoon_qty = '' ; calculate_amt('qty')" (keypress)="CHECKDECIMAL($event)">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="tel" name="price" matInput placeholder="Price" #price="ngModel"
+                              [(ngModel)]="product.price"  readonly>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s4">
+                      <div class="from-fields">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="tel" name="amount" matInput placeholder="Amount" #subtotal_discounted="ngModel"
+                              [(ngModel)]="product.subtotal_discounted"  readonly>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col s12">
+                      <div class="cs-btn fixedd mt32 text-right">
+                        <div class="in-btn">
+                          <a *ngIf="product.qty>0" (click)="addToCart()" mat-raised-button color="accent">ADD TO LIST</a>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col s12 mt20">
+
+              <div class="sprate-box">
+
+
+                <div class="row mb20" *ngIf="data.dealer && credit_data.Outstanding_balance > 0">
+
+                  <div class="col s12">
+                    <div class="tab-space mt15">
+                      <div class="tabs">
+                        <ul class="mt10">
+                          <li style="background-color:#100762;">
+                            <div class="outer">
+                              <div class="inner" style="width:260px">
+                                <!-- {{data.dealer}} -->
+                                <span style="color: #fff;">Credit <span
+                                    class="dashicons dashicons-nametag"></span></span>
+                                <p style="color: #fff;">
+                                  &#8377; {{credit_data.credit_limit}}
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                          <li style="background-color:#5b8f21;">
+                            <div class="outer">
+                              <div class="inner" style="width:260px">
+                                <span style="color: #fff;">Outstanding <span
+                                    class="dashicons dashicons-nametag"></span></span>
+                                <p style="color: #fff;">
+                                  &#8377; {{credit_data.Outstanding_balance}}
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="w200" style="min-width: 200px; background-color: #FF0000;">
+                            <div class="outer">
+                              <div class="inner">
+                                <span style="color: #fff;">Overdue</span>
+                                <p style="color: #fff;"> &#8377;{{credit_data.Overdue_balance}}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+
+
+
+
+                <div class="row " *ngIf="data.panel_code||data.cat_no">
+
+                  <div class="col s12">
+                    <div class="details-info">
+                      <div class="basic-details" style="height:300px">
+                        <div class="cs-heading">
+                          <h2>Product Images</h2>
+
+                        </div>
+
+
+                        <div class="meet-gallery">
+                          <div class="img-video">
+                            <!-- <img (click)="imageModel(image)" height="247px" width="100%" src="{{serve.product_image_url+image}}"> -->
+                            <img  height="247px" width="100%" src="{{serve.product_image_url+image}}">
+                          </div>
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <mat-divider class="left-right-15 mt20"></mat-divider>
+            <div class="row"*ngIf="cart_array.length!=0">
+              <div class="col s12">
+                <div class="cs-collapse mt10">
+
+                  <h2 style="display: inline-block;
+                                      padding: 10px;
+                                      border-radius: 0px 20px 20px 0px;
+                                      margin-bottom: 14px; background-color:#275478;
+                                      font-size: 13px;
+                                      letter-spacing: 0.16em;
+                                      line-height: 15px;
+                                      text-align: left;
+                                      text-transform: uppercase;
+                                      color: #fff">
+                    Items Information
+                  </h2>
+
+
+
+                  <div class="collapse-body pt0">
+                    <div class="cs-form">
+
+                      <div class="cs-table left-right-20" *ngIf="cart_array!=[]">
+                        <div class="table-head">
+                          <table class="sno-border">
+                            <tr>
+                              <th class="w40 text-center"></th>
+                              <th class="w80">Brand</th>
+                              <th class="w100">Item Name</th>
+                              <th class="w80">Panel Code</th>
+                              <th class="w100">Price</th>
+
+                              <th class="w100">Qty</th>
+
+                              <th class="w100">Discontinued</th>
+
+                              <th class="w100">Stock Available</th>
+                              <th class="w100">Amount</th>
+
+                              <th class="w80">Action</th>
+
+
+                            </tr>
+                          </table>
+                        </div>
+
+                        <div class="table-container">
+                          <div class="table-content">
+                            <table class="sno-border">
+                              <tr *ngFor="let data3 of cart_array, let i=index;">
+                                <td class="w40 text-center">1</td>
+
+                                <td class="w80"> {{data3.brand}}</td>
+
+                                <td class="w100">{{data3.product_name}}</td>
+
+                                <td class="w80">
+                                  {{data3.panel_code}}
+                                </td>
+
+
+
+
+                                <td class="w100">
+                                  <span>
+                                    &#8377;
+                                  </span>
+
+                                  {{data3.price}}
+                                </td>
+                                <td class="w100">
+                                  {{data3.qty}}
+<!--                                   
+                                  <input type="number" class="input-bdr" value="{{data3.qty}}"
+                                  name="qty" #qty="ngModel" [(ngModel)]="data3.qty"
+                                  (ngModelChange)="calc(list.id,list.qty)"
+                                  onkeypress="return event.charCode>=48 && event.charCode<=57" min="1"> -->
+                                </td>
+
+
+                                <td class="w100">
+                                  {{data3.status_code == 'DIS' || data3.status_code == 'DIS AIM' || data3.status_code ==
+                                  'WRONG' || data3.status_code == 'NONE' || data3.status_code == 'LAX' ||
+                                  data3.status_code == 'MTO' ? 'Yes':'No'}}
+                                </td>
+                                <td class="w100">{{data3.stock_qty > data3.minimum_qty ? "Available" : 'Not Available'}}
+                                </td>
+                                <td class="w100">
+                                  <span>
+                                    &#8377;
+                                  </span>
+
+                                  {{data3.subtotal_discounted}}
+                                </td>
+                                <td class="w80 text-center">
+                                  <a mat-button class="delete-mat"><i class="material-icons red-clr"
+                                      (click)="deleteorderitem(i)">delete_sweep</i></a>
+                                </td>
+
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+            <div class="row"*ngIf="cart_array.length!=0">
+              <div class="col s8">
+                <div class="control-field">
+                  <mat-form-field class="cs-input" style="width:100%" appearance="outline">
+                      <textarea matInput placeholder="Enter Remarks" name="order_remark"
+                          #order_remark="ngModel" [(ngModel)]="data.order_remark"
+                          class="h112"></textarea>
+                  </mat-form-field>
+              </div>
+              </div>
+              <div class="col s4">
+                <div class="invoice-table">
+                  <table>
+
+                    <tr>
+                      <td>Total Qty</td>
+                      <td class="w30 text-center">:</td>
+                      <td class="w200 text-right ">{{totalQty}}</td>
+                    </tr>
+
+
+                    <tr>
+                      <td>Sub Total</td>
+                      <td class="w30 text-center">:</td>
+                      <td class="w200 text-right ">&#8377;{{sub_total == '0' ? '--' : (sub_total | number:'1.2-2')}} /-
+                      </td>
+                    </tr>
+
+
+
+
+
+                    <tr>
+                      <td>Grand Total</td>
+                      <td class="text-center">:</td>
+                      <td class="text-right ">&#8377; {{grand_total == '0' ? '--' : (grand_total | number:'1.0-0' )}} /-
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+              </div>
+              <div class="col s12" *ngIf="cart_array.length>0">
+                <div class="cs-btn fixedd mt32 text-right">
+                  <div class="in-btn">
+                            <button type="submit" [disabled]="order_lock" mat-raised-button color="accent">SUBMIT</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
