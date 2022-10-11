@@ -273,18 +273,20 @@
             </div>
 
             <div class="sprate-box padding0">
+              <div class="territory-info">
               <div class="full-address">
                 <div class="top-heading">
                   <h2>DEALERS</h2>
                 </div>
-                <div class="ds-from-fields">
+                <div *ngFor="let list of Dealer_list;let index=index" class="ds-from-fields">
                   <div class="cs-row">
                     <div class="static-info">
-                      <p>Dealer Name</p>
+                      <!-- <p>Dealer Name</p> -->
                       <p>{{detail.channel_partner && detail.channel_partner!='' ? detail.channel_partner : '--'}}</p>
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
 
@@ -305,10 +307,10 @@
                   <h2>DEALERS</h2>
                 </div>
                 <div class="ds-from-fields">
-                  <div class="cs-row">
+                  <div  class="cs-row">
                     <div class="static-info">
                       <p>Dealer Name</p>
-                      <p>{{detail.channel_partner && detail.channel_partner!='' ? detail.channel_partner : '--'}}</p>
+                      <p>{{list.name ? list.name : '--'}}</p>
                     </div>
                   </div>
                 </div>

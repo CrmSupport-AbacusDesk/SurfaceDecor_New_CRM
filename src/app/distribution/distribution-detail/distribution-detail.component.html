@@ -471,6 +471,72 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="sprate-box mb15">
+                                <div class="territory-info" *ngIf="sales_executive_update!='true'">
+                                    <div class="head " [ngClass]="{'active':active.user==true}">
+                                        <h2>Sub-Dealer</h2>
+                                        <!-- <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
+                                                class="material-icons">create</i></a> -->
+                                    </div>
+                                    <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
+                                        <div class="checkbox-outer" style="min-height: 115px; max-height: 115px;">
+                                            <section class="checkbox-inner bodr0">
+                                                <mat-checkbox class="check-list bg-none check-none" value="1"
+                                                    *ngFor="let row of dr_detail.assign_user">
+                                                    <div class="name-outer">
+                                                        <div class="outer">
+                                                            <div class="inner">
+                                                                <div class="name-inner">
+                                                                    {{row.sales_executive_name.charAt(0).toUpperCase()}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-box">
+                                                        <h2>{{row.sales_executive_name}}</h2>
+                                                        <p>{{row.role_name}}</p>
+                                                    </div>
+                                                </mat-checkbox>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="territory-info" *ngIf="sales_executive_update=='true'">
+
+                                    <div class="head" [ngClass]="{'active':active.user==true}">
+                                        <h2>Sales User</h2>
+                                        <i class="material-icons search-icon right20"
+                                            (click)="toggleterritory('user','open')" matRipple>search</i>
+                                        <input type="text" placeholder="search..." class="fix-search"
+                                            (input)="getItemsList(search.search)" #search="ngModel"
+                                            [(ngModel)]="search.search">
+                                        <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
+                                            matRipple>clear</i>
+                                    </div>
+                                    <div class="cs-logs">
+                                        <div class="cs-checkbox">
+                                            <div class="checkbox-outer">
+                                                <section class="checkbox-inner">
+                                                    <ng-container *ngFor="let list of asmList;let index=index"
+                                                        aria-required="true">
+                                                        <mat-checkbox (scroll)="scrollHandler($event)"
+                                                            class="check-list" [checked]="list.check"
+                                                            (change)="product_Brand(list.id,index,$event,list)"
+                                                            value="{{list.name}}">{{list.name}} | {{list.role_name}}
+                                                        </mat-checkbox>
+                                                    </ng-container>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cs-btn text-right mb10 mr10">
+                                        <div class="in-btn sm-btn">
+                                            <button mat-raised-button color="accent"
+                                                (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="sprate-box mb15">
                                 <div class="territory-info">
