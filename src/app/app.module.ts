@@ -157,6 +157,7 @@ import { TargetaddComponent } from './targetadd/targetadd.component';
 import { AddsurfaceorderComponent } from './addsurfaceorder/addsurfaceorder.component';
 import { BillingdocumentComponent } from './billingdocument/billingdocument.component';
 import { ShowroomEnquiryListComponent } from './showroom-enquiry-list/showroom-enquiry-list.component';
+import { AddSubDealerModalComponent } from './add-sub-dealer-modal/add-sub-dealer-modal.component';
 
 
 const routes: Routes = [
@@ -413,6 +414,7 @@ const routes: Routes = [
     BillingdocumentComponent,
     ShowroomEnquiryListComponent,
     FollowupAddComponent,
+    AddSubDealerModalComponent,
 
   ],
   imports: [
@@ -453,7 +455,7 @@ const routes: Routes = [
 
   entryComponents: [
 TargetaddComponent,BillingdocumentComponent,
-    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent
+    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent
   ],
 
   exports: [RouterModule],

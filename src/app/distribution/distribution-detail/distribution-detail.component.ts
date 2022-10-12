@@ -13,6 +13,7 @@ import { ChartType, ChartDataSets, ChartOptions } from 'chart.js';
 import { Location } from '@angular/common'
 import { StatusModalComponent } from 'src/app/order/status-modal/status-modal.component';
 import { BillingdocumentComponent } from 'src/app/billingdocument/billingdocument.component';
+import { AddSubDealerModalComponent } from 'src/app/add-sub-dealer-modal/add-sub-dealer-modal.component';
 
 
 
@@ -74,6 +75,7 @@ export class DistributionDetailComponent implements OnInit {
     search2: any = {};
     tmpsearch2: any = {};
     sales_executive_update: any;
+    sub_dealer_update: any;
     brands_update:any;
     temp_dis: any;
     disc_edit: any = false;
@@ -1067,5 +1069,20 @@ export class DistributionDetailComponent implements OnInit {
               });
               }
           
+
+              openModelToAddSubDealer(){
+                const dialogRef=this.dialog.open(AddSubDealerModalComponent,{
+                    panelClass:'rightmodal',
+                    data: {
+                        dr_id:this.dr_id
+                    }
+                    
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                    console.log(result);
+                    console.log('The dialog was closed');
+              
+                });
+              }
 
 }
