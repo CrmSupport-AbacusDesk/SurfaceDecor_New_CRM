@@ -305,6 +305,21 @@ input[type=number] {
 
 
 }
+
+.rightmodal {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0px !important;
+    height: 100%;
+    border-radius: 0px !important;
+    width: 450px !important;
+  
+    .mat-dialog-content{
+        max-height: 100% !important;
+    }
+  }
+
+
 .img-list
 {
     margin-top: 9px;

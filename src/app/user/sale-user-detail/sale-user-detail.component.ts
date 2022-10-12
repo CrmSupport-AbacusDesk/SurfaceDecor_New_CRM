@@ -73,7 +73,9 @@ export class SaleUserDetailComponent implements OnInit {
       this.detail = result['user_detail']['data'];
       this.assign_module_data = result['user_detail']['assignModule'];
       this.dr_brand_list = this.detail['assign_brand']
-      this.Dealer_list = result['user_detail']['data']['dealer']
+   
+
+    
       // this.user_profile=['user_detail']['data']['user_profile']
 
       this.access_level = this.detail.access_level;

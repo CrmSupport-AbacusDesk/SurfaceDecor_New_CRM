@@ -472,11 +472,11 @@
                                 </div>
                             </div>
                             <div class="sprate-box mb15">
-                                <div class="territory-info" *ngIf="sales_executive_update!='true'">
+                                <div class="territory-info" *ngIf="sub_dealer_update!='true'">
                                     <div class="head " [ngClass]="{'active':active.user==true}">
                                         <h2>Sub-Dealer</h2>
-                                        <!-- <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
-                                                class="material-icons">create</i></a> -->
+                                        <a class="edit-item" (click)="openModelToAddSubDealer()"><i
+                                                class="material-icons">add</i></a>
                                     </div>
                                     <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
                                         <div class="checkbox-outer" style="min-height: 115px; max-height: 115px;">
@@ -501,7 +501,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="territory-info" *ngIf="sales_executive_update=='true'">
+                                <!-- <div class="territory-info" *ngIf="sales_executive_update=='true'">
 
                                     <div class="head" [ngClass]="{'active':active.user==true}">
                                         <h2>Sales User</h2>
@@ -535,7 +535,7 @@
                                                 (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="sprate-box mb15">
