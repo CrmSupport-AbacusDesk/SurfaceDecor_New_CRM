@@ -66,6 +66,7 @@ export class PearlService {
   // myimgurl2="https://apps.abacusdesk.com/surfacedekor/";
   // dbUrl="https://apps.abacusdesk.com/surfacedekor/crm/api/index.php/";
   // product_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Products/";
+  // sub_dealer = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/sub_dealer/";
   // billing_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/invoice_deliveryDoc/";
   // new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Popgift/"
   // pdf_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/bill_pdf/"
@@ -78,6 +79,7 @@ export class PearlService {
   myimgurl2="https://apps.abacusdesk.com/surfacedekortest/";
   dbUrl="https://apps.abacusdesk.com/surfacedekortest/crm/api/index.php/";
   product_image_url = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/Products/";
+  sub_dealer = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/sub_dealer/";
   billing_image_url = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/invoice_deliveryDoc/";
   new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/Popgift/"
   pdf_url="https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/bill_pdf/"

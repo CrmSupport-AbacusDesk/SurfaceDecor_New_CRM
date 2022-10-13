@@ -35,7 +35,7 @@
               </div>
               <div class="select-one">
                 <mat-radio-group name="type" [(ngModel)]="data.type" (ngModelChange)="getSalesUserlist()">
-                  <mat-radio-button value="Executive">Executive</mat-radio-button>
+                  <mat-radio-button value="MarketUser">Executive</mat-radio-button>
                   <mat-radio-button value="ShowroomUser">Showroom User</mat-radio-button>
                 </mat-radio-group>
               </div>
@@ -67,12 +67,12 @@
                         </div>
                         <div *ngIf="data.type" class="control-field">
                           <mat-form-field class="cs-input">
-                            <mat-label>Select User {{data.type}}</mat-label>
+                            <mat-label>Select {{data.type}}</mat-label>
                             <mat-select name="executive" placeholder="Select Executive" [(ngModel)]="data.executive"
                               (ngModelChange)="getCompanyName()" required>
                               <mat-option disabled>Select User</mat-option>
                               <div class="search-block">
-                                <input type="search" name="searchuser" placeholder="Search.." (input)="dr_data(data.searchuser)" #searchuser="ngModel" [(ngModel)]="data.searchuser">
+                                <input type="search" name="searchuser" placeholder="Search.." (input)="dr_data(item.searchuser)" #searchuser="ngModel" [(ngModel)]="item.searchuser">
                               </div>
                               <mat-option  *ngFor="let r of sales_user"  value="{{r.id}}">{{r.name}}</mat-option>
                             </mat-select>
@@ -88,20 +88,20 @@
                             </mat-select>
                           </mat-form-field>
                         </div> -->
-                        <div *ngIf="data.type == 'Executive'" class="control-field">
+                        <div *ngIf="data.type == 'MarketUser'" class="control-field">
                           <mat-form-field class="cs-input">
                             <mat-label>Select Company</mat-label>
-                            <mat-select name="Company" placeholder="Select Company" [(ngModel)]="data.Company" required>
+                            <mat-select name="dr_Id" placeholder="Select Company" [(ngModel)]="data.dr_Id" required>
                               <div class="search-block">
-                                <input type="search" name="searchComapny" placeholder="Search.." (input)="searchCompanyName(data.searchComapny)" #searchComapny="ngModel" [(ngModel)]="data.searchComapny">
+                                <input type="search" name="searchComapny" placeholder="Search.." (input)="searchCompanyName(item.searchComapny)" #searchComapny="ngModel" [(ngModel)]="item.searchComapny">
                               </div>
                               <mat-option  disabled>Select Company Name</mat-option>
-                              <mat-option  *ngFor="let data of dr_user" value="{{data.dr_id}}" >{{data.company_name}}</mat-option>
+                              <mat-option  *ngFor="let data of dr_user" value="{{data.dr_id}}">{{data.company_name}}</mat-option>
                             </mat-select>
                           </mat-form-field>
                         </div>
 
-                        <div *ngIf="data.type != 'Executive'" class="control-field">
+                        <div *ngIf="data.type!='MarketUser'" class="control-field">
                           <mat-form-field class="cs-input">
                             <input matInput placeholder="Customer Name" name="customer_name" #customer_name="ngModel"
                               [(ngModel)]="data.customer_name" [ngClass]="{'has-error' : customer_name.invalid } "
@@ -112,7 +112,7 @@
                         </div>
 
 
-                        <div *ngIf="data.type!='Executive'" class="control-field">
+                        <div *ngIf="data.type!='MarketUser'" class="control-field">
                           <mat-form-field class="cs-input">
                             <input type="text" matInput placeholder="Mobile" name="mobile" #mobile="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57" minlength="10" maxlength="10" 
                               [(ngModel)]="data.mobile" [ngClass]="{'has-error' : mobile.invalid } " required>

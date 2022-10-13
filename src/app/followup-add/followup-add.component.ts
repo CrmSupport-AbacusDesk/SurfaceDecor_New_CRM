@@ -125,7 +125,9 @@ export class FollowupAddComponent implements OnInit {
     }
     
 
-    this.serve.fetchData({data:this.data,'login_id':this.login_id},'save/fldls').subscribe((res)=>{
+    this.serve.fetchData({data:this.data,'login_id':this.login_id},'Followup/followup_add').subscribe((res)=>{
+      console.log(res);
+      this.rout.navigate(['/followup-list']);
       
       setTimeout(() => {
         this.loader=false;

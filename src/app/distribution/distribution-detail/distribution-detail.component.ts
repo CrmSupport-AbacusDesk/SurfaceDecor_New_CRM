@@ -44,8 +44,9 @@ export class DistributionDetailComponent implements OnInit {
     userDiscountList = [];
     active: any = {};
     loader: any;
-  today = new Date();
-  opening_bal:any='';
+    subDealerList:any=[];
+    today = new Date();
+    opening_bal:any='';
     order_data: any = [];
     login_data: any = {};
     primary_ord_data: any = [];
@@ -291,6 +292,7 @@ export class DistributionDetailComponent implements OnInit {
                 this.temp_order = this.order_data;
                 this.assignUserList = result['distributor_detail']['result']['assign_user'];
                 this.assignDelaerList = result['distributor_detail']['result']['assign_dealer'];
+                this.subDealerList = result['distributor_detail']['result']['sub_dealers'];
                 // this.assign_brand = result['distributor_detail']['result']['brand'];
                 this.dealersCount = result['distributor_detail']['dealersCount'];
                 this.assignUserId = this.assignUserList;
@@ -1081,8 +1083,26 @@ export class DistributionDetailComponent implements OnInit {
                 dialogRef.afterClosed().subscribe(result => {
                     console.log(result);
                     console.log('The dialog was closed');
-              
+                    this.retailerDetail();
                 });
+              }
+
+             
+
+              openDialog2(image){
+                const dialogRef = this.dialog.open(StatusModalComponent,{
+                  // width: '500px',
+                  panelClass:'image-modal',
+                    data:{
+                      image,
+                      from:"user target modal"
+                    }
+                  }
+                  )
+                  dialogRef.afterClosed().subscribe((result)=>{
+                    console.log(result);
+                    console.log("this dialog box is closed");
+                  })
               }
 
 }
