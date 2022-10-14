@@ -44,8 +44,8 @@
         <ul>
           <li><a class="" [ngClass]="active_tab == 'Pending' ? 'active' : ''"
               (click)="active_tab = 'Pending';get_enquiry_list()">Pending</a></li>
-          <li><a class="" [ngClass]="active_tab == 'partiallyconverted' ? 'active' : ''"
-              (click)="active_tab = 'partiallyconverted';get_enquiry_list()">Partially converted</a></li>
+          <li><a class="" [ngClass]="active_tab == 'partially_converted' ? 'active' : ''"
+              (click)="active_tab = 'partially_converted';get_enquiry_list()">Partially converted</a></li>
           <li><a class="" [ngClass]="active_tab == 'converted' ? 'active' : ''"
               (click)="active_tab = 'converted';get_enquiry_list()">Converted</a></li>
               <li><a class="" [ngClass]="active_tab == 'closed' ? 'active' : ''"
@@ -257,7 +257,7 @@
               </td>
               <td class="w90" *ngIf="data.order_id=='0'">NA</td>
               <td class="w90">
-                <div class="action-btn-group">
+                <div class="action-btn-group" *ngIf="view_delete">
 
                   <button mat-button class="delete-mat" (click)="delete_enquiry_row(data.id)"><i
                       class="material-icons red-clr">delete_sweep</i>

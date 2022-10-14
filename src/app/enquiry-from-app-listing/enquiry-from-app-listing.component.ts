@@ -29,6 +29,10 @@ export class EnquiryFromAppListingComponent implements OnInit {
   total_page:any=0;
   start:any=0;
   page_limit:any=50;
+  assign_login_data:any=[];
+  view_edit : boolean = true;
+  view_add : boolean = true;
+  view_delete : boolean = true;
   pagination_count:any=0
   constructor(public serve:PearlService,public popup_dialog: MatDialog,public route:Router,public sessionstorage:LocalStorage,public toastMsg:ToastrManager,
     public alertctrl:DialogComponent
@@ -36,6 +40,20 @@ export class EnquiryFromAppListingComponent implements OnInit {
     console.log(this.sessionstorage);
     this.login=this.sessionstorage.getSession(); 
     console.log(this.login);
+    this.assign_login_data = this.sessionstorage.getSession();
+    this.assign_login_data = this.assign_login_data.value;
+    this.assign_login_data = this.assign_login_data.assignModule;
+    console.log(this.assign_login_data);
+    const index = this.assign_login_data.findIndex(row => row.module_name == 'Enquiry');
+    console.log(index);
+    
+    this.assign_login_data[index].add == 'true' ? this.view_add = true : this.view_add = false;
+    this.assign_login_data[index].edit == 'true' ? this.view_edit = true : this.view_edit = false;
+    this.assign_login_data[index].delete == 'true' ? this.view_delete = true : this.view_delete = false;
+     
+    console.log(this.view_add);
+    console.log(this.view_edit);
+    console.log(this.view_delete);
     
   }
 

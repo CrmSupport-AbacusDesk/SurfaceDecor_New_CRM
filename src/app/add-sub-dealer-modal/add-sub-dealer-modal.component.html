@@ -8,7 +8,7 @@
 
 <div class="edit-modal">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?addSubDealers(data.reason,data.order_status):''">
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?addSubDealers():''">
 
     <p class="heading">Add Sub Dealers</p>
     <!-- {{data.order_status}} -->
