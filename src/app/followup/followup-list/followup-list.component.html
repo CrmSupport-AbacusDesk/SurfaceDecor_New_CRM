@@ -150,8 +150,8 @@
                 <td class="w120">{{list.sales_user_name}}</td>
                 <td class="w180" matTooltip="{{list.dr_name}}" matTooltipPosition="above">{{list.dr_name}}</td>
                 <td class="w100"> {{ list.dr_city && list.dr_city!=''?list.dr_city:'--'}}</td>
-                <td class="w150">{{list.contact_person}}</td>
-                <td class="w90">{{list.mobile}}</td>
+                <td class="w150">{{list.contact_person ? list.contact_person:list.customer_name}}</td>
+                <td class="w90">{{list.mobile ? list.mobile:list.contact_no}}</td>
                 <td class="w120">{{list.follow_up_date | date : 'd MMM ,y'}}</td>
                 <td class="w120">{{list.follow_up_type}}</td>
                 <td matTooltip="{{list.description}}" matTooltipPosition="above">{{list.description}}</td>

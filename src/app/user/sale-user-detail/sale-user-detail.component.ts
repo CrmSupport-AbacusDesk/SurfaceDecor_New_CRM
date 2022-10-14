@@ -310,10 +310,10 @@ export class SaleUserDetailComponent implements OnInit {
       if (this.rsm_list) {
         console.log('in if');
         for (let i = 0; i < this.rsm_list.length; i++) {
-          console.log('in for1');
+          // console.log('in for1');
 
           for (let j = 0; j < this.team_edit.length; j++) {
-            console.log('in for2');
+            // console.log('in for2');
 
             if (this.rsm_list[i]['name'] == this.team_edit[j]['name']) {
               console.log('in if 2');

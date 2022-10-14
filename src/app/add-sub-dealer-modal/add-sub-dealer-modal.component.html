@@ -8,7 +8,7 @@
 
 <div class="edit-modal">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?addSubDealers(data.reason,data.order_status):''">
+    (ngSubmit)="(update_basic.valid && update_basic.submitted)?addSubDealers():''">
 
     <p class="heading">Add Sub Dealers</p>
     <!-- {{data.order_status}} -->
@@ -66,7 +66,7 @@
           <div class="row">
             <div class="control-field col s12" *ngIf="items.document_type">
               <mat-form-field class="cs-input">
-                <mat-label>{{items.document_type}} No.</mat-label>
+                <mat-label>Document No.</mat-label>
                 <input type="text" matInput name="document_no" #document_no="ngModel" [(ngModel)]="items.document_no"
                   required>
                 <div class="alert alert-danger" *ngIf="!document_no.valid && update_basic.submitted">
@@ -81,7 +81,7 @@
                 <p>UPLOAD FILE</p>
 
                 <ul>
-                  <li>
+                  <li *ngIf="selectedFile.length==0" >
                     <label class="cs-file-img default">
                       <i class="material-icons">cloud_upload</i>
                       <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg,.pdf,.docx"
@@ -94,7 +94,7 @@
 
                   </li>
 
-                  <li class="multi-images">
+                  <li class="multi-images" *ngIf="selectedFile.length>0" >
                     <label *ngFor="let imageType of selectedFile; let i = index">
                       <img *ngIf="imageType.type == 'image/jpeg' || imageType.type ==  'image/png'  " height="75"
                         width="75" [src]="imageType.path" src="assets/imgs/jpg.svg">

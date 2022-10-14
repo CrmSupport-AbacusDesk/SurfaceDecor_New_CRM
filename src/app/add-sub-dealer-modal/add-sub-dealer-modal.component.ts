@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { DialogComponent } from '../dialog.component';
 import { LocalStorage } from '../localstorage.service';
@@ -18,7 +19,7 @@ export class AddSubDealerModalComponent implements OnInit {
   login_user : any;
   login_id : any;
   dr_id:any='';
-  constructor(@Inject(MAT_DIALOG_DATA)public data,public dialog:MatDialog,public serve:PearlService,public session: LocalStorage,public alert:DialogComponent) {
+  constructor(@Inject(MAT_DIALOG_DATA)public data,public dialog:MatDialog,public serve:PearlService,public session: LocalStorage,public alert:DialogComponent,public toastCtrl:ToastrManager) {
   console.log(data);
     this.dr_id=data.dr_id;
   this.login_user = JSON.parse(sessionStorage.getItem('login'));
@@ -37,8 +38,16 @@ export class AddSubDealerModalComponent implements OnInit {
 
   addSubDealers(){
       this.loader=true;
-      this.serve.fetchData({'item':this.items,'image':this.selectedFile,'login_id':this.login_id,'dr_id':this.dr_id},'save/dsudnas').subscribe((res)=>{
+      this.serve.fetchData({'item':this.items,'image':this.selectedFile,'login_id':this.login_id,'dr_id':this.dr_id},'Distributors/sub_dealers').subscribe((res)=>{
         console.log(res);
+          if(res['msg']=='Added Successfully'){
+            this.toastCtrl.successToastr('Added Successfully');
+            this.dialog.closeAll();
+          }else{
+            this.toastCtrl.errorToastr('Something Went Wrong...');
+
+          }
+
         setTimeout(() => {
           this.loader=false;
         }, 2000);

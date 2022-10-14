@@ -35,7 +35,7 @@ export class PlumberMeetComponent implements OnInit {
     this.assign_login_data = this.assign_login_data.value;
     this.assign_login_data = this.assign_login_data.assignModule;
     console.log(this.assign_login_data);
-    const index = this.assign_login_data.findIndex(row => row.module_name == 'plumber meet');
+    const index = this.assign_login_data.findIndex(row => row.module_name == 'Carpenter Meet');
     console.log(index);
 
     if(index != -1){

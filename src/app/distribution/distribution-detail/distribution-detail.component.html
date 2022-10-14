@@ -388,6 +388,110 @@
 
                             </div>
                         </div>
+
+                        <div class="sprate-box padding0 mt15">
+                            <a class="edit-item" color="accent" 
+                                (click)="openModelToAddSubDealer()"><i
+                                    class="material-icons">add</i></a>
+                            <div class="full-address">
+                                <div class="top-heading">
+                                    <h2>Sub-Dealer</h2>
+                                </div>
+
+                                <!-- <div class="ds-from-fields"> -->
+
+                                    <div class="cs-row">
+                                        <div class="cs-table cs-table-scroll">
+                                          
+                                            <div class="stickyTableHead">
+                                                <div class="table-head">
+                                                    <table>
+                                               
+                                                        <tr>
+                                                            <th class="w100">Customer Name</th>
+                                                            <th class="w100">Mobile</th>
+                                                            <th class="w150">Document Type</th>
+                                                            <th class="w150">Document No.</th>
+                    
+                                                            <th class="w100">Image</th>
+                                                           
+                    
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                              <!-- <div class="table-head bdrt">
+                                                    <table>
+
+                                                         <tr>
+                                                            <th class="w30"></th>
+                                                            <th class="w100"></th>
+                                                            <th class="w150"></th>
+                                                            <th class="w150"></th>
+                    
+                                                            <th class="w100">Opening Balance- &#8377;{{opening_bal}}</th>
+                                                            <th class="w100"></th>
+                                                            <th class="w100 text-right"></th>
+                                                            
+                    
+                                                        </tr>
+                                                    </table>
+                                                </div> -->
+                                            </div>
+                    
+                                            <div class="table-container">
+                                                <div class="table-content">
+                                                    <table class="sno-border">
+                                                        <tr *ngFor="let list of subDealerList;let i = index">
+                                                            <td class="w100">{{list.contact_person?list.contact_person:'N/A'}}</td>
+                                                            <td class="w100">{{list.contact_1?list.contact_1:'--'}}</td>
+                                                            <td class="w150">{{list.document_type ? list.document_type:'--'}}</td>
+                                                            <td class="w150">{{list.document_no?list.document_no:'--'}}</td>
+                                                            <td class="w100">
+                                                                <img  height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.image}}" (click)="openDialog2(serve.sub_dealer+list.image)"  /> 
+                                                              
+                                                            </td>
+                                                            
+                                                            <!-- <td class="w100">{{list.payment_status=='R'?list.payment_amount:'--'}}</td>
+                                                            <td class="w100 text-right">&#8377;{{list.continue_opening_balance}}</td> -->
+                                                          
+                    
+                                                        </tr>
+                                                       
+                                                    </table>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="data-not-available" *ngIf="subDealerList.length== '0'">
+                                                <div class="outer">
+                                                    <div class="iinear">
+                                                        <div class="figure" matRipple>
+                                                            <div class="header">
+                                                                <img src="assets/img/data-not-available-header.svg" alt="">
+                                                            </div>
+                    
+                                                            <div class="description">
+                                                                <div class="cs-heading">
+                                                                    <h2>Sub-Dealers</h2>
+                                                                </div>
+                                                                <div class="img">
+                                                                    <i class="material-icons">error_outline</i>
+                                                                </div>
+                                                                <div class="psc">
+                                                                    <p>data not Available</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                        </div>
+                                    </div>
+                                  
+                                <!-- </div> -->
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col {{dr_detail.type==1 ? 's3' : 's4'}}">
@@ -471,72 +575,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="sprate-box mb15">
-                                <div class="territory-info" *ngIf="sub_dealer_update!='true'">
-                                    <div class="head " [ngClass]="{'active':active.user==true}">
-                                        <h2>Sub-Dealer</h2>
-                                        <a class="edit-item" (click)="openModelToAddSubDealer()"><i
-                                                class="material-icons">add</i></a>
-                                    </div>
-                                    <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
-                                        <div class="checkbox-outer" style="min-height: 115px; max-height: 115px;">
-                                            <section class="checkbox-inner bodr0">
-                                                <mat-checkbox class="check-list bg-none check-none" value="1"
-                                                    *ngFor="let row of dr_detail.assign_user">
-                                                    <div class="name-outer">
-                                                        <div class="outer">
-                                                            <div class="inner">
-                                                                <div class="name-inner">
-                                                                    {{row.sales_executive_name.charAt(0).toUpperCase()}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="text-box">
-                                                        <h2>{{row.sales_executive_name}}</h2>
-                                                        <p>{{row.role_name}}</p>
-                                                    </div>
-                                                </mat-checkbox>
-                                            </section>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="territory-info" *ngIf="sales_executive_update=='true'">
-
-                                    <div class="head" [ngClass]="{'active':active.user==true}">
-                                        <h2>Sales User</h2>
-                                        <i class="material-icons search-icon right20"
-                                            (click)="toggleterritory('user','open')" matRipple>search</i>
-                                        <input type="text" placeholder="search..." class="fix-search"
-                                            (input)="getItemsList(search.search)" #search="ngModel"
-                                            [(ngModel)]="search.search">
-                                        <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
-                                            matRipple>clear</i>
-                                    </div>
-                                    <div class="cs-logs">
-                                        <div class="cs-checkbox">
-                                            <div class="checkbox-outer">
-                                                <section class="checkbox-inner">
-                                                    <ng-container *ngFor="let list of asmList;let index=index"
-                                                        aria-required="true">
-                                                        <mat-checkbox (scroll)="scrollHandler($event)"
-                                                            class="check-list" [checked]="list.check"
-                                                            (change)="product_Brand(list.id,index,$event,list)"
-                                                            value="{{list.name}}">{{list.name}} | {{list.role_name}}
-                                                        </mat-checkbox>
-                                                    </ng-container>
-                                                </section>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cs-btn text-right mb10 mr10">
-                                        <div class="in-btn sm-btn">
-                                            <button mat-raised-button color="accent"
-                                                (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
+                          
 
                             <div class="sprate-box mb15">
                                 <div class="territory-info">

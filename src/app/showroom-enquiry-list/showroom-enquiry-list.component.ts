@@ -18,7 +18,7 @@ export class ShowroomEnquiryListComponent implements OnInit {
   skelton : any = new Array(10);
   loader:any=false;
   data_not_found=false;
-  active_tab:any = 'InProcess';
+  active_tab:any = 'Pending';
   enquiry_list:any=[];
   search:any={};
   sales_user_list:any=[];
@@ -26,9 +26,12 @@ export class ShowroomEnquiryListComponent implements OnInit {
   enable_edit:any=0;
   pagenumber:any=0;
   total_page:any=0;
+  view_edit : boolean = true;
+  view_add : boolean = true;
+  view_delete : boolean = true;
   start:any=0;
   page_limit:any=50;
-
+  assign_login_data:any=[];
   pagination_count:any=0
   constructor(public serve:PearlService,public popup_dialog: MatDialog,public route:Router,public sessionstorage:LocalStorage,public toastMsg:ToastrManager,
     public alertctrl:DialogComponent
@@ -36,6 +39,20 @@ export class ShowroomEnquiryListComponent implements OnInit {
     console.log(this.sessionstorage);
     this.login=this.sessionstorage.getSession(); 
     console.log(this.login);
+    this.assign_login_data = this.sessionstorage.getSession();
+    this.assign_login_data = this.assign_login_data.value;
+    this.assign_login_data = this.assign_login_data.assignModule;
+    console.log(this.assign_login_data);
+    const index = this.assign_login_data.findIndex(row => row.module_name == 'Showroom Enquiry');
+    console.log(index);
+    
+    this.assign_login_data[index].add == 'true' ? this.view_add = true : this.view_add = false;
+    this.assign_login_data[index].edit == 'true' ? this.view_edit = true : this.view_edit = false;
+    this.assign_login_data[index].delete == 'true' ? this.view_delete = true : this.view_delete = false;
+     
+    console.log(this.view_add);
+    console.log(this.view_edit);
+    console.log(this.view_delete);
     
   }
 
