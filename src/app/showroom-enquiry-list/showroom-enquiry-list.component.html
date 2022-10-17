@@ -79,7 +79,7 @@
             <!-- <th class="w180">Brand</th> -->
             <!-- <th class="w200">Product</th> -->
             <!-- <th class="w90">QTY</th> -->
-            <!-- <th class="w100">Stock Quantity</th> -->
+            <th class="w100" *ngIf="active_tab == 'closed'">Remark</th>
             <th class="w90">Order Id</th>
             <th class="w90">Action</th>
             <!-- <th class="w130">Description</th> -->
@@ -163,7 +163,7 @@
             </th> -->
 
             <!-- <th class="w9  0"></th> -->
-            <!-- <th class="w100"></th> -->
+            <th class="w100" *ngIf="active_tab == 'closed'"></th>
 
 
             <th class="w90">
@@ -251,7 +251,7 @@
                     (click)="data.image && data.image!= null && data.image!= '' ? imageModel(data.image) : '' ">
                 </a>
               </td> -->
-              <!-- <td class="w100">{{data.stock_quantity}}</td> -->
+              <td class="w100" *ngIf="active_tab == 'closed'">{{data.remark}}</td>
               <td class="w90" *ngIf="data.order_id!='0'">
                 <a class="link-btn" mat-button (click)="orderDetail(data.order_id)">{{data.order_no}}</a>
               </td>
@@ -288,7 +288,7 @@
               <td class="w180">
                 <div>&nbsp;</div>
               </td>
-              <!-- <td class="w100"><div>&nbsp;</div></td> -->
+              <td class="w100" *ngIf="active_tab == 'closed'"><div>&nbsp;</div></td>
               <td class="w90">
                 <div>&nbsp;</div>
               </td>

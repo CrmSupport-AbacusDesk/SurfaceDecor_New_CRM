@@ -414,6 +414,7 @@
                                                             <th class="w150">Document No.</th>
                     
                                                             <th class="w100">Image</th>
+                                                            <th class="w100">Profile Image</th>
                                                            
                     
                                                         </tr>
@@ -448,6 +449,10 @@
                                                             <td class="w150">{{list.document_no?list.document_no:'--'}}</td>
                                                             <td class="w100">
                                                                 <img  height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.image}}" (click)="openDialog2(serve.sub_dealer+list.image)"  /> 
+                                                              
+                                                            </td>
+                                                            <td class="w100">
+                                                                <img  height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.profile_image}}" (click)="openDialog2(serve.sub_dealer+list.profile_image)"  /> 
                                                               
                                                             </td>
                                                             

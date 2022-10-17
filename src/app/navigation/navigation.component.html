@@ -57,11 +57,41 @@
             </li> -->
 
             <!-- <li *ngIf="false && login_data.view_dist_n_w_dealer=='1'"> -->
-            <li>
+            <!-- <li>
                 <a routerLink="/distribution-list" (click)="toggleDropdown(0)" routerLinkActive="active"><i class="material-icons nav-icon">people_alt</i> Dealers
-                    <!-- <span class="nav-counter orange-count">{{count.distributor_count}}</span> -->
+                    <span class="nav-counter orange-count">{{count.distributor_count}}</span>
                     <span class="nav-counter orange-count">{{serve.navigationCount.distributor_count}}</span>
                 </a>
+            </li> -->
+            <li class="dropdown" *ngIf="login_data.view_dist_n_w_dealer=='1'">
+                <a (click)="toggleDropdown(7)" [ngClass]="{'active':dealerActive}"><i class="material-icons nav-icon">people_alt</i>
+                    Dealers</a>
+                <ul>
+                    
+                    <li >
+                        <a routerLink="/distribution-list" routerLinkActive="active">
+                            Dealers
+                            <i class="material-icons">chevron_right </i>
+                            <!-- <span class="nav-counter orange-count">{{count.order}}</span> -->
+                            <span class="nav-counter orange-count">{{serve.navigationCount.distributor_count}}</span>
+
+                        </a>
+                    </li>
+
+    
+                    <li >
+                        <a routerLink="/sub-dealer-list" routerLinkActive="active">
+                            Sub Dealers
+                            <i class="material-icons"> chevron_right</i>
+                            <!-- <span class="nav-counter orange-count">{{count.pop_pending_order_count}}</span> -->
+                            <span class="nav-counter orange-count">{{serve.navigationCount.subDealerCount}}</span>
+
+
+                        </a>
+                    </li>
+
+
+                </ul>
             </li>
 
             <li class="dropdown" *ngIf="login_data.view_orders=='1'">

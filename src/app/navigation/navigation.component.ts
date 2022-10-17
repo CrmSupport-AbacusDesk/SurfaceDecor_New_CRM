@@ -21,6 +21,7 @@ export class NavigationComponent implements OnInit {
   distactive = false;
   ordersactive = false;
   enquiryactive = false;
+  dealerActive = false;
   masteractive = false;
   reportactive = false;
   leadactive = false;
@@ -82,6 +83,7 @@ export class NavigationComponent implements OnInit {
         this.ordersactive = true;
         this.leadactive = false;
         this.enquiryactive = false;
+        this.dealerActive = false;
         this.masteractive = false;
         this.reportactive = false;
 
@@ -89,6 +91,7 @@ export class NavigationComponent implements OnInit {
         this.leadactive = false;
         this.ordersactive = false;
         this.enquiryactive = false;
+        this.dealerActive = false;
 
         this.distactive = false;
         this.masteractive = false;
@@ -139,6 +142,8 @@ export class NavigationComponent implements OnInit {
       if (this.enquiryactive == false) {
         this.reportactive = false;
         this.enquiryactive = true;
+        this.dealerActive = false;
+
         this.distactive = false;
         this.ordersactive = false;
         this.leadactive = false;
@@ -148,6 +153,30 @@ export class NavigationComponent implements OnInit {
         this.reportactive = false;
         this.enquiryactive = false;
         this.leadactive = false;
+        this.dealerActive = false;
+
+        this.ordersactive = false;
+        this.distactive = false;
+        this.masteractive = false;
+
+      }
+
+
+    } else if (value == 7) {
+      if (this.dealerActive == false) {
+        this.reportactive = false;
+        this.dealerActive = true;
+        this.enquiryactive=false;
+        this.distactive = false;
+        this.ordersactive = false;
+        this.leadactive = false;
+        this.masteractive = false;
+
+      } else {
+        this.reportactive = false;
+        this.enquiryactive = false;
+        this.dealerActive = false;
+        this.leadactive = false;
         this.ordersactive = false;
         this.distactive = false;
         this.masteractive = false;
@@ -156,10 +185,13 @@ export class NavigationComponent implements OnInit {
 
 
     }
+
+
     else {
       this.distactive = false;
       this.ordersactive = false;
       this.enquiryactive = false;
+      this.dealerActive = false;
 
       this.masteractive = false;
       this.leadactive = false;

@@ -18,7 +18,7 @@ export class ShowroomEnquiryListComponent implements OnInit {
   skelton : any = new Array(10);
   loader:any=false;
   data_not_found=false;
-  active_tab:any = 'Pending';
+  active_tab:any='Pending';
   enquiry_list:any=[];
   search:any={};
   sales_user_list:any=[];
@@ -71,6 +71,7 @@ export class ShowroomEnquiryListComponent implements OnInit {
     if(action == "refresh"){
       this.search = {};
       this.enquiry_list = [];
+      this.active_tab='Pending';
       this.start=0;
 
     }
