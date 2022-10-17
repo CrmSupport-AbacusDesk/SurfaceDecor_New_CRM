@@ -158,6 +158,7 @@ import { AddsurfaceorderComponent } from './addsurfaceorder/addsurfaceorder.comp
 import { BillingdocumentComponent } from './billingdocument/billingdocument.component';
 import { ShowroomEnquiryListComponent } from './showroom-enquiry-list/showroom-enquiry-list.component';
 import { AddSubDealerModalComponent } from './add-sub-dealer-modal/add-sub-dealer-modal.component';
+import { SubdealerListComponent } from './subdealer-list/subdealer-list.component';
 
 
 const routes: Routes = [
@@ -202,6 +203,7 @@ const routes: Routes = [
 
   { path: 'distribution-detail/:id', component: DistributionDetailComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1', '2']}},
   { path: 'distribution-list', component: DistributionListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'sub-dealer-list', component: SubdealerListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   {path: 'companynames', component: CompanynamesComponent, canActivate: [AuthComponentGuard], data: {expectedRole: ['1']}},
 
   { path: 'distribution-order-list', component: DistributionOrderListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
@@ -415,6 +417,7 @@ const routes: Routes = [
     ShowroomEnquiryListComponent,
     FollowupAddComponent,
     AddSubDealerModalComponent,
+    SubdealerListComponent,
 
   ],
   imports: [

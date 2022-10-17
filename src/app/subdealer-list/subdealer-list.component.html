@@ -1,0 +1,206 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/distribution_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Sub Dealers</h2>
+        <p>Total Sub Dealers - {{dr_count}}</p>
+      </div>
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="dealerList('refresh') " matTooltip="Refresh"><i
+              class="material-icons"> refresh</i></a>
+        </li>
+      </ul>
+
+      <div class="top-pagination">
+        <ul>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; dealerList()"
+              [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; dealerList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; dealerList()"
+              [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50 text-center">&nbsp;</th>
+            <th class="w100">Created Date</th>
+            <th class="w200">Name</th>
+            <th class="w90">Contact No.</th>
+            <th class="w90">Company Name</th>
+            <th class="w80">Document Type</th>
+            <th class="w100">Document No. </th>
+            <th class="w100">Doc </th>
+            <th class="w150">Profile Image</th>
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt">
+        <table class="sno-border">
+          <tr>
+            <th class="w50 text-center">&nbsp;</th>
+            <th class="w100">
+              <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                    [(ngModel)]="search_val.date_created" (dateChange)="onDate($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w200">
+              <div class="th-search-acmt">
+              <mat-form-field class="example-full-width cs-input select-input">
+                <input matInput placeholder="Name" name="contact_person" (keyup.enter)="dealerList()"
+                  [(ngModel)]="search_val.contact_person">
+              </mat-form-field>
+            </div>
+          </th>
+            <th class="w90">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Mobile Number/Landine Number" name="contact_1" (keyup.enter)="dealerList()"
+                    [(ngModel)]="search_val.contact_1">
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w90">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Company Name" name="company_name" (keyup.enter)="dealerList()"
+                    [(ngModel)]="search_val.company_name">
+                </mat-form-field>
+              </div>
+            </th>
+            <th class="w80">
+              <div class="th-search">
+                <select (change)="dealerList()" name="document_type"
+                  [(ngModel)]="search_val.document_type">
+                  <option value="" [disabled]="true">Document Type</option>
+                  <option value="adhar_no">Adhar Card</option>
+                  <option value="drive_lincense_no">driving License</option>
+                  <option value="pan_no">Pan Card</option>
+                  <option value="voter_no">Voter Card</option>
+                </select>
+              </div>
+            </th>
+            <th class="w100"></th>
+            <th class="w100"></th>
+            <th class="w150"></th>      
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <tr *ngFor="let list of distributor_list;let i=index">
+            <td class="w50 text-center">{{start+i+1}}</td>
+            <td class="w100">{{list.date_created | date : 'd MMM y'}}</td>
+            <td class="w200">{{list.contact_person}}</td>
+            <td class="w90">{{list.contact_1 ? list.contact_1 : '--'}}</td>
+            <td class="w90">{{list.company_name ? list.company_name : '--'}}</td>
+            <td class="w80">{{list.document_type ? list.document_type : '--'}}</td>
+            <td class="w100">{{list.document_no ? list.document_no : '--'}}</td>
+            <td class="w100"> 
+               <img *ngIf="list.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.image}}" (click)="openDialog2(serve.sub_dealer+list.image)"  /> 
+              <img *ngIf="list.image==''" height="40px" width="40px" src="assets/img/no-data.gif"  /> 
+            </td>
+            <td class="w150">
+              <img *ngIf="list.profile_image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.profile_image}}" (click)="openDialog2(serve.sub_dealer+list.profile_image)"  /> 
+              <img *ngIf="list.profile_image==''" height="40px" width="40px" src="assets/img/no-data.gif"  /> 
+            </td>
+          
+          </tr>
+
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading sno-border" *ngIf="loader">
+              <td class="w50"><div>&nbsp;</div></td> 
+              <td class="w100"><div>&nbsp;</div></td> <!-- Created Date  -->
+              <td class="w200"><div>&nbsp;</div></td> <!--  Name -->
+              <td class="w90"><div>&nbsp;</div></td> <!-- Contact No. -->
+              <td class="w90"><div>&nbsp;</div></td> <!-- Company Name -->
+              <td class="w80"><div>&nbsp;</div></td><!-- Document Type -->
+              <td class="w100"><div>&nbsp;</div></td> <!--Document No. -->
+              <td class="w100"><div>&nbsp;</div></td> <!-- Doc -->
+              <td class="w150"><div>&nbsp;</div></td> <!-- Profile Image -->             
+            </tr>
+          </ng-container>
+
+        </table>
+
+      </div>
+    </div>
+    <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+      [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="dealerList()">
+    </div>
+
+
+    <div class="data-not-available" *ngIf="data_not_found==true">
+      <div class="outer">
+        <div class="iinear">
+          <div class="figure" matRipple>
+            <div class="header">
+              <img src="assets/img/data-not-available-header.svg" alt="">
+            </div>
+
+            <div class="description">
+              <div class="cs-heading">
+                <h2>Dealer List</h2>
+              </div>
+              <div class="img">
+                <i class="material-icons">error_outline</i>
+              </div>
+              <div class="psc">
+                <p>data not Found</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+    <!-- <a *ngIf="view_add" class="bottom-btn"  matTooltip="Add New" matTooltipPosition="above" mat-raised-button routerLink="/add-distribution/1"><i class="material-icons">add</i></a> -->
+  </div>
+</div>

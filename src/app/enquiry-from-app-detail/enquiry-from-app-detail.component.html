@@ -113,7 +113,17 @@
                   
 
                 </ul>
+
                 <ul>
+                  <li *ngIf="enquiry_detail.status=='Closed'">
+                    <div class="outer">
+                      <div class="inner">
+                        <span>Remark</span>
+                        <p>{{enquiry_detail.remark && enquiry_detail.remark !='' ? enquiry_detail.remark
+                          : 'N/A'}}</p>
+                      </div>
+                    </div>
+                  </li>
                   <li>
                     <div class="outer">
                       <div class="inner">
