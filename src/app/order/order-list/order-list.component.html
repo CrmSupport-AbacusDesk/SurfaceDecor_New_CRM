@@ -326,7 +326,7 @@
               , y, hh:mm aa '}}</td>
 
             <td class="w160">{{list.created_by_type == 'channel partner' ? list.ord_created_by :
-              list.ord_user_created_by}}</td>
+              list.ord_user_created_by}} ({{list.created_by_type == 'channel partner'? 'Dealer':list.created_by_type}})</td>
             <td class="w120"><a *ngIf="view_edit" class="link-btn" mat-button  (click)="orderDetail(list.id)">{{list.order_no}}</a> {{!view_edit?list.order_no:''}}</td>
                 <!-- routerLink="/order-detail/{{list.id}}"   routerLinkActive="active"-->
             <td class="w200">{{list.company_name}}</td>
