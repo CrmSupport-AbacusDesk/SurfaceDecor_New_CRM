@@ -161,6 +161,7 @@
             <th class="w40">S.No</th>
             <th class="w120">Date</th>
             <th class="w160">Created By</th>
+            <th class="w160">Designations</th>
             <th class="w120">Order ID</th>
             <th class="w200">Company Name</th>
             <th class="w90 text-center">Total Item</th>
@@ -204,6 +205,14 @@
                     (keyup.enter)="orderList()">
                 </mat-form-field>
               </div>
+            </th>
+            <th class="w160">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Created By. . ." name="created_by" [(ngModel)]="search_val.created_by"
+                    (keyup.enter)="orderList()">
+                </mat-form-field>
+              </div> -->
             </th>
             <th class="w120">
               <div class="th-search-acmt">
@@ -327,6 +336,7 @@
 
             <td class="w160">{{list.created_by_type == 'channel partner' ? list.ord_created_by :
               list.ord_user_created_by}} ({{list.created_by_type == 'channel partner'? 'Dealer':list.created_by_type}})</td>
+              <td class="w160">{{list.created_by_type == 'channel partner'? 'Dealer':list.created_by_type}}</td>
             <td class="w120"><a *ngIf="view_edit" class="link-btn" mat-button  (click)="orderDetail(list.id)">{{list.order_no}}</a> {{!view_edit?list.order_no:''}}</td>
                 <!-- routerLink="/order-detail/{{list.id}}"   routerLinkActive="active"-->
             <td class="w200">{{list.company_name}}</td>
@@ -409,64 +419,27 @@
 
           <ng-container *ngIf="loader">
             <tr class="sk-loading" *ngFor="let lead of skelton">
-              <td class="w40">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w120">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w160">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w120">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w200">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w90">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Hold'" class="w250">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Approved'" class="w120">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Approved'" class="w120">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='all'" class="w90">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Approved' " class="w130">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab!='all' && view_tab!='Pending' && view_tab!='Approved'">
-                <div>&nbsp;</div>
-              </td>
+              <td class="w40"><div>&nbsp;</div></td>
+              <td class="w120"><div>&nbsp;</div></td>
+              <td class="w160"><div>&nbsp;</div></td>
+              <td class="w160"><div>&nbsp;</div></td>
+              <td class="w120"><div>&nbsp;</div></td>
+              <td class="w200"><div>&nbsp;</div></td>
+              <td class="w90"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Hold'" class="w250"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Approved'" class="w120"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Approved'" class="w120"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='all'" class="w90"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Approved' " class="w130"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab!='all' && view_tab!='Pending' && view_tab!='Approved'"><div>&nbsp;</div></td>
 
-              <td *ngIf="view_tab=='Approved' || view_tab=='PDispatch' " class="w190">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Dispatch' " class="w190">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Dispatch' " class="w190">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Pending' " class="w130">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Approved' " class="w130">
-                <div>&nbsp;</div>
-              </td>
-              <td *ngIf="view_tab=='Approved' || view_tab=='PDispatch' " class="w130">
-                <div>&nbsp;</div>
-              </td>
-              <td class="w120">
-                <div>&nbsp;</div>
-              </td>
+              <td *ngIf="view_tab=='Approved' || view_tab=='PDispatch' " class="w190"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Dispatch' " class="w190"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Dispatch' " class="w190"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Pending' " class="w130"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Approved' " class="w130"><div>&nbsp;</div></td>
+              <td *ngIf="view_tab=='Approved' || view_tab=='PDispatch' " class="w130"><div>&nbsp;</div></td>
+              <td class="w120"><div>&nbsp;</div></td>
 
             </tr>
           </ng-container>
