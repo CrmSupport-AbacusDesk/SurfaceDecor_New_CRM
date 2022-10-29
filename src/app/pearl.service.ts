@@ -72,8 +72,8 @@ export class PearlService {
   pdf_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/bill_pdf/"
   pdf_url2="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/"
   
+
   // new test link 
-  
   // myurl="https://apps.abacusdesk.com/surfacedekortest/crm/";
   // myimgurl="https://apps.abacusdesk.com/surfacedekortest/";
   // myimgurl2="https://apps.abacusdesk.com/surfacedekortest/";

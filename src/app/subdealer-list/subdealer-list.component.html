@@ -126,7 +126,7 @@
         <table>
           <tr *ngFor="let list of distributor_list;let i=index">
             <td class="w50 text-center">{{start+i+1}}</td>
-            <td class="w100">{{list.date_created | date : 'd MMM y'}}</td>
+            <td class="w100">{{list.date_created | date : 'd MMM y, hh:mm aa'}}</td>
             <td class="w200">{{list.contact_person}}</td>
             <td class="w90">{{list.contact_1 ? list.contact_1 : '--'}}</td>
             <td class="w90">{{list.company_name ? list.company_name : '--'}}</td>
