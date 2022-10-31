@@ -253,6 +253,17 @@
                                         </div>
                                     </li>
                                 </ul>
+                                <ul class="mt10"  *ngIf="order_detail.outstanding_balance && order_detail.overdue_balance">
+                                    <li class=""  style="min-width: 200px; background-color: #56026b;">
+                                        <div class="outer">
+                                            <div class="inner">
+                                                <span style="color: #fff;">Overdue Days</span>
+                                                <p style="color: #fff;">{{order_detail.overdue_days}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
                                 <ul class="mt10">
                                     <li style="border: 1px solid #B29D9D;">
                                         <div class="outer">

@@ -28,9 +28,15 @@ export class SubdealerListComponent implements OnInit {
   data_not_found: boolean = false;
   distributor_list: any = [];
   pagination_count: any = 0;
+  login_id : any;
+  login_user : any;
 
-  constructor(public serve: PearlService, public dialog: MatDialog) {
+  constructor(public serve: PearlService, public dialog: MatDialog,public Dialog:DialogComponent) {
     this.dealerList();
+    this.login_user = JSON.parse(sessionStorage.getItem('login'));
+
+    this.login_id = parseInt(this.login_user['data']['id']);
+    console.log(this.login_id)
   }
 
   ngOnInit() {
@@ -88,6 +94,8 @@ export class SubdealerListComponent implements OnInit {
     this.dealerList();
   }
 
+
+
   exportAsXLSX(): void {
     this.exp_loader = true;
     this.loader = true;
@@ -102,7 +110,8 @@ export class SubdealerListComponent implements OnInit {
             'Company Name': this.exp_data[i].company_name,
             'Contact Person': this.exp_data[i].contact_person,
             'Mobile': this.exp_data[i].contact_1,
-
+            'Document Type':this.exp_data[i].document_type,
+            'Document No.':this.exp_data[i].document_no
           });
         }
         this.exp_loader = false;
@@ -116,4 +125,26 @@ export class SubdealerListComponent implements OnInit {
 
 
   }
+
+  deleteSubDealers(id){
+    this.loader=true;
+    this.Dialog.confirm("You Want to Delete This Sub Dealer?").then((res)=>{
+      if(res){
+        this.serve.fetchData({'delete_id':id,'login_id':this.login_id},'Distributors/deleteSubDealer').subscribe((res)=>{
+          if(res['msg']=='SUCCESS'){
+            this.Dialog.success("Deleted" , "Success");
+            this.dealerList();
+          }
+          this.loader=false;
+        },err=>{
+          this.Dialog.error("Something Went Wrong...");
+
+          this.loader=false;
+        })
+      }
+    })
+ 
+
+  }
+
 }
