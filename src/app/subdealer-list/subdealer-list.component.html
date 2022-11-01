@@ -28,7 +28,8 @@
           </li>
           <li>
             <input type="text" placeholder="GO TO" name="pagenumber"
-              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; dealerList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; dealerList()" [(ngModel)]="pagenumber" min="1"
+              max={{total_page}}>
           </li>
 
           <li>
@@ -60,6 +61,7 @@
             <th class="w100">Document No. </th>
             <th class="w100">Doc </th>
             <th class="w150">Profile Image</th>
+            <th class="w150">Action</th>
           </tr>
         </table>
       </div>
@@ -79,17 +81,17 @@
             </th>
             <th class="w200">
               <div class="th-search-acmt">
-              <mat-form-field class="example-full-width cs-input select-input">
-                <input matInput placeholder="Name" name="contact_person" (keyup.enter)="dealerList()"
-                  [(ngModel)]="search_val.contact_person">
-              </mat-form-field>
-            </div>
-          </th>
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Name" name="contact_person" (keyup.enter)="dealerList()"
+                    [(ngModel)]="search_val.contact_person">
+                </mat-form-field>
+              </div>
+            </th>
             <th class="w90">
               <div class="th-search-acmt">
                 <mat-form-field class="example-full-width cs-input select-input">
-                  <input matInput placeholder="Mobile Number/Landine Number" name="contact_1" (keyup.enter)="dealerList()"
-                    [(ngModel)]="search_val.contact_1">
+                  <input matInput placeholder="Mobile Number/Landine Number" name="contact_1"
+                    (keyup.enter)="dealerList()" [(ngModel)]="search_val.contact_1">
                 </mat-form-field>
               </div>
             </th>
@@ -103,8 +105,7 @@
             </th>
             <th class="w80">
               <div class="th-search">
-                <select (change)="dealerList()" name="document_type"
-                  [(ngModel)]="search_val.document_type">
+                <select (change)="dealerList()" name="document_type" [(ngModel)]="search_val.document_type">
                   <option value="" [disabled]="true">Document Type</option>
                   <option value="adhar_no">Adhar Card</option>
                   <option value="drive_lincense_no">driving License</option>
@@ -115,7 +116,8 @@
             </th>
             <th class="w100"></th>
             <th class="w100"></th>
-            <th class="w150"></th>      
+            <th class="w150"></th>
+            <th class="w150"></th>
           </tr>
         </table>
       </div>
@@ -132,28 +134,59 @@
             <td class="w90">{{list.company_name ? list.company_name : '--'}}</td>
             <td class="w80">{{list.document_type ? list.document_type : '--'}}</td>
             <td class="w100">{{list.document_no ? list.document_no : '--'}}</td>
-            <td class="w100"> 
-               <img *ngIf="list.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.image}}" (click)="openDialog2(serve.sub_dealer+list.image)"  /> 
-              <img *ngIf="list.image==''" height="40px" width="40px" src="assets/img/no-data.gif"  /> 
+            <td class="w100">
+              <img *ngIf="list.image!=''" height="40px" width="40px" style="cursor: zoom-in;"
+                src="{{serve.sub_dealer+list.image}}" (click)="openDialog2(serve.sub_dealer+list.image)" />
+              <img *ngIf="list.image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
             </td>
             <td class="w150">
-              <img *ngIf="list.profile_image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.sub_dealer+list.profile_image}}" (click)="openDialog2(serve.sub_dealer+list.profile_image)"  /> 
-              <img *ngIf="list.profile_image==''" height="40px" width="40px" src="assets/img/no-data.gif"  /> 
+              <img *ngIf="list.profile_image!=''" height="40px" width="40px" style="cursor: zoom-in;"
+                src="{{serve.sub_dealer+list.profile_image}}"
+                (click)="openDialog2(serve.sub_dealer+list.profile_image)" />
+              <img *ngIf="list.profile_image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
             </td>
-          
+            <td class="w150">
+              <div class="acton-btn">
+                <button  mat-button class="delete-mat" (click)="deleteSubDealers(list.id)"><i
+                    class="material-icons red-clr">delete_sweep</i>
+                </button>
+              </div>
+            </td>
           </tr>
 
           <ng-container *ngFor="let lead of skelton">
             <tr class="sk-loading sno-border" *ngIf="loader">
-              <td class="w50"><div>&nbsp;</div></td> 
-              <td class="w100"><div>&nbsp;</div></td> <!-- Created Date  -->
-              <td class="w200"><div>&nbsp;</div></td> <!--  Name -->
-              <td class="w90"><div>&nbsp;</div></td> <!-- Contact No. -->
-              <td class="w90"><div>&nbsp;</div></td> <!-- Company Name -->
-              <td class="w80"><div>&nbsp;</div></td><!-- Document Type -->
-              <td class="w100"><div>&nbsp;</div></td> <!--Document No. -->
-              <td class="w100"><div>&nbsp;</div></td> <!-- Doc -->
-              <td class="w150"><div>&nbsp;</div></td> <!-- Profile Image -->             
+              <td class="w50">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w100">
+                <div>&nbsp;</div>
+              </td> <!-- Created Date  -->
+              <td class="w200">
+                <div>&nbsp;</div>
+              </td> <!--  Name -->
+              <td class="w90">
+                <div>&nbsp;</div>
+              </td> <!-- Contact No. -->
+              <td class="w90">
+                <div>&nbsp;</div>
+              </td> <!-- Company Name -->
+              <td class="w80">
+                <div>&nbsp;</div>
+              </td><!-- Document Type -->
+              <td class="w100">
+                <div>&nbsp;</div>
+              </td>
+              <!--Document No. -->
+              <td class="w100">
+                <div>&nbsp;</div>
+              </td> <!-- Doc -->
+              <td class="w150">
+                <div>&nbsp;</div>
+              </td> <!-- Profile Image -->
+              <td class="w150">
+                <div>&nbsp;</div>
+              </td> <!--  Action -->
             </tr>
           </ng-container>
 

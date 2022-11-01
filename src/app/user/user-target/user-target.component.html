@@ -145,8 +145,8 @@
               <table>
                 <tr>
                   <th style="background-color:lightyellow; text-align: center;font-weight: 700;font-size: 15px; height:50px;"></th>
-                  <th style="background-color:skyblue; text-align: center;font-weight: 700;font-size: 15px;height:50px;">Today {{current_date}}</th>
-                  <th style=" background-color:lightpink; text-align: center;font-weight: 700;font-size: 15px;height:50px;">{{monthName}} {{current_year}} </th>
+                  <th  style="background-color:skyblue; text-align: center;font-weight: 700;font-size: 15px;height:50px;">Today {{current_date}}</th>
+                  <th  style="background-color:lightpink; text-align: center;font-weight: 700;font-size: 15px;height:50px;">{{monthName}} {{current_year}} </th>
 
                 </tr>
               </table>
@@ -163,14 +163,16 @@
               <table>
 
                 <tr >
-                  <th class="w110 text-center" style="background-color:lightyellow;">image</th>
-                  <th class="w190 text-center" style="background-color:lightyellow;">Brand</th>
+                  <th class="w180 text-center" style="background-color:lightyellow;">image</th>
+                  <th class="w210 text-center" style="background-color:lightyellow;">Brand</th>
                   <th class="w100" style="background-color:skyblue;">Today Target</th>
                   <th class="w100" style="background-color:skyblue;">Today Achievement</th>
+                  <th class="w100" style="background-color:skyblue;">Today Achievement Percentage</th>
                   <th class="w100" style="background-color:skyblue;">Today Difference</th>
 
                   <th class="w100" style="background-color:lightpink;">Total Target</th>
                   <th class="w100" style="background-color:lightpink;">Total Achievement</th>
+                  <th class="w100" style="background-color:lightpink;">Total Achievement Percentage</th>
                   <th class="w100" style="background-color:lightpink;">Difference</th>
                 </tr>
               </table>
@@ -181,18 +183,20 @@
                 <table>
                   <tr *ngFor=" let target_Data of brand_list">
 
-                    <td class="w110 text-center">
+                    <td class="w180 text-center">
                       <!-- (click)="openDialog( image.image,'test1')" -->
                       <img *ngIf="target_Data.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.product_image_url+target_Data.image}}" (click)="openDialog(serve.product_image_url+target_Data.image)"  /> 
                       <img *ngIf="target_Data.image==''" height="40px" width="40px" src="assets/img/no-data.gif"  /> 
                     </td>
-                    <td class="w190 text-center bold">{{target_Data.brand_name}}
+                    <td class="w210 text-center bold">{{target_Data.brand_name}}
                     </td>
                     <td class="w100 text-center bold" style="font-size:16px">{{target_Data.today_target | number:'1.0-0'}} </td>
-                    <td class="w100 text-center bold"  style="font-size:16px">{{target_Data.today_achievement}} ({{target_Data.today_achievement_percentage+'%'}})</td>
+                    <td class="w100 text-center bold"  style="font-size:16px">{{target_Data.today_achievement}} </td>
+                    <td class="w100 text-center bold"  style="font-size:16px">{{target_Data.today_achievement_percentage+'%'}}</td>
                     <td class="w100 text-center bold" [ngStyle]="target_Data.today_achievement > target_Data.today_target ? {'background-color' :'#8AFF8A' }: null" style="font-size:16px">{{target_Data.today_remaining_achievement | number:'1.0-0'}}</td>
                     <td class="w100 text-center bold" style="font-size:16px">{{target_Data.target}}</td>
-                    <td class="w100 text-center bold" style="font-size:16px">{{target_Data.achievement}} ({{target_Data.achievement_percentage+'%'}})</td>
+                    <td class="w100 text-center bold" style="font-size:16px">{{target_Data.achievement}}</td>
+                    <td class="w100 text-center bold" style="font-size:16px">{{target_Data.achievement_percentage+'%'}}</td>
                     <td class="w100 text-center bold" [ngStyle]="target_Data.achievement > target_Data.target ? {'background-color' :'#8AFF8A'}: null"  style="font-size:16px">{{target_Data.remaining_achievement}}</td>
 
                   </tr>
@@ -246,7 +250,7 @@
 
 </div>
 <div class="edit-modal" *ngIf="data.company_target=='company_sale_target'">
-  <p class="heading">Company Target</p>
+  <p class="heading">Company Sales</p>
   <div *ngIf="loader" class="cs-loader">
     <mat-spinner class="loader">
       <div>

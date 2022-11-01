@@ -135,7 +135,7 @@ export class DashboardComponent implements OnInit {
       console.log("targetModal method calls");
       
       const dialogRef = this.dialog2.open(UserTargetComponent, {
-        width: '1024px',
+        width: '2000px',
         data: {
           id,'company_target':'company_target',
         }
