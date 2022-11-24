@@ -354,6 +354,61 @@ export class AddPopNGiftComponent implements OnInit {
 
   }
 
+  // easy code for select or deselect all
+
+  // selectAll(action) {
+
+  //   this.loading_list = true;
+
+  //   if (action == 'allCategory_id') {
+
+  //     console.log(this.siteform.allCategory_id);
+  //     setTimeout(() => {
+
+  //       if (this.siteform.allCategory_id == true) {
+  //         const categoryData = [];
+  //         for (let i = 0; i < this.categoryList.length; i++) {
+  //           categoryData.push(this.categoryList[i].id);
+
+  //         };
+  //         this.siteform.category_id = categoryData;
+  //         console.log(this.siteform.category_id);
+  //       } else {
+  //         this.siteform.category_id = [];
+  //       }
+
+  //     }, 2000);
+
+
+  //   }
+
+
+  //   if (action == 'allpc_id') {
+
+  //     console.log(this.siteform.allpc_id);
+  //     if (this.siteform.allpc_id == true) {
+  //       setTimeout(() => {
+  //         const pcData = [];
+
+  //         for (let x = 0; x < this.pc.length; x++) {
+  //           pcData.push(this.pc[x].id);
+  //         }
+  //         this.siteform.contractor_id = pcData;
+  //       }, 2000);
+
+  //     } else {
+  //       this.siteform.contractor_id = [];
+  //     }
+
+  //   }
+
+  //   setTimeout(() => {
+  //   this.loading_list = false;
+
+  //   }, 2000);
+
+
+  // }
   
 
 
