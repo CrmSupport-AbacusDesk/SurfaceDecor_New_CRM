@@ -74,8 +74,8 @@ export class PearlService {
   myimgurl2="https://devcrm.abacusdesk.com/surfacedekortest/";
   dbUrl="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/index.php/";
   product_image_url = "https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/Products/";
-  sub_dealer = "https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/sub_dealer/";
-  billing_image_url = "https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/invoice_deliveryDoc/";
+  sub_dealer="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/sub_dealer/";
+  billing_image_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/invoice_deliveryDoc/";
   new_product_image_url_for_pop_master="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/Popgift/"
   pdf_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/bill_pdf/"
   pdf_url2="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/"
