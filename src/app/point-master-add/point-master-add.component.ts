@@ -19,11 +19,19 @@ export class PointMasterAddComponent implements OnInit {
   item:any={};
   all_brands_list2:any=[];
   tempSearch:any='';
+  update_id:any=0;
   login_user:any;
   login_id:any;
   constructor(@Inject(MAT_DIALOG_DATA)public data,public dialog:MatDialog,public serve:PearlService,public session: SessionStorage,public alert:DialogComponent,public toastCtrl:ToastrManager) { 
     
     this.get_brand_list();
+    console.log(data);
+    if(data.from=='editPointMaster'){
+      this.data1=data.value;
+      this.data1.brand_id=[data.value.brand_id];
+      this.update_id=this.data1.id
+    }
+  
 
   }
 
@@ -36,9 +44,43 @@ export class PointMasterAddComponent implements OnInit {
   submitPointMaster(){
     this.loader=true;
     this.data1.login_id=this.login_id;
-    this.serve.fetchData({'data':this.data1},'save/dsd').pipe(retry(4)).subscribe((res)=>{
+    this.serve.fetchData({'data':this.data1},'Announcement/add_point_master').pipe(retry(4)).subscribe((res)=>{
       console.log(res);
       this.loader=false;
+      if(res['msg']=='Success'){
+        this.toastCtrl.successToastr("Successfully Added");
+        this.dialog.closeAll();
+      }else if(res['msg']=='Fail'){
+        this.toastCtrl.errorToastr("Points For this Brand is already exists");
+        
+      }else{
+        this.toastCtrl.errorToastr("Something Went Wrong...");
+
+      }
+    },err=>{
+    this.loader=false;
+
+    }
+    )
+  }
+
+
+  editPointMaster(){
+    this.loader=true;
+    this.data1.login_id=this.login_id;
+    this.serve.fetchData({'data':this.data1},'Announcement/edit_point_master').pipe(retry(4)).subscribe((res)=>{
+      console.log(res);
+      this.loader=false;
+      if(res['msg']=='Success'){
+        this.toastCtrl.successToastr("Successfully Added");
+        this.dialog.closeAll();
+      }else if(res['msg']=='Fail'){
+        this.toastCtrl.errorToastr("Points For this Brand is already exists");
+        
+      }else{
+        this.toastCtrl.errorToastr("Something Went Wrong...");
+
+      }
     },err=>{
     this.loader=false;
 

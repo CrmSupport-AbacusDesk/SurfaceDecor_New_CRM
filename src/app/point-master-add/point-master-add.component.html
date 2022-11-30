@@ -8,9 +8,9 @@
 
 <div class="edit-modal">
   <form validate #update_basic="ngForm" name="update_basic"
-    (ngSubmit)="(update_basic.valid && update_basic.submitted)?submitPointMaster():''">
+    (ngSubmit)="(update_basic.valid && update_basic.submitted&&update_id==0)?submitPointMaster():editPointMaster()">
 
-    <p class="heading">Add Point Master</p>
+    <p class="heading">{{data.from=='editPointMaster'? 'Edit':'Add'}} Point Master</p>
     <!-- {{data.order_status}} -->
     <div mat-dialog-content>
       <div class="from-fields">
@@ -18,8 +18,8 @@
           <div class="col s12">
             <div class="control-field">
               <mat-form-field class="cs-input">
-                <mat-select placeholder="Select Category" multiple [(ngModel)]="data1.category_id" name="category_id"
-                  #category_id="ngModel" required>
+                <mat-select placeholder="Select Brands" multiple [(ngModel)]="data1.brand_id" name="brand_id"
+                  #brand_id="ngModel" required>
 
                   <div class="search-block">
                     <input type="search" name="brand_name" placeholder="Search.."
@@ -55,7 +55,8 @@
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
-      <button mat-raised-button color="accent" type="submit">Save</button>
+      <button mat-raised-button *ngIf="update_id==0" color="accent" type="submit">Save</button>
+      <button mat-raised-button *ngIf="update_id!=0" color="accent" type="submit">Update</button>
     </div>
   </form>
 </div>
