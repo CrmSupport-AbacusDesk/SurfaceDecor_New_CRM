@@ -54,36 +54,31 @@ export class PearlService {
 
 
 
-  // test links for surface decors---------------------
-  // myurl="http://phpstack-83335-2192864.cloudwaysapps.com/crm/";
-  // myimgurl="http://phpstack-83335-2192864.cloudwaysapps.com/";
-  // myimgurl2="http://phpstack-83335-2192864.cloudwaysapps.com/";
-  // dbUrl="http://phpstack-83335-2192864.cloudwaysapps.com/crm/api/index.php/";
 
   // Cpanel Server live Link :-
-  myurl="https://apps.abacusdesk.com/surfacedekor/crm/";
-  myimgurl="https://apps.abacusdesk.com/surfacedekor/";
-  myimgurl2="https://apps.abacusdesk.com/surfacedekor/";
-  dbUrl="https://apps.abacusdesk.com/surfacedekor/crm/api/index.php/";
-  product_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Products/";
-  sub_dealer = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/sub_dealer/";
-  billing_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/invoice_deliveryDoc/";
-  new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Popgift/"
-  pdf_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/bill_pdf/"
-  pdf_url2="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/"
+  // myurl="https://apps.abacusdesk.com/surfacedekor/crm/";
+  // myimgurl="https://apps.abacusdesk.com/surfacedekor/";
+  // myimgurl2="https://apps.abacusdesk.com/surfacedekor/";
+  // dbUrl="https://apps.abacusdesk.com/surfacedekor/crm/api/index.php/";
+  // product_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Products/";
+  // sub_dealer = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/sub_dealer/";
+  // billing_image_url = "https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/invoice_deliveryDoc/";
+  // new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Popgift/"
+  // pdf_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/bill_pdf/"
+  // pdf_url2="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/"
   
 
   // new test link 
-  // myurl="https://apps.abacusdesk.com/surfacedekortest/crm/";
-  // myimgurl="https://apps.abacusdesk.com/surfacedekortest/";
-  // myimgurl2="https://apps.abacusdesk.com/surfacedekortest/";
-  // dbUrl="https://apps.abacusdesk.com/surfacedekortest/crm/api/index.php/";
-  // product_image_url = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/Products/";
-  // sub_dealer = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/sub_dealer/";
-  // billing_image_url = "https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/invoice_deliveryDoc/";
-  // new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/Popgift/"
-  // pdf_url="https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/bill_pdf/"
-  // pdf_url2="https://apps.abacusdesk.com/surfacedekortest/crm/api/uploads/"
+  myurl="https://devcrm.abacusdesk.com/surfacedekortest/crm/";
+  myimgurl="https://devcrm.abacusdesk.com/surfacedekortest/";
+  myimgurl2="https://devcrm.abacusdesk.com/surfacedekortest/";
+  dbUrl="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/index.php/";
+  product_image_url = "https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/Products/";
+  sub_dealer="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/sub_dealer/";
+  billing_image_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/invoice_deliveryDoc/";
+  new_product_image_url_for_pop_master="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/Popgift/"
+  pdf_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/bill_pdf/"
+  pdf_url2="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/"
 
 
   constructor(public http:HttpClient) {

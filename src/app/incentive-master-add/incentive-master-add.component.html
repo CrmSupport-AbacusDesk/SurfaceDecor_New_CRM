@@ -1,0 +1,254 @@
+<div class="main-container">
+  <div class="middle-container">
+    <div class="page-heading">
+      <div class="heading-text bc-space">
+        <div class="back-btn" (click)="back()">
+          <a mat-button><i class="material-icons">arrow_right_alt</i></a>
+        </div>
+        <h2>Add Incentive Master</h2>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <form #f="ngForm">
+    <div class="container-outer">
+      <!-- <div class="container">
+        <div class="sprate-box">
+          <div class="cs-heading">
+            <h2>Select Follow-up Type</h2>
+          </div>
+        </div>
+      </div> -->
+      <div class="container">
+
+        <!-- point Allocation -->
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>POINT ALLOCATION(%)</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="from-fields">
+                <div class="row pl10">
+                  <div class="col s12 pl0">
+                    <div class="row">
+                      <div class="col s6">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="Sales Point"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="sales_point"
+                              #sales_point="ngModel" [(ngModel)]="data.sales_point" (keyup)="calculatePointAllocation()"
+                              [ngClass]="{'has-error' : sales_point.invalid }" required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s6">
+
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="WAREHOUSE POINT" name="warehouse_points"
+                              #warehouse_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57" (keyup)="calculatePointAllocation()"
+                              [(ngModel)]="data.warehouse_points" [ngClass]="{'has-error' : warehouse_points.invalid } "
+                              required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+
+
+
+
+                  </div>
+
+
+
+                </div>
+
+              </div>
+              <div class="cs-btn fixedd mt32 text-right">
+                <div class="in-btn mr25">
+                  <button mat-raised-button (click)="(f.valid && f.submitted)? addIncentiveMaster():''" color="accent">Update</button>
+                </div>
+              </div>
+            </div>
+         
+          </div>
+        </div>
+        <!-- Point Allocation -->
+
+        <!-- Market SalePoint Allocation -->
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>MARKET SALES POINT ALLOCATION(%)</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="from-fields">
+                <div class="row pl10">
+                  <div class="col s12 pl0">
+                    <div class="row">
+                      <div class="col s4">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="HO1 Point"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="ho1_point"
+                              #ho1_point="ngModel" [(ngModel)]="data.ho1_point" (keyup)="calculateMarketSalesPointAllocation()"
+                              [ngClass]="{'has-error' : ho1_point.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s4">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="SALESMAN POINT"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="salesman_point"
+                              #salesman_point="ngModel" [(ngModel)]="data.salesman_point" (keyup)="calculateMarketSalesPointAllocation()"
+                              [ngClass]="{'has-error' : salesman_point.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s4">
+
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="COLLECTION POINT" name="collection_points"
+                              #collection_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57" (keyup)="calculateMarketSalesPointAllocation()"
+                              [(ngModel)]="data.collection_points" [ngClass]="{'has-error' : collection_points.invalid } "
+                              required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="cs-btn fixedd mt32 text-right">
+                <div class="in-btn mr25">
+                  <button mat-raised-button color="accent" (click)="(f.valid && f.submitted)? addIncentiveMaster():''">Update</button>
+                </div>
+               </div>
+            </div>
+         
+          </div>
+        </div>
+        <!-- Market SalesPoint Allocation -->
+
+        <!-- wareHouse Point Allocation -->
+
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>WAREHOUSE POINT ALLOCATION(%)</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="from-fields">
+                <div class="row pl10">
+                  <div class="col s12 pl0">
+                    <div class="row">
+                      <div class="col s3">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="TELEPHONE OP POINT"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="telephone_op_point"
+                              #telephone_op_point="ngModel" [(ngModel)]="data.telephone_op_point" (keyup)="calculateWarehousePointAllocation()"
+                              [ngClass]="{'has-error' : telephone_op_point.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s3">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="WAREHOUSE KEEP POINT"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="warehouse_keep_point"
+                              #warehouse_keep_point="ngModel" [(ngModel)]="data.warehouse_keep_point" (keyup)="calculateWarehousePointAllocation()"
+                              [ngClass]="{'has-error' : warehouse_keep_point.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s3">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="DISPATCH POINT"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="dispatch_point"
+                              #dispatch_point="ngModel" [(ngModel)]="data.dispatch_point" (keyup)="calculateWarehousePointAllocation()"
+                              [ngClass]="{'has-error' : dispatch_point.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s3">
+
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="LABOUR POINT" name="labour_points"
+                              #labour_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57" (keyup)="calculateWarehousePointAllocation()"
+                              [(ngModel)]="data.labour_points" [ngClass]="{'has-error' : labour_points.invalid } "
+                              required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="cs-btn fixedd mt32 text-right">
+                <div class="in-btn mr25">
+                  <button mat-raised-button color="accent" (click)="(f.valid && f.submitted)? addIncentiveMaster():''">Update</button>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <!-- wareHouse Point Allocation -->
+      </div>
+
+    </div>
+  </form>
+</div>

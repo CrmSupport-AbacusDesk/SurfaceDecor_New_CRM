@@ -159,6 +159,10 @@ import { BillingdocumentComponent } from './billingdocument/billingdocument.comp
 import { ShowroomEnquiryListComponent } from './showroom-enquiry-list/showroom-enquiry-list.component';
 import { AddSubDealerModalComponent } from './add-sub-dealer-modal/add-sub-dealer-modal.component';
 import { SubdealerListComponent } from './subdealer-list/subdealer-list.component';
+import { PointMasterComponent } from './point-master/point-master.component';
+import { PointMasterAddComponent } from './point-master-add/point-master-add.component';
+import { IncentiveMasterListComponent } from './incentive-master-list/incentive-master-list.component';
+import { IncentiveMasterAddComponent } from './incentive-master-add/incentive-master-add.component';
 
 
 const routes: Routes = [
@@ -220,6 +224,9 @@ const routes: Routes = [
 
   { path: 'dealer-lead-list', component: DealerLeadListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'consumer-lead-list', component: ConsumerLeadListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'pointMaster', component: PointMasterComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'IncentiveMaster', component: IncentiveMasterListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'IncentiveMasterAdd', component: IncentiveMasterAddComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'plumber-lead-list', component: PlumberLeadListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'dwr', component: DwrComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'monthly-dwr', component: MonthlyDwrComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
@@ -418,6 +425,10 @@ const routes: Routes = [
     FollowupAddComponent,
     AddSubDealerModalComponent,
     SubdealerListComponent,
+    PointMasterComponent,
+    PointMasterAddComponent,
+    IncentiveMasterListComponent,
+    IncentiveMasterAddComponent,
 
   ],
   imports: [
@@ -458,7 +469,7 @@ const routes: Routes = [
 
   entryComponents: [
 TargetaddComponent,BillingdocumentComponent,
-    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent
+    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent,PointMasterAddComponent
   ],
 
   exports: [RouterModule],
