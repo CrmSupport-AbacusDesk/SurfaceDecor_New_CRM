@@ -111,11 +111,11 @@ export class PointMasterAddComponent implements OnInit {
           console.log(this.all_brands_list[i].id);
           brandData.push(this.all_brands_list[i].id);
         }
-        this.data1.category_id=brandData
+        this.data1.brand_id=brandData
       }else{
-        this.data1.category_id=[];
+        this.data1.brand_id=[];
       }
-      console.log(this.data1.category_id);
+      console.log(this.data1.brand_id);
     }
   }
 

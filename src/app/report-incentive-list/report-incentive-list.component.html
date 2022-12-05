@@ -1,0 +1,239 @@
+<div class="main-container pb0">
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/distribution_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Report Incentive</h2>
+      </div>
+    </div>
+
+    <div class="left-auto">
+      <div class="from-fields cs-flex" style="margin-left: -100px;">
+        <div class="control-field mr10">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from" [(ngModel)]="search_val.date_from"
+              (dateChange)="onBetweenDate($event, 'date_from')" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="control-field mr10">
+          <mat-form-field class="cs-input date-column infix-bodr">
+            <input matInput [matDatepicker]="pickers" placeholder="To" name="date_to" [(ngModel)]="search_val.date_to"
+              (dateChange)="onBetweenDate($event, 'date_to')" readonly>
+            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+            <mat-datepicker #pickers></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="cs-flex" *ngIf="search_val.date_from && search_val.date_to">
+        <button mat-raised-button style="background-color: #275478; color: #fff"
+          (click)="getReportIncentive()">
+          Go
+        </button>
+      </div>
+
+      <div class="cs-flex" *ngIf="search_val.date_from == '' && search_val.date_to == ''">
+        <button mat-raised-button style="background-color: #275478; color: #fff">
+          Go
+        </button>
+      </div>
+
+     
+
+    
+
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons">
+              refresh</i></a>
+        </li>
+      </ul>
+
+
+    </div>
+  </div>
+
+
+
+  <div class="cs-table cs-table-scroll no-tab">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50">&nbsp;</th>
+            <th class="w140">Brand</th>
+            <th class="w180">Sale Qty</th>
+            <th>Market</th>
+            <th>Warehouse</th>
+
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt">
+        <table class="sno-border">
+          <tr>
+            <th class="w50"></th>
+            <th class="w140">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="cs-input date-column infix-bodr">
+                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" [(ngModel)]="search.date_created" (dateChange)="onDate($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div> -->
+            </th>
+            <th class="w180">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+
+                  <input matInput placeholder="Created By. . ." type="text" name="created_by" [(ngModel)]="search.created_by" (keyup.enter)="get_Point_Master_list()" >
+                </mat-form-field>
+              </div> -->
+            </th>
+
+            <th>
+             <table>
+              <tr>
+                <th>HO1</th>
+                <th>SALESMAN</th>
+                <th>COLLECTION</th>
+              </tr>
+             </table>
+
+            </th>
+
+            <th>
+              <table>
+                <tr>
+                  <th>TELEPHONE OP</th>
+                  <th>WAREHOUSE KEEP</th>
+                  <th>DISPATCH</th>
+                  <th>LABOUR</th>
+                </tr>
+               </table>
+            </th>
+
+
+
+
+
+
+
+
+
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <!-- <ng-container *ngFor="let data of ReportIncentiveList;let i = index"> -->
+            <ng-container>
+            <!-- <tr>
+              <td class="w50">{{i+1}}</td>
+              <td class="w140"></td>
+              <td class="w180">{{data.created_by_name}}</td>
+              <td>{{data.subject}}</td>
+              <td>43</td>
+
+            </tr> -->
+
+            <tr>
+              <td class="w50">test</td>
+              <td class="w140">12</td>
+              <td class="w180">12</td>
+              <td> 
+                <table>
+                  <tr>
+                    <td>22</td>
+                    <td>4</td>
+                    <td>2</td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td>22</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>23</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </ng-container>
+         
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading" *ngIf="loader">
+              <td class="w50">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w140">
+                <div>&nbsp;</div>
+              </td><!-- Brands -->
+              <td class="w180">
+                <div>&nbsp;</div>
+              </td><!-- Sale Qty -->
+              <td>
+                <div>&nbsp;</div>
+              </td><!-- market-->
+              <td>
+                <div>&nbsp;</div>
+              </td><!-- Warehouse -->
+
+
+            </tr>
+          </ng-container>
+          <!-- <ng-container>
+            <div class="data-not-available" *ngIf="ReportIncentiveList.length==0">
+              <div class="outer">
+                <div class="iinear">
+                  <div class="figure" matRipple>
+                    <div class="header">
+                      <img src="assets/img/data-not-available-header.svg" alt="">
+                    </div>
+  
+                    <div class="description">
+                      <div class="cs-heading">
+                        <h2>Report Incentive List</h2>
+                      </div>
+                      <div class="img">
+                        <i class="material-icons">error_outline</i>
+                      </div>
+                      <div class="psc">
+                        <p>data not Found</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container> -->
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+  <!-- <div class="fix-btn">
+    <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
+      (click)="addIncentiveMaster()"><i class="material-icons">add</i></a>
+  </div> -->
+</div>
