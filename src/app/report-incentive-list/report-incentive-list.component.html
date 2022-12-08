@@ -11,8 +11,8 @@
       <div class="from-fields cs-flex" style="margin-left: -100px;">
         <div class="control-field mr10">
           <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from" [(ngModel)]="search_val.date_from"
-              (dateChange)="onBetweenDate($event, 'date_from')" readonly>
+            <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from"
+              [(ngModel)]="search_val.date_from" (dateChange)="onBetweenDate($event, 'date_from')" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -29,8 +29,7 @@
       </div>
 
       <div class="cs-flex" *ngIf="search_val.date_from && search_val.date_to">
-        <button mat-raised-button style="background-color: #275478; color: #fff"
-          (click)="getReportIncentive()">
+        <button mat-raised-button style="background-color: #275478; color: #fff" (click)="getReportIncentive()">
           Go
         </button>
       </div>
@@ -41,9 +40,9 @@
         </button>
       </div>
 
-     
 
-    
+
+
 
     </div>
     <div class="uppr-one m-right-data">
@@ -65,11 +64,11 @@
       <div class="table-head">
         <table>
           <tr>
-            <th class="w50">&nbsp;</th>
-            <th class="w140">Brand</th>
-            <th class="w180">Sale Qty</th>
-            <th>Market</th>
-            <th>Warehouse</th>
+            <th class="w50 text-center">&nbsp;</th>
+            <th class="w200 text-center">Brand</th>
+            <th class="w180 text-center">Sale Qty</th>
+            <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
+            <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th>
 
           </tr>
         </table>
@@ -78,14 +77,21 @@
         <table class="sno-border">
           <tr>
             <th class="w50"></th>
-            <th class="w140">
-              <!-- <div class="th-search-acmt">
-                <mat-form-field class="cs-input date-column infix-bodr">
-                  <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" [(ngModel)]="search.date_created" (dateChange)="onDate($event)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+            <th class="w200">
+              <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Enter Brand...." [matAutocomplete]="brand_name"
+                    (keyup.enter)="getReportIncentive()"
+                    (input)="category_array_filter(search_val.brand_name,tmp_category)" name="brand_name"
+                    #brand_name="ngModel" [(ngModel)]="search_val.brand_name">
+                  <mat-autocomplete #brand_name="matAutocomplete">
+                    <mat-option *ngFor="let category of category_list" (click)="getReportIncentive()"
+                      value="{{category.category}}">
+                      <small>{{category.category}}</small>
+                    </mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
-              </div> -->
+              </div>
             </th>
             <th class="w180">
               <!-- <div class="th-search-acmt">
@@ -97,25 +103,25 @@
             </th>
 
             <th>
-             <table>
-              <tr>
-                <th>HO1</th>
-                <th>SALESMAN</th>
-                <th>COLLECTION</th>
-              </tr>
-             </table>
+              <table>
+                <tr>
+                  <th>HO1 ({{ReportIncentiveList.ho1_point}})% </th>
+                  <th>SALESMAN ({{ReportIncentiveList.salesman_point}})% </th>
+                  <th>COLLECTION ({{ReportIncentiveList.collection_points}})% </th>
+                </tr>
+              </table>
 
             </th>
 
             <th>
               <table>
                 <tr>
-                  <th>TELEPHONE OP</th>
-                  <th>WAREHOUSE KEEP</th>
-                  <th>DISPATCH</th>
-                  <th>LABOUR</th>
+                  <th>TELEPHONE OP ({{ReportIncentiveList.telephone_op_point}})% </th>
+                  <th>WAREHOUSE KEEP ({{ReportIncentiveList.warehouse_keep_point}})% </th>
+                  <th>DISPATCH ({{ReportIncentiveList.dispatch_point}})% </th>
+                  <th>LABOUR ({{ReportIncentiveList.labour_points}})% </th>
                 </tr>
-               </table>
+              </table>
             </th>
 
 
@@ -134,60 +140,82 @@
     <div class="table-container mb60">
       <div class="table-content" style="width: fit-content;">
         <table>
-          <!-- <ng-container *ngFor="let data of ReportIncentiveList;let i = index"> -->
-            <ng-container>
-            <!-- <tr>
-              <td class="w50">{{i+1}}</td>
-              <td class="w140"></td>
-              <td class="w180">{{data.created_by_name}}</td>
-              <td>{{data.subject}}</td>
-              <td>43</td>
+          <ng-container *ngFor="let data of ReportIncentiveBrandList;let i = index">
 
-            </tr> -->
+
 
             <tr>
-              <td class="w50">test</td>
-              <td class="w140">12</td>
-              <td class="w180">12</td>
-              <td> 
+              <td class="w50">{{i+1}}</td>
+              <td class="w200">{{data.brand_name}}</td>
+              <td class="w180">{{data.total_qty}}</td>
+              <td>
                 <table>
                   <tr>
-                    <td>22</td>
-                    <td>4</td>
-                    <td>2</td>
+                    <td>{{data.ho1_point}}</td>
+                    <td>{{data.salesman_point}}</td>
+                    <td>{{data.collection_points}}</td>
                   </tr>
                 </table>
               </td>
               <td>
                 <table>
                   <tr>
-                    <td>22</td>
-                    <td>4</td>
-                    <td>2</td>
-                    <td>23</td>
+                    <td>{{data.telephone_op_point}}</td>
+                    <td>{{data.warehouse_keep_point}}</td>
+                    <td>{{data.dispatch_point}}</td>
+                    <td>{{data.labour_points}}</td>
                   </tr>
                 </table>
               </td>
             </tr>
 
           </ng-container>
-         
+
           <ng-container *ngFor="let lead of skelton">
             <tr class="sk-loading" *ngIf="loader">
               <td class="w50">
                 <div>&nbsp;</div>
               </td>
-              <td class="w140">
+              <td class="w200">
                 <div>&nbsp;</div>
               </td><!-- Brands -->
               <td class="w180">
                 <div>&nbsp;</div>
               </td><!-- Sale Qty -->
               <td>
-                <div>&nbsp;</div>
+
+                <table>
+                  <tr>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                  </tr>
+                </table>
+
               </td><!-- market-->
               <td>
-                <div>&nbsp;</div>
+                <table>
+                  <tr>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                    <td>
+                      <div>&nbsp;</div>
+                    </td>
+                  </tr>
+                </table>
               </td><!-- Warehouse -->
 
 
