@@ -93,6 +93,23 @@ export class ReportIncentiveListComponent implements OnInit {
 
   }
 
+  tempSearch:any='';
+
+  filterBrandListData(brand_name){
+    brand_name=brand_name.toUpperCase();
+    this.tempSearch='';
+    this.ReportIncentiveBrandList=[];
+    for(let i=0; i<this.ReportIncentiveBrandList2.length;i++){
+      this.tempSearch=this.ReportIncentiveBrandList2[i].brand_name.toUpperCase();
+
+      if(this.tempSearch.search(brand_name)){
+        this.ReportIncentiveBrandList.push(this.ReportIncentiveBrandList2[i]);
+      }
+
+    }
+
+
+  }
 
   onBetweenDate(event,tab){
     console.log(event);
