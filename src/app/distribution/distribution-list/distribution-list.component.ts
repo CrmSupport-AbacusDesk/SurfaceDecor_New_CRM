@@ -195,40 +195,7 @@ export class DistributionListComponent implements OnInit {
       this.route.navigate(['/distribution-detail/'+id]);
       
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
     
     
     tmpsearch1:any={};

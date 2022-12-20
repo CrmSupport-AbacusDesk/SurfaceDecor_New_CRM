@@ -21,6 +21,7 @@ export class IncentiveMasterAddComponent implements OnInit {
 
     this.data.sales_point=70;
     this.data.warehouse_points=30;
+    this.data.showroom_points=0;
     // MARKET SALES POINTS ALLOCATION					
 
     this.data.ho1_point=29;

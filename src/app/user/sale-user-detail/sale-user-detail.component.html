@@ -121,7 +121,8 @@
                       <p>{{detail.employee_id}}</p>
 
                     </div>
-                  </li>
+                  </li> 
+                
 
                   <li class="col s4"
                     *ngIf="detail.user_type == 'office' || detail.user_type == 'OFFICE' || detail.user_type == 'Office'">
@@ -145,8 +146,17 @@
                   </li>
                 </ul>
 
+             
                 <ul>
-
+                  <li class="col s4">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Incentive Point Pecentage</span>
+                      <p>{{detail.incentive_percent && detail.incentive_percent != ''?detail.incentive_percent :'--' }}</p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                      (click)="openEditDialog(detail.incentive_percent,'incentive_percent')"><i class="material-icons">create</i></a>
+                    </div>
+                  </li>
                   <li class="col s4">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">

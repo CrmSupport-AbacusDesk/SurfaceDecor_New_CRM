@@ -13,7 +13,15 @@
               class="material-icons"> refresh</i></a>
         </li>
       </ul>
-
+      <div class="tabs ml15">
+        <ul>
+          <li><a class="" [ngClass]="this.search.active_tab == 'Brand_Wise' ? 'active' : ''"
+              (click)="this.search.active_tab = 'Brand_Wise'; get_pointMaster_list()">Brand Wise</a></li>
+          <li><a class="" [ngClass]="this.search.active_tab == 'Product_Wise' ? 'active' : ''"
+              (click)="this.search.active_tab = 'Product_Wise';get_pointMaster_list() ">Product Wise</a></li>
+        
+        </ul>
+      </div>
 
     </div>
   </div>
@@ -110,7 +118,7 @@
               <td class="w180">{{data.created_by_name}}</td>
               <td>{{data.brand_name}}</td>
               <td class="w150 text-center">{{data.points}}</td>
-              <td class="w100 text-center" >{{data.updated_at !='0000-00-00 00:00:00' ?data.updated_at:'--'}}</td>
+              <td class="w100 text-center">{{data.updated_at !='0000-00-00 00:00:00' ?data.updated_at:'--'}}</td>
               <td class="w100 text-center">{{data.updated_by_name}}</td>
               <td class="w150">
                 <div class="acton-btn">
@@ -129,14 +137,30 @@
 
           <ng-container *ngFor="let lead of skelton">
             <tr class="sk-loading" *ngIf="loader">
-              <td class="w50"><div>&nbsp;</div></td>
-              <td class="w140"><div>&nbsp;</div></td><!-- Date Created -->
-              <td class="w180"><div>&nbsp;</div></td><!-- Created By -->
-              <td><div>&nbsp;</div></td><!-- Brand -->
-              <td class="w150"><div>&nbsp;</div></td><!-- Point -->
-              <td class="w100"><div>&nbsp;</div></td><!-- Date Updated -->
-              <td class="w100"><div>&nbsp;</div></td><!-- Updated by -->
-              <td class="w150"><div>&nbsp;</div></td><!-- Action -->
+              <td class="w50">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w140">
+                <div>&nbsp;</div>
+              </td><!-- Date Created -->
+              <td class="w180">
+                <div>&nbsp;</div>
+              </td><!-- Created By -->
+              <td>
+                <div>&nbsp;</div>
+              </td><!-- Brand -->
+              <td class="w150">
+                <div>&nbsp;</div>
+              </td><!-- Point -->
+              <td class="w100">
+                <div>&nbsp;</div>
+              </td><!-- Date Updated -->
+              <td class="w100">
+                <div>&nbsp;</div>
+              </td><!-- Updated by -->
+              <td class="w150">
+                <div>&nbsp;</div>
+              </td><!-- Action -->
 
             </tr>
           </ng-container>

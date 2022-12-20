@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='working_state'">
+<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='incentive_percent'  && data.type!='working_state'">
     <p class="heading">Update User detail</p>
     <div mat-dialog-content>
         
@@ -242,6 +242,26 @@
                 <input matInput name="password" #password="ngModel" [(ngModel)]="data.value" [ngClass]="{'has-error' : password.invalid } ">
                 <div class="alert alert-danger" *ngIf="!password.valid && update_basic.submitted">
                     Password is Invalid....
+                </div>
+            </mat-form-field >
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+            <div >
+                <button type="submit" color="accent" mat-button >Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="edit-modal" *ngIf="data.type=='incentive_percent'">
+    <p class="heading">Update Incentive Point Percentage</p>
+    <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_user()">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width wp100 cs-field">
+                <input matInput name="incentive_percent" #incentive_percent="ngModel" onkeypress="return event.charCode >=48 && event.charCode<=57"  [(ngModel)]="data.value" [ngClass]="{'has-error' : incentive_percent.invalid } ">
+                <div class="alert alert-danger" *ngIf="!incentive_percent.valid && update_basic.submitted">
+                   Incentive Point is Invalid....
                 </div>
             </mat-form-field >
         </div>

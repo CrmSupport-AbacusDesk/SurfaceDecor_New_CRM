@@ -1,4 +1,4 @@
-<div class="main-container" >
+<div class="main-container">
     <div class="middle-container mb0">
         <div class="page-heading">
             <img src="assets/img/person.svg" class="h-icon h20">
@@ -13,19 +13,25 @@
             <div class="top-pagination">
                 <ul>
                     <li class="refresh-area">
-                        <a class="refresh-btn" mat-raised-button  matTooltip="Refresh" (click)="value = {};getUserList(0,50)"><i class="material-icons"> refresh</i></a>
+                        <a class="refresh-btn" mat-raised-button matTooltip="Refresh"
+                            (click)="value = {};getUserList(0,50)"><i class="material-icons"> refresh</i></a>
                     </li>
                 </ul>
             </div>
-            <div class="click-btn ml15" >
+            <div class="click-btn ml15">
                 <button *ngIf="view_edit" mat-button (click)="openModal()">Update Admin Panel Details</button>
             </div>
 
             <div class="tabs ml15">
                 <ul>
-                    <li><a class="" [ngClass]="active_tab == 'Office' ? 'active' : ''" (click)="active_tab = 'Office';getUserList(0,10);">Office User </a></li>
-                    <li><a class="" [ngClass]="active_tab == 'Market' ? 'active' : ''" (click)="active_tab = 'Market';getUserList(0,10);">Market User </a></li>
-                    <li><a class="" [ngClass]="active_tab == 'Showroom' ? 'active' : ''" (click)="active_tab = 'Showroom';getUserList(0,10);">Showroom User </a></li>
+                    <li><a class="" [ngClass]="active_tab == 'Office' ? 'active' : ''"
+                            (click)="active_tab = 'Office';getUserList(0,10);">Office User </a></li>
+                    <li><a class="" [ngClass]="active_tab == 'Market' ? 'active' : ''"
+                            (click)="active_tab = 'Market';getUserList(0,10);">Market User </a></li>
+                    <li><a class="" [ngClass]="active_tab == 'Showroom' ? 'active' : ''"
+                            (click)="active_tab = 'Showroom';getUserList(0,10);">Showroom User </a></li>
+                    <li><a class="" [ngClass]="active_tab == 'Warehouse' ? 'active' : ''"
+                            (click)="active_tab = 'Warehouse';getUserList(0,10);">Warehouse User </a></li>
 
                     <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Distributor User </a></li> -->
                     <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Dealer User </a></li> -->
@@ -55,28 +61,34 @@
                                         <th class="w150" *ngIf="active_tab != 'distributor_user'">Reporting Manager</th>
                                         <th class="w150" *ngIf="active_tab == 'Market'">Sale</th>
                                         <th class="w60" *ngIf="active_tab == 'Market'">Target</th>
-                                        <th *ngIf="view_edit && active_tab != 'Office'" class="w70 text-center" >Status</th>
+                                        <th class="w100">Incentive Point Percentage</th>
+                                        <th *ngIf="view_edit && active_tab != 'Office'" class="w70 text-center">Status
+                                        </th>
                                         <!-- <th *ngIf="view_delete" class="w70 text-center" >Delete</th> -->
                                     </tr>
 
                                 </table>
                             </div>
-                            <div class="table-head bdrt" >
+                            <div class="table-head bdrt">
                                 <table>
                                     <tr>
                                         <th class="w150">
                                             <div class="th-search-acmt">
                                                 <mat-form-field class="example-full-width cs-input select-input">
-                                                    <input matInput placeholder="Name. . ." (keyup.enter)="getUserList(0,50)" #search="ngModel" [(ngModel)]="value.name">
+                                                    <input matInput placeholder="Name. . ."
+                                                        (keyup.enter)="getUserList(0,50)" #search="ngModel"
+                                                        [(ngModel)]="value.name">
 
                                                 </mat-form-field>
                                             </div>
                                         </th>
                                         <th class="w150" *ngIf="active_tab == 'Market'"></th>
-                                        <th class="w150" >
+                                        <th class="w150">
                                             <div class="th-search-acmt">
                                                 <mat-form-field>
-                                                    <input type="text"  matInput placeholder="Designation. . ." (keyup.enter)="getUserList(0,50)" #search="ngModel" [(ngModel)]="value.role">
+                                                    <input type="text" matInput placeholder="Designation. . ."
+                                                        (keyup.enter)="getUserList(0,50)" #search="ngModel"
+                                                        [(ngModel)]="value.role">
 
                                                 </mat-form-field>
                                             </div>
@@ -92,7 +104,9 @@
                                         <th class="w100">
                                             <div class="th-search-acmt">
                                                 <mat-form-field>
-                                                    <input type="text"  matInput placeholder="Mobile. . ." (keyup.enter)="getUserList(0,50)" #search="ngModel" [(ngModel)]="value.mobile">
+                                                    <input type="text" matInput placeholder="Mobile. . ."
+                                                        (keyup.enter)="getUserList(0,50)" #search="ngModel"
+                                                        [(ngModel)]="value.mobile">
                                                 </mat-form-field>
                                             </div>
                                         </th>
@@ -103,22 +117,27 @@
                                         <th class="w150" *ngIf="active_tab != 'distributor_user'">
                                             <div class="th-search-acmt">
                                                 <mat-form-field>
-                                                    <input type="text"  matInput placeholder="Reporting Manager. . ." (keyup.enter)="getUserList(0,50)" #search="ngModel" [(ngModel)]="value.assign_user">
+                                                    <input type="text" matInput placeholder="Reporting Manager. . ."
+                                                        (keyup.enter)="getUserList(0,50)" #search="ngModel"
+                                                        [(ngModel)]="value.assign_user">
                                                 </mat-form-field>
                                             </div>
                                         </th>
 
-                                        <th class="w150"  *ngIf="active_tab == 'Market'"></th>
+                                        <th class="w150" *ngIf="active_tab == 'Market'"></th>
                                         <th class="w60" *ngIf="active_tab == 'Market'"></th>
-                                        <th *ngIf="view_edit && active_tab != 'Office'" class="w70" >
+                                        <th class="w100"></th>
+
+                                        <th *ngIf="view_edit && active_tab != 'Office'" class="w70">
                                             <div class="th-search">
-                                                <select (change)="getUserList(0,50);" name="status"  [(ngModel)]="value.status">
-                                                  <option value="All">All</option>
-                                                  <option value="Active">Active</option>
-                                                  <option value="Deactive">Deactive</option>
-                      
+                                                <select (change)="getUserList(0,50);" name="status"
+                                                    [(ngModel)]="value.status">
+                                                    <option value="All">All</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Deactive">Deactive</option>
+
                                                 </select>
-                                              </div>
+                                            </div>
                                         </th>
                                         <!-- <th *ngIf="view_delete" class="w70" ></th> -->
                                     </tr>
@@ -128,14 +147,18 @@
 
                         <div class="table-container" style="width: fit-content;">
                             <div *ngIf="loader">
-                                <mat-spinner class="loader" >
-                                    <div><p>Loading....</p></div>
+                                <mat-spinner class="loader">
+                                    <div>
+                                        <p>Loading....</p>
+                                    </div>
                                 </mat-spinner>
                             </div>
                             <div class="table-content">
                                 <table>
                                     <tr *ngFor="let u of userlist;let i=index ">
-                                        <td class="w150"><a *ngIf="view_edit" class="link-btn" (click)="saleuserDetail(u.id)"  mat-button>{{u.name}}</a> {{!view_edit?u.name:''}}</td>
+                                        <td class="w150"><a *ngIf="view_edit" class="link-btn"
+                                                (click)="saleuserDetail(u.id)" mat-button>{{u.name}}</a>
+                                            {{!view_edit?u.name:''}}</td>
                                         <!-- routerLink="/sale-user-detail/{{u.id}}" routerLinkActive="active" -->
                                         <td class="w150" *ngIf="active_tab == 'Market'">
                                             <ng-container *ngIf="u.user_type=='Market' || u.user_type=='MARKET'">
@@ -154,34 +177,53 @@
                                             </div>
                                         </td>
 
-                                        <td class="w150" *ngIf="active_tab != 'distributor_user'">{{u.created_by_name && u.created_by_name!= '' ? (u.created_by_name | titlecase) : '--'}}</td>
-                                        <td class="w150" *ngIf="active_tab == 'distributor_user'">{{u.created_by_dr_name && u.created_by_dr_name!= '' ? (u.created_by_dr_name | titlecase) : '--'}}</td>
+                                        <td class="w150" *ngIf="active_tab != 'distributor_user'">{{u.created_by_name &&
+                                            u.created_by_name!= '' ? (u.created_by_name | titlecase) : '--'}}</td>
+                                        <td class="w150" *ngIf="active_tab == 'distributor_user'">{{u.created_by_dr_name
+                                            && u.created_by_dr_name!= '' ? (u.created_by_dr_name | titlecase) : '--'}}
+                                        </td>
 
                                         <td class="w100">{{u.contact_01 && u.contact_01!='' ? u.contact_01 : '--'}}</td>
 
 
                                         <td *ngIf="active_tab == 'distributor_user'" class="w90">
-                                            {{u.dr_user_verification_status && u.dr_user_verification_status!= ''?u.dr_user_verification_status:'--'}}
-                                            <div class="action-btns" *ngIf="u.dr_user_verification_status && u.dr_user_verification_status!= ''">
-                                              <a *ngIf="view_edit" mat-button class="view" (click)="openDialog(u.id,u.dr_user_verification_status)" ><i class="material-icons">cached</i> Verify </a>
+                                            {{u.dr_user_verification_status && u.dr_user_verification_status!=
+                                            ''?u.dr_user_verification_status:'--'}}
+                                            <div class="action-btns"
+                                                *ngIf="u.dr_user_verification_status && u.dr_user_verification_status!= ''">
+                                                <a *ngIf="view_edit" mat-button class="view"
+                                                    (click)="openDialog(u.id,u.dr_user_verification_status)"><i
+                                                        class="material-icons">cached</i> Verify </a>
                                             </div>
                                         </td>
-                                        <td *ngIf="active_tab == 'distributor_user'" class="w120">{{u.verified_by_user_name && u.verified_by_user_name!='' && u.verified_by_user_name!=null ? u.verified_by_user_name : '--'}}</td>
+                                        <td *ngIf="active_tab == 'distributor_user'" class="w120">
+                                            {{u.verified_by_user_name && u.verified_by_user_name!='' &&
+                                            u.verified_by_user_name!=null ? u.verified_by_user_name : '--'}}</td>
 
 
-                                        <td class="w150"  *ngIf="active_tab != 'distributor_user'" matTooltip="{{u.assign_user}}" matTooltipPosition="above">
+                                        <td class="w150" *ngIf="active_tab != 'distributor_user'"
+                                            matTooltip="{{u.assign_user}}" matTooltipPosition="above">
                                             <div class="one-line">
                                                 {{u.assign_user && u.assign_user!='' ? u.assign_user : '--'}}
                                             </div>
                                         </td>
-                                        <td class="w150"*ngIf="active_tab == 'Market'" >
+                                        <td class="w150" *ngIf="active_tab == 'Market'">
                                             <div class="one-line">
-                                                {{u.primary_sale.count && u.primary_sale.count != '' ? u.primary_sale.count : '--'}} | &#8377; {{u.primary_sale.sum && u.primary_sale.sum != '' ? u.primary_sale.sum : '--'}}
+                                                {{u.primary_sale.count && u.primary_sale.count != '' ?
+                                                u.primary_sale.count : '--'}} | &#8377; {{u.primary_sale.sum &&
+                                                u.primary_sale.sum != '' ? u.primary_sale.sum : '--'}}
                                             </div>
                                         </td>
-                                        <td class="w60" *ngIf="active_tab == 'Market'" [ngClass]="u.user_type=='Market' || u.user_type=='MARKET' ? 'ankr-clr' : ''" style ="cursor: pointer"  (click)="u.user_type=='Market' || u.user_type=='MARKET' ? targetModal(u.id) : ''">{{u.user_type=='Market' || u.user_type=='MARKET' ? 'View' : '--'}}</td>
+                                        <td class="w60" *ngIf="active_tab == 'Market'"
+                                            [ngClass]="u.user_type=='Market' || u.user_type=='MARKET' ? 'ankr-clr' : ''"
+                                            style="cursor: pointer"
+                                            (click)="u.user_type=='Market' || u.user_type=='MARKET' ? targetModal(u.id) : ''">
+                                            {{u.user_type=='Market' || u.user_type=='MARKET' ? 'View' : '--'}}</td>
+                                        <td class="w100">{{u.incentive_percent && u.incentive_percent!='' ? u.incentive_percent : '--'}}</td>
+
                                         <td *ngIf="view_edit && active_tab != 'Office'" class="w70 text-center">
-                                            <mat-slide-toggle [checked]="u.status "  (click)="userStatus(i,u.id)" ></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="u.status "
+                                                (click)="userStatus(i,u.id)"></mat-slide-toggle>
                                         </td>
                                         <!-- <td *ngIf="view_delete" class="w70 text-center">
                                             <button mat-button class="delete-mat" (click)="deleteUser(u.id)"><i class="material-icons red-clr">delete_sweep</i></button>
@@ -189,18 +231,43 @@
 
                                     </tr>
                                     <ng-container *ngFor="let lead of skelton">
-                                        <tr class="sk-loading"  *ngIf="loader">
-                                            <td class="w150"><div>&nbsp;</div></td>
-                                            <td class="w150" *ngIf="active_tab == 'Market'"><div>&nbsp;</div></td>
-                                            <td class="w150"><div>&nbsp;</div></td>
-                                            <td class="w150"><div>&nbsp;</div></td>
-                                            <td class="w100"><div>&nbsp;</div></td>
-                                            <td *ngIf="active_tab == 'distributor_user'" class="w90"><div>&nbsp;</div></td>
-                                            <td *ngIf="active_tab == 'distributor_user'" class="w120"><div>&nbsp;</div></td>
-                                            <td class="w150" *ngIf="active_tab != 'distributor_user'"><div>&nbsp;</div></td>
-                                            <td class="w150" *ngIf="active_tab == 'Market'"><div>&nbsp;</div></td>
-                                            <td class="w60" *ngIf="active_tab == 'Market'"><div>&nbsp;</div></td>
-                                            <td *ngIf="view_edit && active_tab != 'Office'" class="w70"><div>&nbsp;</div></td>
+                                        <tr class="sk-loading" *ngIf="loader">
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150" *ngIf="active_tab == 'Market'">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td *ngIf="active_tab == 'distributor_user'" class="w90">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td *ngIf="active_tab == 'distributor_user'" class="w120">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150" *ngIf="active_tab != 'distributor_user'">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w150" *ngIf="active_tab == 'Market'">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w60" *ngIf="active_tab == 'Market'">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td class="w100">
+                                                <div>&nbsp;</div>
+                                            </td>
+                                            <td *ngIf="view_edit && active_tab != 'Office'" class="w70">
+                                                <div>&nbsp;</div>
+                                            </td>
                                             <!-- <td *ngIf="view_delete" class="w70"><div>&nbsp;</div></td> -->
                                         </tr>
 
@@ -241,8 +308,8 @@
 
         <div class="fix-btn">
 
-            <a *ngIf="view_add" class="bottom-btn" matTooltip="Add New" matTooltipPosition="left" mat-raised-button routerLink="/user-add"><i class="material-icons">add</i></a>
+            <a *ngIf="view_add" class="bottom-btn" matTooltip="Add New" matTooltipPosition="left" mat-raised-button
+                routerLink="/user-add"><i class="material-icons">add</i></a>
         </div>
     </div>
 </div>
-

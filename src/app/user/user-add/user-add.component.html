@@ -22,15 +22,18 @@
               <mat-divider class="left-right-15 mt10"></mat-divider>
 
               <div class="row mb20">
-                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'" >
+                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'">
                   <div class="from-fields">
                     <div class="control-field">
                       <mat-form-field class="cs-input">
-                        <mat-select name="user_type" placeholder="Sales User Type" [(ngModel)]="data.user_type"#user_type="ngModel" [ngClass]="{'has-error' : user_type.invalid } " required=true>
+                        <mat-select name="user_type" placeholder="Sales User Type" [(ngModel)]="data.user_type"
+                          #user_type="ngModel" [ngClass]="{'has-error' : user_type.invalid } " required=true>
                           <mat-option disabled value="">Select Sales User Type</mat-option>
                           <mat-option value="Market" (click)="get_sales_user_type('Market')">Market</mat-option>
                           <mat-option value="Office" (click)="get_sales_user_type('Office')">Office</mat-option>
                           <mat-option value="Showroom" (click)="get_sales_user_type('Showroom')">Showroom</mat-option>
+                          <mat-option value="Warehouse"
+                            (click)="get_sales_user_type('Warehouse')">Warehouse</mat-option>
 
                         </mat-select>
                         <div class="alert alert-danger" *ngIf="!user_type.valid && f.submitted">
@@ -41,13 +44,18 @@
                   </div>
                 </div>
 
-                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'" *ngIf="sales_type">
+                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'"
+                  *ngIf="sales_type">
                   <div class="from-fields">
                     <div class="control-field">
                       <mat-form-field class="cs-input">
-                        <mat-select name="userrole" placeholder="User Designation" [(ngModel)]="data.userrole" #userrole="ngModel" (ngModelChange)="data.userrole == '16' ? get_warehouse_data() : data.warehouse_location_id = '0'" [ngClass]="{'has-error' : userrole.invalid } " required=true>
+                        <mat-select name="userrole" placeholder="User Designation" [(ngModel)]="data.userrole"
+                          #userrole="ngModel"
+                          (ngModelChange)="data.userrole == '16' ? get_warehouse_data() : data.warehouse_location_id = '0'"
+                          [ngClass]="{'has-error' : userrole.invalid } " required=true>
                           <mat-option disabled value="">Select Sales User Designation</mat-option>
-                          <mat-option *ngFor="let rsm of sales_type" value="{{rsm.id}}" (click)="assign_users(rsm.id)">{{rsm.role_name}}</mat-option>
+                          <mat-option *ngFor="let rsm of sales_type" value="{{rsm.id}}"
+                            (click)="assign_users(rsm.id)">{{rsm.role_name}}</mat-option>
                         </mat-select>
                         <div class="alert alert-danger" *ngIf="!userrole.valid && f.submitted">
                           Sales user Designation is required...
@@ -57,7 +65,8 @@
                   </div>
                 </div>
 
-                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'" *ngIf="data.userrole && data.userrole!='' && data.userrole == '16'">
+                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'"
+                  *ngIf="data.userrole && data.userrole!='' && data.userrole == '16'">
                   <div class="from-fields">
                     <!-- <div class="control-field">
                       <mat-form-field class="cs-input">
@@ -91,10 +100,10 @@
 
               <div class="row mb0">
                 <div class="col s3">
-                  <div class="cs-file" >
+                  <div class="cs-file">
                     <p>User Profile Image</p>
                     <ul class="product-images">
-                      <li class="multi-images" >
+                      <li class="multi-images">
                         <label class="cs-file-img" *ngFor="let val of urls; let i = index">
                           <img [src]="val" alt="your image">
                           <span class="cancel-icon">
@@ -103,7 +112,8 @@
                         </label>
                         <label class="cs-file-img default" *ngIf="urls.length == 0">
                           <i class="material-icons">cloud_upload</i>
-                          <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg" style="display: none;" (change)="insertImage($event)" required>
+                          <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg"
+                            style="display: none;" (change)="insertImage($event)" required>
                         </label>
                       </li>
                     </ul>
@@ -115,7 +125,8 @@
                 <div class="col s3">
                   <div class="control-field">
                     <mat-form-field class="cs-input" [ngClass]="{'has-error' : name.invalid } ">
-                      <input matInput placeholder="Name" name="name" #name="ngModel" [(ngModel)]="data.name"[ngClass]="{'has-error' : name.invalid } " required>
+                      <input matInput placeholder="Name" name="name" #name="ngModel" [(ngModel)]="data.name"
+                        [ngClass]="{'has-error' : name.invalid } " required>
                       <div class="alert alert-danger" *ngIf="!name.valid && f.submitted">
                         Name is required...
                       </div>
@@ -126,8 +137,8 @@
                   <div class="control-field">
                     <mat-form-field class="cs-input">
                       <input matInput placeholder="Mobile No" type="tel" name="mobileno" #mobileno="ngModel"
-                      [(ngModel)]="data.mobileno" minlength="10" maxlength="10" min="0"
-                      (keypress)="MobileNumber($event)" [ngClass]="{'has-error' : mobileno.invalid } " required>
+                        [(ngModel)]="data.mobileno" minlength="10" maxlength="10" min="0"
+                        (keypress)="MobileNumber($event)" [ngClass]="{'has-error' : mobileno.invalid } " required>
                     </mat-form-field>
                     <div class="alert alert-danger" *ngIf="!mobileno.valid && f.submitted">
                       Mobile no. must be 10 digits...
@@ -145,11 +156,23 @@
                   <div class="control-field">
                     <mat-form-field class="cs-input">
                       <input matInput placeholder="Email ID" type="email" name="email" #email="ngModel"
-                      [(ngModel)]="data.email" [ngClass]="{'has-error' : email.invalid } "
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                        [(ngModel)]="data.email" [ngClass]="{'has-error' : email.invalid } "
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
                       <div class="alert alert-danger" *ngIf="!email.valid && f.submitted">
                         Email Id is required...
                       </div>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s3 pr0">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input">
+                      <input type="text" matInput placeholder="Incentive Point"
+                        onkeypress="return event.charCode >=48 && event.charCode<=57" name="incentive_point"
+                        #incentive_point="ngModel" [(ngModel)]="data.incentive_point"
+                        [ngClass]="{'has-error' : incentive_point.invalid }" required>
+                      <mat-autocomplete #auto="matAutocomplete">
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                 </div>
@@ -160,7 +183,8 @@
                 <div class="col s6 ">
                   <div class="control-field">
                     <mat-form-field class="cs-input">
-                      <textarea matInput placeholder="Address" name="address" #address="ngModel" [(ngModel)]="data.address" class="h100"></textarea>
+                      <textarea matInput placeholder="Address" name="address" #address="ngModel"
+                        [(ngModel)]="data.address" class="h100"></textarea>
                     </mat-form-field>
                   </div>
                 </div>
@@ -170,10 +194,13 @@
                     <div class="col s6">
                       <div class="control-field">
                         <mat-form-field class="cs-input">
-                          <mat-select name="state" placeholder="State" #state="ngModel" [(ngModel)]="data.state" [ngClass]="{'has-error' : state.invalid } "   [required] = "data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
+                          <mat-select name="state" placeholder="State" #state="ngModel" [(ngModel)]="data.state"
+                            [ngClass]="{'has-error' : state.invalid } "
+                            [required]="data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
 
                             <mat-option disabled="">Select State</mat-option>
-                            <mat-option *ngFor="let state of state_list" (keyup.enter)="getDistrict()" (click)="getDistrict()" value="{{state}}">{{state}}</mat-option>
+                            <mat-option *ngFor="let state of state_list" (keyup.enter)="getDistrict()"
+                              (click)="getDistrict()" value="{{state}}">{{state}}</mat-option>
 
                           </mat-select>
                           <div class="alert alert-danger" *ngIf="!state.valid && f.submitted">
@@ -185,10 +212,13 @@
                     <div class="col s6">
                       <div class="control-field">
                         <mat-form-field class="cs-input">
-                          <mat-select name="district" placeholder="District" #distric="ngModel" [(ngModel)]="data.district" [ngClass]="{'has-error' : distric.invalid } " [required] = "data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
+                          <mat-select name="district" placeholder="District" #distric="ngModel"
+                            [(ngModel)]="data.district" [ngClass]="{'has-error' : distric.invalid } "
+                            [required]="data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
 
                             <mat-option disabled="">Select District</mat-option>
-                            <mat-option *ngFor="let district of district_list" (keyup.enter)="getCityList()" (click)="getCityList()" value="{{district}}">{{district}}</mat-option>
+                            <mat-option *ngFor="let district of district_list" (keyup.enter)="getCityList()"
+                              (click)="getCityList()" value="{{district}}">{{district}}</mat-option>
 
                           </mat-select>
                           <div class="alert alert-danger" *ngIf="!distric.valid && f.submitted">
@@ -204,7 +234,9 @@
                     <div class="col s6 pr0">
                       <div class="control-field">
                         <mat-form-field class="cs-input">
-                          <mat-select name="city" placeholder="City" #city="ngModel" [(ngModel)]="data.city" [ngClass]="{'has-error' : city.invalid } " [required] = "data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
+                          <mat-select name="city" placeholder="City" #city="ngModel" [(ngModel)]="data.city"
+                            [ngClass]="{'has-error' : city.invalid } "
+                            [required]="data.user_type && data.user_type !='' && data.user_type != 'Ware House'">
 
                             <mat-option disabled="">Select City</mat-option>
                             <mat-option *ngFor="let city of city_list" value="{{city}}">{{city}}</mat-option>
@@ -221,7 +253,7 @@
                       <div class="control-field">
                         <mat-form-field class="cs-input" [ngClass]="{'has-error' : name.invalid } ">
                           <input matInput name="pincode" placeholder="Pincode" #pincode="ngModel" maxlength="6"
-                          [(ngModel)]="data.pincode">
+                            [(ngModel)]="data.pincode">
                           <div class="alert alert-danger" *ngIf="!pincode.valid && f.submitted">
                             Pincode is required...
                           </div>
@@ -237,7 +269,7 @@
 
 
 
-              <div class="left-right-15"  *ngIf="data.user_type == 'Office'">
+              <div class="left-right-15" *ngIf="data.user_type == 'Office'">
                 <div class="cs-table">
                   <div class="stickyHead">
 
@@ -245,10 +277,10 @@
                       <table>
                         <tr>
                           <th class="w50">S.No.</th>
-                          <th >Module Name</th>
-                          <th class="w120 text-center" >View</th>
+                          <th>Module Name</th>
+                          <th class="w120 text-center">View</th>
                           <th class="w120 text-center">Edit</th>
-                          <th  class="w120 text-center">Delete</th>
+                          <th class="w120 text-center">Delete</th>
                           <th class="w120 text-center">Add</th>
                         </tr>
                       </table>
@@ -261,29 +293,42 @@
                       <table>
                         <tr *ngFor="let data of assign_module_data; let i = index">
                           <td class="w50">{{i+1}}</td>
-                          <td >{{data.module_name == 'distribution dealer' ? 'Distributor Retail Partners' : (data.module_name == 'lead dealer' ? 'Lead Retail Partners' : data.module_name )  }}</td>
+                          <td>{{data.module_name == 'distribution dealer' ? 'Distributor Retail Partners' :
+                            (data.module_name == 'lead dealer' ? 'Lead Retail Partners' : data.module_name ) }}</td>
 
                           <td class="w120 text-center">
 
-                            <mat-checkbox *ngIf="data.view!= '' &&  data.view  == false || data.view  == 'false' || data.view  == 'true' || data.view  == true" [checked]="data.view==true && data.view== 'true'" (change)="assign_module('view',$event,i)"></mat-checkbox>
+                            <mat-checkbox
+                              *ngIf="data.view!= '' &&  data.view  == false || data.view  == 'false' || data.view  == 'true' || data.view  == true"
+                              [checked]="data.view==true && data.view== 'true'"
+                              (change)="assign_module('view',$event,i)"></mat-checkbox>
                             <mat-checkbox *ngIf="data.view== ''" [disabled]=true></mat-checkbox>
 
                           </td>
                           <td class="w120 text-center">
 
-                            <mat-checkbox *ngIf="data.edit!= '' &&  data.edit  == false || data.edit  == 'false' || data.edit  == 'true' || data.edit  == true"  [checked]="data.edit==true && data.edit== 'true'" (change)="assign_module('edit',$event,i)"></mat-checkbox>
+                            <mat-checkbox
+                              *ngIf="data.edit!= '' &&  data.edit  == false || data.edit  == 'false' || data.edit  == 'true' || data.edit  == true"
+                              [checked]="data.edit==true && data.edit== 'true'"
+                              (change)="assign_module('edit',$event,i)"></mat-checkbox>
                             <mat-checkbox *ngIf="data.edit== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
 
                           </td>
                           <td class="w120 text-center">
 
-                            <mat-checkbox *ngIf="data.delete!= '' &&  data.delete  == false || data.delete  == 'false' || data.delete  == 'true' || data.delete  == true" [checked]="data.delete==true && data.delete== 'true'" (change)="assign_module('delete',$event,i)"></mat-checkbox>
+                            <mat-checkbox
+                              *ngIf="data.delete!= '' &&  data.delete  == false || data.delete  == 'false' || data.delete  == 'true' || data.delete  == true"
+                              [checked]="data.delete==true && data.delete== 'true'"
+                              (change)="assign_module('delete',$event,i)"></mat-checkbox>
                             <mat-checkbox *ngIf="data.delete== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
 
                           </td>
                           <td class="w120 text-center">
 
-                            <mat-checkbox *ngIf="data.add!= '' &&  data.add  == false || data.add  == 'false' || data.add  == 'true' || data.add  == true" [checked]="data.add==true && data.add== 'true'" (change)="assign_module('add',$event,i)"></mat-checkbox>
+                            <mat-checkbox
+                              *ngIf="data.add!= '' &&  data.add  == false || data.add  == 'false' || data.add  == 'true' || data.add  == true"
+                              [checked]="data.add==true && data.add== 'true'"
+                              (change)="assign_module('add',$event,i)"></mat-checkbox>
                             <mat-checkbox *ngIf="data.add== ''" [disabled]=true [indeterminate]=true></mat-checkbox>
 
                           </td>
@@ -300,17 +345,16 @@
 
 
               <div class="row" *ngIf="data.userrole && data.user_type ">
-                <div class="col s4" >
+                <div class="col s4">
                   <div class="territory-info">
                     <div class="head" [ngClass]="{'active':active.user==true}">
                       <h2>Reporting Manager</h2>
                       <i class="material-icons search-icon right20" (click)="toggleterritory('user','open')"
-                      matRipple>search</i>
+                        matRipple>search</i>
                       <input type="text" placeholder="search..." name="sales_executive" class="fix-search"
-                      (input)="getItemsList(search.sales_executive)" #sales_executive="ngModel"
-                      [(ngModel)]="search.sales_executive">
-                      <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
-                      matRipple>clear</i>
+                        (input)="getItemsList(search.sales_executive)" #sales_executive="ngModel"
+                        [(ngModel)]="search.sales_executive">
+                      <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
                     </div>
 
                     <div class="cs-logs">
@@ -319,8 +363,8 @@
                           <section class="checkbox-inner">
                             <ng-container *ngFor="let list of rsm_list;let index=index" aria-required="true">
                               <mat-checkbox class="check-list" [checked]="list.check"
-                              (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} |
-                              {{list.role_name}}</mat-checkbox>
+                                (change)="product_Brand(list.id,index,$event)" value="{{list.name}}">{{list.name}} |
+                                {{list.role_name}}</mat-checkbox>
                             </ng-container>
                           </section>
                         </div>

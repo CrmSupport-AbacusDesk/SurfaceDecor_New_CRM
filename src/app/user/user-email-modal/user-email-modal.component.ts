@@ -113,6 +113,13 @@ export class UserEmailModalComponent implements OnInit {
   
   update_user()
   {
+    if(this.data.type=='incentive_percent'){
+      if(this.data.value>100){
+          this.toast.errorToastr("Incentive Point Percentage Can't Be Greater Than 100%");
+        return;
+      }
+    }
+
     console.log(this.datauser['data']['id']);
     console.log(this.datauser['data']['name']);
     this.index=this.data.type;
