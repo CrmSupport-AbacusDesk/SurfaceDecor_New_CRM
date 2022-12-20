@@ -24,7 +24,7 @@ export class PointMasterAddComponent implements OnInit {
   login_id:any;
   constructor(@Inject(MAT_DIALOG_DATA)public data,public dialog:MatDialog,public serve:PearlService,public session: SessionStorage,public alert:DialogComponent,public toastCtrl:ToastrManager) { 
     
-    this.get_brand_list();
+    // this.get_brand_list();
     console.log(data);
     if(data.from=='editPointMaster'){
       this.data1=data.value;

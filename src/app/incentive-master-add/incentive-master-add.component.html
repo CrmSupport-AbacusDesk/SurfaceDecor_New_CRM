@@ -42,7 +42,7 @@
                 <div class="row pl10">
                   <div class="col s12 pl0">
                     <div class="row">
-                      <div class="col s6">
+                      <div class="col s4">
                         <div class="control-field">
                           <mat-form-field class="cs-input">
                             <input type="text" matInput placeholder="Sales Point"
@@ -54,14 +54,26 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col s6">
-
+                      <div class="col s4">
                         <div class="control-field">
                           <mat-form-field class="cs-input">
                             <input type="text" matInput placeholder="WAREHOUSE POINT" name="warehouse_points"
-                              #warehouse_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57" (keyup)="calculatePointAllocation()"
-                              [(ngModel)]="data.warehouse_points" [ngClass]="{'has-error' : warehouse_points.invalid } "
-                              required>
+                              #warehouse_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                              (keyup)="calculatePointAllocation()" [(ngModel)]="data.warehouse_points"
+                              [ngClass]="{'has-error' : warehouse_points.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s4">
+
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="SHOWROOM POINT" name="showroom_points"
+                              #showroom_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                              [(ngModel)]="data.showroom_points"
+                              [ngClass]="{'has-error' : showroom_points.invalid } " required>
                             <mat-autocomplete #auto="matAutocomplete">
                             </mat-autocomplete>
                           </mat-form-field>
@@ -70,31 +82,24 @@
 
                       </div>
                     </div>
-
-
-
-
-
                   </div>
-
-
-
                 </div>
 
               </div>
               <div class="cs-btn fixedd mt32 text-right">
                 <div class="in-btn mr25">
-                  <button mat-raised-button (click)="(f.valid && f.submitted)? addIncentiveMaster():''" color="accent">Update</button>
+                  <button mat-raised-button (click)="(f.valid && f.submitted)? addIncentiveMaster():''"
+                    color="accent">Update</button>
                 </div>
               </div>
             </div>
-         
+
           </div>
         </div>
         <!-- Point Allocation -->
 
         <!-- Market SalePoint Allocation -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col s12">
             <div class="sprate-box">
               <div class="cs-heading">
@@ -161,12 +166,12 @@
             </div>
          
           </div>
-        </div>
+        </div> -->
         <!-- Market SalesPoint Allocation -->
 
         <!-- wareHouse Point Allocation -->
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col s12">
             <div class="sprate-box">
               <div class="cs-heading">
@@ -245,7 +250,7 @@
             </div>
            
           </div>
-        </div>
+        </div> -->
         <!-- wareHouse Point Allocation -->
       </div>
 
