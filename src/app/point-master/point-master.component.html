@@ -15,10 +15,10 @@
       </ul>
       <div class="tabs ml15">
         <ul>
-          <li><a class="" [ngClass]="this.search.active_tab == 'Brand_Wise' ? 'active' : ''"
-              (click)="this.search.active_tab = 'Brand_Wise'; get_pointMaster_list()">Brand Wise</a></li>
-          <li><a class="" [ngClass]="this.search.active_tab == 'Product_Wise' ? 'active' : ''"
-              (click)="this.search.active_tab = 'Product_Wise';get_pointMaster_list() ">Product Wise</a></li>
+          <li><a class="" [ngClass]="search.active_tab == 'Brand_Wise' ? 'active' : ''"
+              (click)="search.active_tab = 'Brand_Wise'; get_pointMaster_list()">Brand Wise</a></li>
+          <li><a class="" [ngClass]="search.active_tab == 'Product_Wise' ? 'active' : ''"
+              (click)="search.active_tab = 'Product_Wise';get_pointMaster_list() ">Product Wise</a></li>
         
         </ul>
       </div>
@@ -37,6 +37,8 @@
             <th class="w140">Date Created</th>
             <th class="w180">Created By</th>
             <th>Brands</th>
+            <th *ngIf="this.search.active_tab != 'Brand_Wise'">Product Name</th>
+            <th *ngIf="this.search.active_tab != 'Brand_Wise'">Product Status</th>
             <th class="w150 text-center">Points</th>
             <th class="w100 text-center">Date Updated</th>
             <th class="w100 text-center">Updated By</th>
@@ -66,7 +68,21 @@
               </div> -->
             </th>
 
-            <th>
+            <th >
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Subject" name="subject" [(ngModel)]="search.subject" (keyup.enter)="get_Point_Master_list()" >
+                </mat-form-field>
+              </div> -->
+            </th>
+            <th *ngIf="this.search.active_tab!='Brand_Wise'">
+              <!-- <div class="th-search-acmt">
+                <mat-form-field class="example-full-width cs-input select-input">
+                  <input matInput placeholder="Subject" name="subject" [(ngModel)]="search.subject" (keyup.enter)="get_Point_Master_list()" >
+                </mat-form-field>
+              </div> -->
+            </th>
+            <th *ngIf="this.search.active_tab!='Brand_Wise'">
               <!-- <div class="th-search-acmt">
                 <mat-form-field class="example-full-width cs-input select-input">
                   <input matInput placeholder="Subject" name="subject" [(ngModel)]="search.subject" (keyup.enter)="get_Point_Master_list()" >
@@ -117,6 +133,8 @@
               <!-- routerLink="/announcement-detail/{{data.id}}" routerLinkActive="active" -->
               <td class="w180">{{data.created_by_name}}</td>
               <td>{{data.brand_name}}</td>
+              <td *ngIf="this.search.active_tab!= 'Brand_Wise'">{{data.product_name}}</td>
+              <td *ngIf="this.search.active_tab != 'Brand_Wise'">{{data.product_status}}</td>
               <td class="w150 text-center">{{data.points}}</td>
               <td class="w100 text-center">{{data.updated_at !='0000-00-00 00:00:00' ?data.updated_at:'--'}}</td>
               <td class="w100 text-center">{{data.updated_by_name}}</td>
@@ -146,9 +164,15 @@
               <td class="w180">
                 <div>&nbsp;</div>
               </td><!-- Created By -->
-              <td>
+              <td >
                 <div>&nbsp;</div>
               </td><!-- Brand -->
+              <td *ngIf="this.search.active_tab != 'Brand_Wise'">
+                <div>&nbsp;</div>
+              </td><!-- Product Name -->
+              <td *ngIf="this.search.active_tab != 'Brand_Wise'">
+                <div>&nbsp;</div>
+              </td><!-- Product Status -->
               <td class="w150">
                 <div>&nbsp;</div>
               </td><!-- Point -->
