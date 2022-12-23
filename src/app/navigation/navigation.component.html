@@ -374,6 +374,14 @@
                    
                 </a>
             </li>
+            <li *ngIf="true">
+                <a routerLink="/UserIncentiveReportList" routerLinkActive="active">
+                    <i class="material-icons nav-icon">report</i>
+                  User Report Incentive
+                   <!-- <span class="nav-counter orange-count">{{serve.navigationCount.pending_complaint__count}}</span> -->
+                   
+                </a>
+            </li>
 
             <!-- <li class="dropdown" *ngIf="false && login_data.view_monthly_work_report=='1' && login_data.view_c_p_sales_report=='1' && login_data.view_primary_secondary_report=='1'">
                 <a (click)=toggleDropdown(5) [ngClass]="{'active':reportactive}">Report<img src="assets/img/report.svg " class="nav-icon h20"></a>

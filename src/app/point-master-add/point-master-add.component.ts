@@ -217,7 +217,7 @@ export class PointMasterAddComponent implements OnInit {
   showToast(position: any = 'bottom-right', msg: any) {
     this.toastCtrl.infoToastr(msg, 'Toast', {
       position: position,
-      duration: 20000
+      toastTimeout:20000
     });
   }
   selectAll2(action) {

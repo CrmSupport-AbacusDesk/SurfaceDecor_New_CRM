@@ -275,7 +275,7 @@
 </div>
 
 <div class="edit-modal" *ngIf="data.type=='work_effeciency_point'">
-    <p class="heading">Update Work Effieciency Point Percentage</p>
+    <p class="heading">Update Work Effieciency Point</p>
     <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_user()">
         <div mat-dialog-content>
             <mat-form-field class="example-full-width wp100 cs-field">
@@ -350,6 +350,8 @@
             <mat-radio-group aria-placeholder="User Type" name="user" #user="ngModel" [(ngModel)]="data.value"  [ngClass]="{'has-error' : user.invalid } "   required="true">
                 <mat-radio-button class="example-margin" color="accent" value="Market">Market</mat-radio-button>
                 <mat-radio-button class="example-margin" color="accent" value="Office">Office</mat-radio-button>
+                <mat-radio-button class="example-margin" color="accent" value="Showroom">Showroom</mat-radio-button>
+                <mat-radio-button class="example-margin" color="accent" value="Warehouse">Warehouse</mat-radio-button>
                 <div class="alert alert-danger" *ngIf="!user.valid && update_basic.submitted">
                     Type is required....
                 </div>

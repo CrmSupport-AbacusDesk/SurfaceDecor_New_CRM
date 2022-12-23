@@ -496,6 +496,59 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col s12">
+          <div class="details-info padding0 mt10">
+            <h2
+              style="display: inline-block; padding: 10px; border-radius: 0px 20px 20px 0px; margin-bottom: 14px; background-color:#275478; font-size: 13px; letter-spacing: 0.16em;line-height: 15px;text-align: left;text-transform: uppercase;color: #fff">
+              Orders Log </h2>
+
+            <div class="cs-table">
+              <div class="table-head">
+               
+                <table class="">
+                  <tr>
+                    <th class="w20">S.No</th>
+                    <th class="w40">Updated On</th>
+
+                    <th class="w30">Updated By</th>
+                    <th class="w40">Action</th>
+                    <th class="w40">Product Description</th>
+
+                    <th class="w150">Remark</th>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="table-container">
+                <div class="table-content" style="word-break: break-all;">
+
+                  <table class="">
+
+                    <tr *ngFor="let k of detail.order_status_change_log; let i=index">
+                      <td class="w20">{{i+1}}</td>
+                      <td class="w40">{{k.changed_time | date:' d MMM y, h:mm a'}} </td>
+
+                      <td class="w30">{{k.usr_name }}</td>
+                     
+                      <td class="w40">{{k.changed_status == 'Reject'? 'Reject':k.changed_status ==
+                        'Dispatch'?'Dispatched':k.changed_status == 'Approved'?'Order Accepted':k.changed_status ==
+                        'Pending'? 'Pending':k.changed_status == 'PDispatch' ? 'Partially Dispatched': k.changed_status
+                        == 'Closed' ? 'Order Closed':'--'}}</td>
+                     
+                      <td class="w40">{{k.order_item_name ? k.order_item_name:'--'}}</td>
+                      <td class="w150">{{k.reason ? k.reason :'--'}} </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
       <div class="row mt15"
         *ngIf="detail.user_type == 'OFFICE' || detail.user_type == 'office' || detail.user_type =='Office'">

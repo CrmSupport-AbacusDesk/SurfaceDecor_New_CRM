@@ -8,7 +8,7 @@
     </div>
 
     <div class="left-auto">
-      <div class="from-fields cs-flex" style="margin-left: -100px;">
+      <!-- <div class="from-fields cs-flex" style="margin-left: -100px;">
         <div class="control-field mr10">
           <mat-form-field class="cs-input date-column infix-bodr">
             <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from"
@@ -38,7 +38,7 @@
         <button mat-raised-button style="background-color: #275478; color: #fff">
           Go
         </button>
-      </div>
+      </div> -->
 
 
 
@@ -65,10 +65,11 @@
         <table>
           <tr>
             <th class="w50 text-center">&nbsp;</th>
-            <th class="w200 text-center">Brand</th>
-            <th class="w180 text-center">Sale Qty</th>
-            <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
-            <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th>
+            <th class="w200 text-center">Sale User</th>
+            <th class="w180 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
+              uppercase}} </th>
+            <!-- <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
+            <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th> -->
 
           </tr>
         </table>
@@ -78,31 +79,18 @@
           <tr>
             <th class="w50"></th>
             <th class="w200">
-              <div class="th-search-acmt">
-                <mat-form-field class="example-full-width cs-input select-input">
-                  <input matInput placeholder="Enter Brand...." [matAutocomplete]="brand_name"
-                    (keyup.enter)="getReportIncentive()"
-                    (input)="category_array_filter(search_val.brand_name,tmp_category)" name="brand_name"
-                    #brand_name="ngModel" [(ngModel)]="search_val.brand_name">
-                  <mat-autocomplete #brand_name="matAutocomplete">
-                    <mat-option *ngFor="let category of category_list" (click)="getReportIncentive()"
-                      value="{{category.category}}">
-                      <small>{{category.category}}</small>
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
-            </th>
-            <th class="w180">
-              <!-- <div class="th-search-acmt">
-                <mat-form-field class="example-full-width cs-input select-input">
 
-                  <input matInput placeholder="Created By. . ." type="text" name="created_by" [(ngModel)]="search.created_by" (keyup.enter)="get_Point_Master_list()" >
-                </mat-form-field>
-              </div> -->
+            </th>
+            <th class="w180" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+              <table>
+                <tr>
+                  <th>Qty</th>
+                  <th>Points</th>
+                </tr>
+              </table>
             </th>
 
-            <th>
+            <!-- <th>
               <table>
                 <tr>
                   <th>HO1 ({{ReportIncentiveList.ho1_point}})% </th>
@@ -111,9 +99,9 @@
                 </tr>
               </table>
 
-            </th>
+            </th> -->
 
-            <th>
+            <!-- <th>
               <table>
                 <tr>
                   <th>TELEPHONE OP ({{ReportIncentiveList.telephone_op_point}})% </th>
@@ -122,16 +110,7 @@
                   <th>LABOUR ({{ReportIncentiveList.labour_points}})% </th>
                 </tr>
               </table>
-            </th>
-
-
-
-
-
-
-
-
-
+            </th> -->
           </tr>
         </table>
       </div>
@@ -140,15 +119,24 @@
     <div class="table-container mb60">
       <div class="table-content" style="width: fit-content;">
         <table>
-          <ng-container *ngFor="let data of ReportIncentiveBrandList;let i = index">
+          <ng-container *ngFor="let data of ReportIncentiveList;let i = index">
 
 
 
             <tr>
               <td class="w50">{{i+1}}</td>
-              <td class="w200">{{data.brand_name}}</td>
-              <td class="w180">{{data.total_qty}}</td>
-              <td>
+              <td class="w200">
+                {{data.name}}
+              </td>
+              <td class="w180" *ngFor="let row1 of data.brandData;let i = index">
+                <table>
+                  <tr >
+                    <td>{{row1.total_qty}}</td>
+                    <td>{{row1.incentivePoints}}</td>
+                  </tr>
+                </table>
+              </td>
+              <!-- <td>
                 <table>
                   <tr>
                     <td>{{data.ho1_point}}</td>
@@ -156,8 +144,8 @@
                     <td>{{data.collection_points}}</td>
                   </tr>
                 </table>
-              </td>
-              <td>
+              </td> -->
+              <!-- <td>
                 <table>
                   <tr>
                     <td>{{data.telephone_op_point}}</td>
@@ -166,7 +154,7 @@
                     <td>{{data.labour_points}}</td>
                   </tr>
                 </table>
-              </td>
+              </td> -->
             </tr>
 
           </ng-container>
@@ -178,51 +166,28 @@
               </td>
               <td class="w200">
                 <div>&nbsp;</div>
-              </td><!-- Brands -->
-              <td class="w180">
-                <div>&nbsp;</div>
+              </td><!-- Sale User -->
+              <td class="w180" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                <table>
+                  <tr>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                    
+                  </tr>
+                </table>
               </td><!-- Sale Qty -->
-              <td>
-
-                <table>
-                  <tr>
-                    <th>
-                      <div>&nbsp;</div>
-                    </th>
-                    <th>
-                      <div>&nbsp;</div>
-                    </th>
-                    <th>
-                      <div>&nbsp;</div>
-                    </th>
-                  </tr>
-                </table>
-
-              </td><!-- market-->
-              <td>
-                <table>
-                  <tr>
-                    <td>
-                      <div>&nbsp;</div>
-                    </td>
-                    <td>
-                      <div>&nbsp;</div>
-                    </td>
-                    <td>
-                      <div>&nbsp;</div>
-                    </td>
-                    <td>
-                      <div>&nbsp;</div>
-                    </td>
-                  </tr>
-                </table>
-              </td><!-- Warehouse -->
+             
+              
 
 
             </tr>
           </ng-container>
           <ng-container>
-            <div class="data-not-available" *ngIf="ReportIncentiveBrandList.length==0">
+            <div class="data-not-available" *ngIf="ReportIncentiveList.length==0">
               <div class="outer">
                 <div class="iinear">
                   <div class="figure" matRipple>

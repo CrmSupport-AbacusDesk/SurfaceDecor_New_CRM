@@ -164,6 +164,7 @@ import { PointMasterAddComponent } from './point-master-add/point-master-add.com
 import { IncentiveMasterListComponent } from './incentive-master-list/incentive-master-list.component';
 import { IncentiveMasterAddComponent } from './incentive-master-add/incentive-master-add.component';
 import { ReportIncentiveListComponent } from './report-incentive-list/report-incentive-list.component';
+import { SaleUserReportComponent } from './sale-user-report/sale-user-report.component';
 
 
 const routes: Routes = [
@@ -228,6 +229,7 @@ const routes: Routes = [
   { path: 'pointMaster', component: PointMasterComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'IncentiveMaster', component: IncentiveMasterListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'ReportIncentiveList', component: ReportIncentiveListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'UserIncentiveReportList', component: SaleUserReportComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'IncentiveMasterAdd', component: IncentiveMasterAddComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'plumber-lead-list', component: PlumberLeadListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'dwr', component: DwrComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
@@ -432,6 +434,7 @@ const routes: Routes = [
     IncentiveMasterListComponent,
     IncentiveMasterAddComponent,
     ReportIncentiveListComponent,
+    SaleUserReportComponent,
 
   ],
   imports: [
