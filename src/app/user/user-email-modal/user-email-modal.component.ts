@@ -122,6 +122,7 @@ export class UserEmailModalComponent implements OnInit {
 
     console.log(this.datauser['data']['id']);
     console.log(this.datauser['data']['name']);
+    console.log(this.data.value);
     this.index=this.data.type;
     this.user[this.index]=this.data.value;
     this.value={data:this.user,"user_id":this.data.user_id,'last_updated_by':this.datauser['data']['id'],'last_updated_by_name':this.datauser['data']['name']}

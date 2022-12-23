@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='incentive_percent'  && data.type!='working_state'">
+<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='incentive_percent' && data.type!='work_effeciency_point'  && data.type!='working_state'">
     <p class="heading">Update User detail</p>
     <div mat-dialog-content>
         
@@ -274,6 +274,25 @@
     </form>
 </div>
 
+<div class="edit-modal" *ngIf="data.type=='work_effeciency_point'">
+    <p class="heading">Update Work Effieciency Point Percentage</p>
+    <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_user()">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width wp100 cs-field">
+                <input matInput name="work_effeciency_point" #work_effeciency_point="ngModel"  onkeypress="return event.charCode >=48 && event.charCode<=57"  [(ngModel)]="data.value" [ngClass]="{'has-error' : work_effeciency_point.invalid } ">
+                <div class="alert alert-danger" *ngIf="!work_effeciency_point.valid && update_basic.submitted">
+                   Work Efficiency Point is Invalid....
+                </div>
+            </mat-form-field >
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+            <div >
+                <button type="submit" color="accent" mat-button >Save</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="edit-modal" *ngIf="data.type=='access_level'">
     <p class="heading">Update Designation</p>
     <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="(user.valid && update_basic.submitted)?update_user():''">

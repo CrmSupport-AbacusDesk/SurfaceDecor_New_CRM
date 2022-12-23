@@ -121,8 +121,8 @@
                       <p>{{detail.employee_id}}</p>
 
                     </div>
-                  </li> 
-                
+                  </li>
+
 
                   <li class="col s4"
                     *ngIf="detail.user_type == 'office' || detail.user_type == 'OFFICE' || detail.user_type == 'Office'">
@@ -146,17 +146,9 @@
                   </li>
                 </ul>
 
-             
+
                 <ul>
-                  <li class="col s4">
-                    <div class="cs-box">
-                      <img src="assets/img/phone.svg" class="fix-img">
-                      <span>Incentive Point Pecentage</span>
-                      <p>{{detail.incentive_percent && detail.incentive_percent != ''?detail.incentive_percent :'--' }}</p>
-                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
-                      (click)="openEditDialog(detail.incentive_percent,'incentive_percent')"><i class="material-icons">create</i></a>
-                    </div>
-                  </li>
+
                   <li class="col s4">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">
@@ -180,6 +172,32 @@
                     </div>
                   </li>
                 </ul>
+
+                <ul>
+                  <li class="col s4" *ngIf="detail.user_type != 'office' ">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Incentive Point Pecentage</span>
+                      <p>{{detail.incentive_percent && detail.incentive_percent != ''?detail.incentive_percent :'--' }}
+                      </p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.incentive_percent,'incentive_percent')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s4" *ngIf="detail.user_type != 'office' ">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Work Efficiency Point</span>
+                      <p>{{detail.work_effeciency_point && detail.work_effeciency_point !=
+                        ''?detail.work_effeciency_point :'--' }}
+                      </p>
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.work_effeciency_point,'work_effeciency_point')"><i
+                          class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                </ul>
               </div>
 
               <div class="col s6 cs-figure">
@@ -197,7 +215,8 @@
               <div class="cs-heading">
                 <h2>User Profile</h2>
                 <label>
-                  <input type="file" accept=".png,.jpg,.jpeg" name="image" placeholder="Upload file" (change)="insertImage($event)" style="display: none;">
+                  <input type="file" accept=".png,.jpg,.jpeg" name="image" placeholder="Upload file"
+                    (change)="insertImage($event)" style="display: none;">
                   Add New
                 </label>
               </div>
@@ -207,14 +226,16 @@
                   <div class="vertical-img">
                     <div class="sm-img">
                       <ul>
-                        <li class="overlay-content" (click)="detail.user_profile && detail.user_profile != '' ? openImage(detail.user_profile):''">
-                          <img [src]="detail.user_profile && detail.user_profile != '' ? detail.user_profile : 'assets/img/NoPopNGift.png'">
+                        <li class="overlay-content"
+                          (click)="detail.user_profile && detail.user_profile != '' ? openImage(detail.user_profile):''">
+                          <img
+                            [src]="detail.user_profile && detail.user_profile != '' ? detail.user_profile : 'assets/img/NoPopNGift.png'">
                           <p>{{user_profile}}</p>
                           <!-- <a class="close" matRipple matTooltip="Delete"><i class="material-icons">delete_sweep</i></a> -->
                           <div class="overlay">
                           </div>
                         </li>
-                       
+
                       </ul>
                     </div>
                   </div>
@@ -310,7 +331,7 @@
           </div>
         </form>
 
-          <!-- <div class="col s8">
+        <!-- <div class="col s8">
             <div class="sprate-box padding0">
               <div class="full-address">
                 <div class="top-heading">
@@ -341,7 +362,7 @@
               <i class="material-icons close-icon" (click)="toggleterritory('user','close')" matRipple>clear</i>
             </div>
 
-            <div class="cs-logs">       
+            <div class="cs-logs">
               <div class="cs-checkbox">
                 <div class="checkbox-outer">
                   <section class="checkbox-inner">
@@ -403,33 +424,31 @@
             <div class="territory-info" *ngIf="brands_update != 'true'">
               <div class="head ">
                 <h2> Brands</h2>
-                <a class="edit-item" (click)="update_assigned_brands('true')"><i
-                  class="material-icons">create</i></a>
+                <a class="edit-item" (click)="update_assigned_brands('true')"><i class="material-icons">create</i></a>
               </div>
               <!-- <mat-checkbox class="check-list" [checked]="data.checks" (change)="sale-user-detail(data)"
                 > {{data.brand_name}} </mat-checkbox>
                 (click)="update_brands(data.id)" -->
-                <div class="cs-checkbox" *ngIf="dr_brand_list.length!=0">
-                  <div class="checkbox-outer" style="min-height: 115px;">
-                      <section class="checkbox-inner bodr0">
-                          <mat-checkbox class="check-list bg-none check-none" value="1"
-                              *ngFor="let row of dr_brand_list">
-                              <div class="name-outer">
-                                  <div class="outer">
-                                      <div class="inner">
-                                          <div class="name-inner">
-                                              {{row.brand.charAt(0).toUpperCase()}}
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="text-box">
-                                  <h2>{{row.brand}}</h2>
-                                  <!-- <p>{{row.role_name}}</p> -->
-                              </div>
-                          </mat-checkbox>
-                      </section>
-                  </div>
+              <div class="cs-checkbox" *ngIf="dr_brand_list.length!=0">
+                <div class="checkbox-outer" style="min-height: 115px;">
+                  <section class="checkbox-inner bodr0">
+                    <mat-checkbox class="check-list bg-none check-none" value="1" *ngFor="let row of dr_brand_list">
+                      <div class="name-outer">
+                        <div class="outer">
+                          <div class="inner">
+                            <div class="name-inner">
+                              {{row.brand.charAt(0).toUpperCase()}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-box">
+                        <h2>{{row.brand}}</h2>
+                        <!-- <p>{{row.role_name}}</p> -->
+                      </div>
+                    </mat-checkbox>
+                  </section>
+                </div>
               </div>
               <!-- <div class="cs-btn text-right mb10 mr10">
                 <div class="in-btn sm-btn">
@@ -451,7 +470,8 @@
                 <div class="checkbox-outer">
                   <section class="checkbox-inner">
                     <ng-container *ngFor="let data of all_brands_list;let i = index" aria-required="true">
-                       <mat-checkbox class="check-list" [checked]="data.checks" (change)="brands(data)" [(ngModel)]="data.checks"> {{data.brand_name}} </mat-checkbox>
+                      <mat-checkbox class="check-list" [checked]="data.checks" (change)="brands(data)"
+                        [(ngModel)]="data.checks"> {{data.brand_name}} </mat-checkbox>
 
                     </ng-container>
                   </section>
@@ -460,10 +480,9 @@
               </div>
               <div class="cs-btn text-right mb10 mr10">
                 <div class="in-btn sm-btn">
-                    <button mat-raised-button color="accent"
-                    (click)="update_brands()">Update</button>
+                  <button mat-raised-button color="accent" (click)="update_brands()">Update</button>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
 

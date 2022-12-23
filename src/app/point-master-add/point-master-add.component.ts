@@ -214,8 +214,14 @@ export class PointMasterAddComponent implements OnInit {
 
   }
 
+  showToast(position: any = 'bottom-right', msg: any) {
+    this.toastCtrl.infoToastr(msg, 'Toast', {
+      position: position,
+      duration: 20000
+    });
+  }
   selectAll2(action) {
-    this.loader = true;
+    this.showToast('bottom-right', 'Please Wait... Lots Of Product')
 
     if (action == 'allProductName_id') {
       console.log(this.data1.allProductName_id);
@@ -230,12 +236,12 @@ export class PointMasterAddComponent implements OnInit {
         } else {
           this.data1.product_id = [];
         }
-      }, 10000);
+      }, 20000);
 
       console.log(this.data1.product_id);
 
     }
-    this.loader = false;
+
 
   }
 
@@ -267,5 +273,18 @@ export class PointMasterAddComponent implements OnInit {
     }
 
   }
+  
+distinct_status_array:any=[];
+status_product(){
+  // console.log("this data ",this.data);
+
+  this.serve.fetchData({},'Product/distinct_status_code').subscribe((data)=>{
+    // console.log("distinct status code",data);
+    this.distinct_status_array=data['statusCode'];
+    // console.log("this distinct status array", this.distinct_status_array);
+
+  })
+
+}
 
 }
