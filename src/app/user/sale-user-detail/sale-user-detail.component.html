@@ -174,7 +174,7 @@
                 </ul>
 
                 <ul>
-                  <li class="col s4" *ngIf="detail.user_type != 'office' ">
+                  <li class="col s3" *ngIf="detail.user_type != 'office' ">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">
                       <span>Incentive Point Pecentage</span>
@@ -185,7 +185,7 @@
                           class="material-icons">create</i></a>
                     </div>
                   </li>
-                  <li class="col s4" *ngIf="detail.user_type != 'office' ">
+                  <li class="col s3" *ngIf="detail.user_type != 'office' ">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">
                       <span>Work Efficiency Point</span>
@@ -195,6 +195,30 @@
                       <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
                         (click)="openEditDialog(detail.work_effeciency_point,'work_effeciency_point')"><i
                           class="material-icons">create</i></a>
+                    </div>
+                  </li>
+                  <li class="col s3" *ngIf="detail.user_type != 'office' ">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Birthday Point</span>
+                      <p>{{detail.birthday_point && detail.birthday_point !=
+                        ''?detail.birthday_point :'--' }}
+                      </p>
+                      <!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.work_effeciency_point,'work_effeciency_point')"><i
+                          class="material-icons">create</i></a> -->
+                    </div>
+                  </li>
+                  <li class="col s3" *ngIf="detail.user_type != 'office' ">
+                    <div class="cs-box">
+                      <img src="assets/img/phone.svg" class="fix-img">
+                      <span>Anniversary Point</span>
+                      <p>{{detail.aniversary_points && detail.aniversary_points !=
+                        ''?detail.aniversary_points :'--' }}
+                      </p>
+                      <!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.aniversary_points,'work_effeciency_point')"><i
+                          class="material-icons">create</i></a> -->
                     </div>
                   </li>
                 </ul>

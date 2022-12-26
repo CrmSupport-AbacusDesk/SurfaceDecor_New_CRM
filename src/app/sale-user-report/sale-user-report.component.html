@@ -3,7 +3,7 @@
     <div class="page-heading">
       <img src="assets/img/distribution_icon.svg" class="h-icon">
       <div class="heading-text">
-        <h2>Report Incentive</h2>
+        <h2>User Report Incentive</h2>
       </div>
     </div>
 
@@ -40,7 +40,21 @@
         </button>
       </div> -->
 
+      <div class="tabs ml15">
+        <ul>
+          <!-- <li><a class="" [ngClass]="search_val.active_tab == 'Office' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Office';getReportIncentive();">Office User </a></li> -->
+          <li><a class="" [ngClass]="search_val.active_tab == 'Market' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Market';getReportIncentive();">Market User </a></li>
+          <li><a class="" [ngClass]="search_val.active_tab == 'Showroom' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Showroom';getReportIncentive();">Showroom User </a></li>
+          <li><a class="" [ngClass]="search_val.active_tab == 'Warehouse' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Warehouse';getReportIncentive();">Warehouse User </a></li>
 
+          <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Distributor User </a></li> -->
+          <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Dealer User </a></li> -->
+        </ul>
+      </div>
 
 
 
@@ -130,7 +144,7 @@
               </td>
               <td class="w180" *ngFor="let row1 of data.brandData;let i = index">
                 <table>
-                  <tr >
+                  <tr>
                     <td>{{row1.total_qty}}</td>
                     <td>{{row1.incentivePoints}}</td>
                   </tr>
@@ -176,12 +190,12 @@
                     <th>
                       <div>&nbsp;</div>
                     </th>
-                    
+
                   </tr>
                 </table>
               </td><!-- Sale Qty -->
-             
-              
+
+
 
 
             </tr>
@@ -194,7 +208,7 @@
                     <div class="header">
                       <img src="assets/img/data-not-available-header.svg" alt="">
                     </div>
-  
+
                     <div class="description">
                       <div class="cs-heading">
                         <h2>Report Incentive List</h2>
@@ -212,21 +226,24 @@
             </div>
           </ng-container>
         </table>
-
+        <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+          [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="getReportIncentive()">
+        </div>
       </div>
+
     </div>
 
+
+
+
+
+
+
+
+    <div class="fix-btn">
+      <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+        (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+      <!-- <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button -->
+      <!-- (click)="addIncentiveMaster()"><i class="material-icons">add</i></a> -->
+    </div>
   </div>
-
-
-
-
-
-
-
-
-  <!-- <div class="fix-btn">
-    <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
-      (click)="addIncentiveMaster()"><i class="material-icons">add</i></a>
-  </div> -->
-</div>

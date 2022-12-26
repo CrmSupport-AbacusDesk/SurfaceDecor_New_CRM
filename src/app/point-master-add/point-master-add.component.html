@@ -71,7 +71,7 @@
           <div class="col s12" *ngIf="data.incentive_wiseType=='Product_Wise'">
             <div class="control-field">
               <mat-form-field class="cs-input">
-                <mat-select placeholder="Select Status" [(ngModel)]="data1.product_status"
+                <mat-select placeholder="Select Status" [(ngModel)]="data1.product_status" multiple
                   (ngModelChange)="get_Productlist()" name="product_status" #product_status="ngModel" required>
                   <mat-option *ngFor="let status of distinct_status_array" value="{{status.status_code}}">
                     {{status.status_code}}

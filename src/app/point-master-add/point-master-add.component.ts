@@ -39,8 +39,10 @@ export class PointMasterAddComponent implements OnInit {
         this.data1.brand_id = [data.value.brand_id];
 
       } else {
-        this.data1.product_status = data.value.product_status;
+        this.data1.product_status = [data.value.product_status];
+        console.log(this.data1.product_status);
         this.get_Productlist();
+        this.status_product();
         this.data1.product_id = [data.value.product_id];
         this.data1.product_points = data.value.points;
         this.data1.id = data.value.id;
@@ -217,7 +219,7 @@ export class PointMasterAddComponent implements OnInit {
   showToast(position: any = 'bottom-right', msg: any) {
     this.toastCtrl.infoToastr(msg, 'Toast', {
       position: position,
-      toastTimeout:20000
+      toastTimeout: 20000
     });
   }
   selectAll2(action) {
@@ -273,18 +275,18 @@ export class PointMasterAddComponent implements OnInit {
     }
 
   }
-  
-distinct_status_array:any=[];
-status_product(){
-  // console.log("this data ",this.data);
 
-  this.serve.fetchData({},'Product/distinct_status_code').subscribe((data)=>{
-    // console.log("distinct status code",data);
-    this.distinct_status_array=data['statusCode'];
-    // console.log("this distinct status array", this.distinct_status_array);
+  distinct_status_array: any = [];
+  status_product() {
+    // console.log("this data ",this.data);
 
-  })
+    this.serve.fetchData({}, 'Product/distinct_status_code').subscribe((data) => {
+      // console.log("distinct status code",data);
+      this.distinct_status_array = data['statusCode'];
+      // console.log("this distinct status array", this.distinct_status_array);
 
-}
+    })
+
+  }
 
 }
