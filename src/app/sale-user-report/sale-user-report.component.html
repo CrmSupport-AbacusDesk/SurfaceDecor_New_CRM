@@ -1,4 +1,11 @@
 <div class="main-container pb0">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
   <div class="middle-container mb0">
     <div class="page-heading">
       <img src="assets/img/distribution_icon.svg" class="h-icon">
@@ -8,55 +15,25 @@
     </div>
 
     <div class="left-auto">
-      <!-- <div class="from-fields cs-flex" style="margin-left: -100px;">
-        <div class="control-field mr10">
-          <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="picker1" placeholder="From" name="date_from"
-              [(ngModel)]="search_val.date_from" (dateChange)="onBetweenDate($event, 'date_from')" readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-        </div>
-
-        <div class="control-field mr10">
-          <mat-form-field class="cs-input date-column infix-bodr">
-            <input matInput [matDatepicker]="pickers" placeholder="To" name="date_to" [(ngModel)]="search_val.date_to"
-              (dateChange)="onBetweenDate($event, 'date_to')" readonly>
-            <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
-            <mat-datepicker #pickers></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="cs-flex" *ngIf="search_val.date_from && search_val.date_to">
-        <button mat-raised-button style="background-color: #275478; color: #fff" (click)="getReportIncentive()">
-          Go
-        </button>
-      </div>
-
-      <div class="cs-flex" *ngIf="search_val.date_from == '' && search_val.date_to == ''">
-        <button mat-raised-button style="background-color: #275478; color: #fff">
-          Go
-        </button>
-      </div> -->
 
       <div class="tabs ml15">
         <ul>
           <!-- <li><a class="" [ngClass]="search_val.active_tab == 'Office' ? 'active' : ''"
               (click)="search_val.active_tab = 'Office';getReportIncentive();">Office User </a></li> -->
           <li><a class="" [ngClass]="search_val.active_tab == 'Market' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Market';getReportIncentive();">Market User </a></li>
+              (click)="search_val.active_tab = 'Market'; ReportIncentiveList=[]; getReportIncentive();">Market User </a>
+          </li>
           <li><a class="" [ngClass]="search_val.active_tab == 'Showroom' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Showroom';getReportIncentive();">Showroom User </a></li>
+              (click)="search_val.active_tab = 'Showroom';ReportIncentiveList=[]; getReportIncentive();">Showroom User
+            </a></li>
           <li><a class="" [ngClass]="search_val.active_tab == 'Warehouse' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Warehouse';getReportIncentive();">Warehouse User </a></li>
+              (click)="search_val.active_tab = 'Warehouse';ReportIncentiveList=[]; getReportIncentive();">Warehouse User
+            </a></li>
 
           <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Distributor User </a></li> -->
           <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Dealer User </a></li> -->
         </ul>
       </div>
-
-
 
     </div>
     <div class="uppr-one m-right-data">
@@ -66,7 +43,31 @@
               refresh</i></a>
         </li>
       </ul>
+      <div class="top-pagination">
+        <ul>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; getReportIncentive()"
+              [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getReportIncentive()" [(ngModel)]="pagenumber"
+              min="1" max={{total_page}}>
+          </li>
 
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; getReportIncentive()"
+              [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
 
     </div>
   </div>
@@ -80,7 +81,9 @@
           <tr>
             <th class="w50 text-center">&nbsp;</th>
             <th class="w200 text-center">Sale User</th>
-            <th class="w180 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
+            <th class="w120 text-center">Total Qty</th>
+            <th class="w120 text-center">Total Points</th>
+            <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
               uppercase}} </th>
             <!-- <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
             <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th> -->
@@ -95,7 +98,10 @@
             <th class="w200">
 
             </th>
-            <th class="w180" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+            <th class="w120 text-center"></th>
+            <th class="w120 text-center"> </th>
+
+            <th class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
               <table>
                 <tr>
                   <th>Qty</th>
@@ -138,11 +144,17 @@
 
 
             <tr>
-              <td class="w50">{{i+1}}</td>
+              <td class="w50">{{start+i+1}}</td>
               <td class="w200">
                 {{data.name}}
               </td>
-              <td class="w180" *ngFor="let row1 of data.brandData;let i = index">
+              <td class="w120">
+                {{data.total_qty}}
+              </td>
+              <td class="w120">
+                {{data.total_points}}
+              </td>
+              <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
                 <table>
                   <tr>
                     <td>{{row1.total_qty}}</td>
@@ -181,7 +193,13 @@
               <td class="w200">
                 <div>&nbsp;</div>
               </td><!-- Sale User -->
-              <td class="w180" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Total Qty-->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Total Points-->
+              <td class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
                 <table>
                   <tr>
                     <th>
@@ -226,24 +244,19 @@
             </div>
           </ng-container>
         </table>
-        <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
-          [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="getReportIncentive()">
-        </div>
+
       </div>
 
     </div>
 
 
-
-
-
-
-
-
-    <div class="fix-btn">
-      <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
-        (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
-      <!-- <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button -->
-      <!-- (click)="addIncentiveMaster()"><i class="material-icons">add</i></a> -->
-    </div>
+  </div>
+  <!-- <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
+    [infiniteScrollThrottle]="10" (scrolled)="getReportIncentive()">
+  </div> -->
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+    <!-- <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button -->
+    <!-- (click)="addIncentiveMaster()"><i class="material-icons">add</i></a> -->
   </div>

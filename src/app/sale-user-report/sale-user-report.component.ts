@@ -15,34 +15,43 @@ export class SaleUserReportComponent implements OnInit {
   ReportIncentiveBrandList: any = [];
   skelton: any = new Array(10);
   loader: boolean = false;
+  list_count: any = 0;
   search_val: any = {};
+  calculationArray: any = [];
+  total_page: any = 0
+  pagenumber: any = 0
+  start: any = 0
   category_list: any = [];
   brand;
   tmp_category: any = [];
   category;
   tmp_subcategory: any = [];
+  rowTotalQty: any;
+  rowTotalPoint: any;
   download_User_Report_excel_data: any = []
   new_array: any = [];
   excel_data: any = [];
-  pagelimit: any = 50;
+  page_limit: any = 50;
 
   ReportIncentiveBrandList2: any = [];
   constructor(public serve: PearlService) {
-    this.search_val = {
-      active_tab: 'Market',
-      'start': this.ReportIncentiveList.length,
-      'pagelimit': this.pagelimit
-    };
+    this.search_val.active_tab = 'Market';
     this.getReportIncentive();
     this.getCategoryList();
-
   }
 
   ngOnInit() {
   }
 
   refresh() {
-    this.search_val = {};
+    // this.search_val = {};
+    this.start = 0
+    this.search_val = {
+      active_tab: 'Market',
+      'start': this.start,
+      'pagelimit': this.page_limit
+    };
+    this.ReportIncentiveList = []
     this.getReportIncentive();
   }
   getCategoryList() {
@@ -71,17 +80,42 @@ export class SaleUserReportComponent implements OnInit {
 
   getReportIncentive() {
     this.loader = true;
+    this.ReportIncentiveList = [];
+    this.search_val = {
+      active_tab: this.search_val.active_tab,
+      start: this.start,
+      pagelimit: this.page_limit
+    };
     this.serve.fetchData({ 'search': this.search_val }, 'User/userPointMaster').pipe(
       retry(3)
     ).subscribe((res) => {
       console.log(res);
       this.loader = false;
       this.ReportIncentiveList = res['userData'];
+      // this.calculationArray = res['userData']['brandData'];
+      // console.log(this.calculationArray);
+
+      // this.ReportIncentiveList = this.ReportIncentiveBrandList.concat(res['userData']);
       this.ReportIncentiveBrandList = res['BrandList'];
       this.ReportIncentiveBrandList2 = res['BrandList'];
+      this.list_count = res['list_count'];
+
+      this.total_page = Math.ceil(this.list_count / this.page_limit);
+      this.pagenumber = Math.ceil(this.start / this.page_limit) + 1;
     }, err => {
       this.loader = false;
     })
+  }
+
+  filterSaleTotalQtyAndPointData() {
+    const totalArray = from(this.calculationArray);
+    console.log(totalArray);
+    totalArray.pipe(filter((data: any) => data), toArray()).subscribe((res) => {
+      console.log(res);
+
+    })
+
+
   }
 
 
@@ -143,30 +177,64 @@ export class SaleUserReportComponent implements OnInit {
       this.download_User_Report_excel_data = result['userData'];
       console.log(this.download_User_Report_excel_data);
 
-      for (let i = 0; i < this.download_User_Report_excel_data.length; i++) {
+      // for (let i = 0; i < this.download_User_Report_excel_data.length; i++) {
 
-        let keys_value: any = [];
-        keys_value = Object.keys(this.download_User_Report_excel_data[i])
+      //   let keys_value: any = [];
+      //   keys_value = Object.keys(this.download_User_Report_excel_data[i])
 
-        let excel_object: any = {}
+      //   let excel_object: any = {}
 
-        for (let secondary_index = 0; secondary_index < keys_value.length; secondary_index++) {
-          excel_object[keys_value[secondary_index]] = this.download_User_Report_excel_data[i][keys_value[secondary_index]]
+      //   for (let secondary_index = 0; secondary_index < keys_value.length; secondary_index++) {
+      //     excel_object[keys_value[secondary_index]] = this.download_User_Report_excel_data[i][keys_value[secondary_index]]
+      //   }
+
+      //   this.excel_data.push(excel_object)
+
+      // }
+      for (let x = 0; x < this.ReportIncentiveList.length; x++) {
+
+        let brandlist = this.ReportIncentiveList[x]['brandData'];
+
+        for (let y = 0; y < brandlist.length; y++) {
+          this.excel_data.push({
+            'Name': this.ReportIncentiveList[x].name,
+            'Total Qty': this.ReportIncentiveList[x].total_qty,
+            'Total Points': this.ReportIncentiveList[x].total_points,
+            'Brand Name': brandlist[y].brand_name,
+            'Incentive Points': brandlist[y].incentivePoints,
+            'Qty': brandlist[y].total_qty,
+          })
         }
 
-        this.excel_data.push(excel_object)
-
       }
+
+
+
       console.log(this.excel_data);
-      this.serve.exportAsExcelFile(this.excel_data, 'PRODUCT SHEET');
+      this.serve.exportAsExcelFile(this.excel_data, 'USER REPORT SHEET');
       setTimeout(() => {
 
       }, 700);
     }), err => {
       this.loader = false;
 
-    })
+    });
 
   }
 
+  // downloadExcel(date,product_id)
+  // {
+
+  //   let data = {'warehouse_id':this.apiHit.serviceWarehouse_id,'date':date,'product_id':product_id}
+
+  //   this.apiHit.PostRequest(data, "Stock/downloadBarcodeExcel").subscribe((result => {
+
+  //     setTimeout(() => {
+
+  //       window.open(this.apiHit.downloadURL + "uploads/barcodeData.csv");
+
+  //      }, 700);
+
+  //   }));
+  // }
 }
