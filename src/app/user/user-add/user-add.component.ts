@@ -23,6 +23,7 @@ export class UserAddComponent implements OnInit {
   rsm_list: any;
   data: any = {};
   district_list: any = [];
+  today_date:any=new Date();
   city_list: any = [];
   area_list: any = [];
   pinCode_list: any = [];

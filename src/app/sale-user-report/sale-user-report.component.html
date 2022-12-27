@@ -74,13 +74,16 @@
 
 
 
-  <div class="cs-table cs-table-scroll no-tab">
+  <div class="cs-table cs-table-scroll no-tab" #table>
     <div class="stickyTableHead" style="width: fit-content;">
       <div class="table-head">
         <table>
           <tr>
             <th class="w50 text-center">&nbsp;</th>
             <th class="w200 text-center">Sale User</th>
+            <th class="w120 text-center">Birthday Point</th>
+            <th class="w120 text-center">Work Efficiency Point</th>
+            <th class="w120 text-center">Anniversary Point</th>
             <th class="w120 text-center">Total Qty</th>
             <th class="w120 text-center">Total Points</th>
             <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
@@ -96,6 +99,15 @@
           <tr>
             <th class="w50"></th>
             <th class="w200">
+
+            </th>
+            <th class="w120">
+
+            </th>
+            <th class="w120">
+
+            </th>
+            <th class="w120">
 
             </th>
             <th class="w120 text-center"></th>
@@ -147,6 +159,15 @@
               <td class="w50">{{start+i+1}}</td>
               <td class="w200">
                 {{data.name}}
+              </td>
+              <td class="w120">
+                {{data.birthday_point}}
+              </td>
+              <td class="w120">
+                {{data.work_effeciency_point}}
+              </td>
+              <td class="w120">
+                {{data.aniversary_points}}
               </td>
               <td class="w120">
                 {{data.total_qty}}

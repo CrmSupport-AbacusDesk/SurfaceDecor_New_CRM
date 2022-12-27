@@ -103,25 +103,25 @@
             </th>
 
             <th>
-              <table>
+              <!-- <table>
                 <tr>
                   <th>HO1 ({{ReportIncentiveList.ho1_point}})% </th>
                   <th>SALESMAN ({{ReportIncentiveList.salesman_point}})% </th>
                   <th>COLLECTION ({{ReportIncentiveList.collection_points}})% </th>
                 </tr>
-              </table>
+              </table> -->
 
             </th>
 
             <th>
-              <table>
+              <!-- <table>
                 <tr>
                   <th>TELEPHONE OP ({{ReportIncentiveList.telephone_op_point}})% </th>
                   <th>WAREHOUSE KEEP ({{ReportIncentiveList.warehouse_keep_point}})% </th>
                   <th>DISPATCH ({{ReportIncentiveList.dispatch_point}})% </th>
                   <th>LABOUR ({{ReportIncentiveList.labour_points}})% </th>
                 </tr>
-              </table>
+              </table> -->
             </th>
 
 
@@ -149,23 +149,26 @@
               <td class="w200">{{data.brand_name}}</td>
               <td class="w180">{{data.total_qty}}</td>
               <td>
-                <table>
+                {{data.ho1_point+data.salesman_point+data.collection_points | number:'1.2-2'}}
+                <!-- <table>
                   <tr>
                     <td>{{data.ho1_point}}</td>
                     <td>{{data.salesman_point}}</td>
                     <td>{{data.collection_points}}</td>
                   </tr>
-                </table>
+                </table> -->
               </td>
               <td>
-                <table>
+                {{data.telephone_op_point+data.warehouse_keep_point+data.dispatch_point+data.labour_points | number:'1.2-2'}}
+
+                <!-- <table>
                   <tr>
                     <td>{{data.telephone_op_point}}</td>
                     <td>{{data.warehouse_keep_point}}</td>
                     <td>{{data.dispatch_point}}</td>
                     <td>{{data.labour_points}}</td>
                   </tr>
-                </table>
+                </table> -->
               </td>
             </tr>
 
@@ -184,7 +187,7 @@
               </td><!-- Sale Qty -->
               <td>
 
-                <table>
+                <!-- <table>
                   <tr>
                     <th>
                       <div>&nbsp;</div>
@@ -196,11 +199,11 @@
                       <div>&nbsp;</div>
                     </th>
                   </tr>
-                </table>
+                </table> -->
 
               </td><!-- market-->
               <td>
-                <table>
+                <!-- <table>
                   <tr>
                     <td>
                       <div>&nbsp;</div>
@@ -215,7 +218,7 @@
                       <div>&nbsp;</div>
                     </td>
                   </tr>
-                </table>
+                </table> -->
               </td><!-- Warehouse -->
 
 

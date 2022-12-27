@@ -200,25 +200,25 @@
                   <li class="col s3" *ngIf="detail.user_type != 'office' ">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">
-                      <span>Birthday Point</span>
-                      <p>{{detail.birthday_point && detail.birthday_point !=
-                        ''?detail.birthday_point :'--' }}
+                      <span>Birthday Date</span>
+                      <p>{{detail.birthday_date && detail.birthday_date !=
+                        ''?detail.birthday_date :'--' }}
                       </p>
-                      <!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
-                        (click)="openEditDialog(detail.work_effeciency_point,'work_effeciency_point')"><i
-                          class="material-icons">create</i></a> -->
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.birthday_date,'birthday_date')"><i
+                          class="material-icons">create</i></a>
                     </div>
                   </li>
                   <li class="col s3" *ngIf="detail.user_type != 'office' ">
                     <div class="cs-box">
                       <img src="assets/img/phone.svg" class="fix-img">
                       <span>Anniversary Point</span>
-                      <p>{{detail.aniversary_points && detail.aniversary_points !=
-                        ''?detail.aniversary_points :'--' }}
+                      <p>{{detail.aniversary_date && detail.aniversary_date !=
+                        ''?detail.aniversary_date :'--' }}
                       </p>
-                      <!-- <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
-                        (click)="openEditDialog(detail.aniversary_points,'work_effeciency_point')"><i
-                          class="material-icons">create</i></a> -->
+                      <a class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                        (click)="openEditDialog(detail.aniversary_date,'aniversary_date')"><i
+                          class="material-icons">create</i></a>
                     </div>
                   </li>
                 </ul>
@@ -520,7 +520,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col s12">
           <div class="details-info padding0 mt10">
             <h2
@@ -571,7 +571,7 @@
 
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="row mt15"

@@ -385,7 +385,7 @@ export class DashboardComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(StatusModalComponent, {
-      width: '700px',
+      width: '1000px',
       data: {
         'from': 'dashboard_outstanding_tab'
       }

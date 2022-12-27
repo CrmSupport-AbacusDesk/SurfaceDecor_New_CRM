@@ -176,6 +176,28 @@
                     </mat-form-field>
                   </div>
                 </div>
+                <div class="col s6 pr0" *ngIf="data.user_type && data.user_type!='Office'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker1" max="{{today_date}}"
+                        placeholder="Select Your Date Of Birth" name="birthday_date" [(ngModel)]="data.birthday_date"
+                        readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s6 pr0" *ngIf="data.user_type && data.user_type!='Office'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker2" max="{{today_date}}"
+                        placeholder="Select Your Anniversary Date" name="aniversary_date"
+                        [(ngModel)]="data.aniversary_date" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
               </div>
 
               <div class="row">

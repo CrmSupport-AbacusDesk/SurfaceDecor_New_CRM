@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { filter, retry, toArray } from 'rxjs/operators';
 import { DatabaseService } from 'src/_services/DatabaseService';
 import { PearlService } from 'src/app/pearl.service';
 import { from } from 'rxjs';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-sale-user-report',
@@ -34,6 +35,9 @@ export class SaleUserReportComponent implements OnInit {
   page_limit: any = 50;
 
   ReportIncentiveBrandList2: any = [];
+
+  @ViewChild('table') table: ElementRef;
+
   constructor(public serve: PearlService) {
     this.search_val.active_tab = 'Market';
     this.getReportIncentive();
@@ -191,23 +195,28 @@ export class SaleUserReportComponent implements OnInit {
       //   this.excel_data.push(excel_object)
 
       // }
-      for (let x = 0; x < this.ReportIncentiveList.length; x++) {
+      // for (let x = 0; x < this.ReportIncentiveList.length; x++) {
 
-        let brandlist = this.ReportIncentiveList[x]['brandData'];
+      //   let brandlist = this.ReportIncentiveList[x]['brandData'];
 
-        for (let y = 0; y < brandlist.length; y++) {
-          this.excel_data.push({
-            'Name': this.ReportIncentiveList[x].name,
-            'Total Qty': this.ReportIncentiveList[x].total_qty,
-            'Total Points': this.ReportIncentiveList[x].total_points,
-            'Brand Name': brandlist[y].brand_name,
-            'Incentive Points': brandlist[y].incentivePoints,
-            'Qty': brandlist[y].total_qty,
-          })
-        }
+      //   for (let y = 0; y < brandlist.length; y++) {
+      //     this.excel_data.push({
+      //       'Name': this.ReportIncentiveList[x].name,
+      //       'Total Qty': this.ReportIncentiveList[x].total_qty,
+      //       'Total Points': this.ReportIncentiveList[x].total_points,
+      //       'Brand Name': brandlist[y].brand_name,
+      //       'Incentive Points': brandlist[y].incentivePoints,
+      //       'Qty': brandlist[y].total_qty,
+      //     })
+      //   }
 
+      // }
+
+      for (let x = 0; x < this.download_User_Report_excel_data.length; x++) {
+        var brandlist = this.ReportIncentiveList[x]['brandData'];
       }
 
+  
 
 
       console.log(this.excel_data);
@@ -221,6 +230,17 @@ export class SaleUserReportComponent implements OnInit {
     });
 
   }
+
+  ExportToExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'User.xlsx');
+
+  }
+
 
   // downloadExcel(date,product_id)
   // {
