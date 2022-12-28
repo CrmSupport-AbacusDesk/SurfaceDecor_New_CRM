@@ -20,7 +20,7 @@
 </div>
 
 <div class="edit-modal"
-    *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='incentive_percent' && data.type!='aniversary_date' && data.type!='birthday_date' && data.type!='work_effeciency_point'  && data.type!='working_state'">
+    *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type' && data.type!='ware_house_name'  && data.type!='access_level' && data.type!='username' && data.type!='password' && data.type!='incentive_percent' && data.type!='aniversary_date' && data.type!='birthday_date' && data.type!='work_effeciency_point' && data.type!='sales_team_code' && data.type!='working_state'">
     <p class="heading">Update User detail</p>
     <div mat-dialog-content>
 
@@ -348,8 +348,7 @@
         <div mat-dialog-content>
             <mat-form-field class="cs-input date-column infix-bodr">
                 <input matInput [matDatepicker]="picker2" max="{{today_date}}"
-                    placeholder="Select Your Anniversary Date" name="aniversary_date" [(ngModel)]="data.value"
-                    readonly>
+                    placeholder="Select Your Anniversary Date" name="aniversary_date" [(ngModel)]="data.value" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -389,6 +388,35 @@
     </form>
 
 </div>
+
+
+<div class="edit-modal" *ngIf="data.type=='sales_team_code'">
+    <p class="heading">Update Sales Code</p>
+    <form validate #update_basic="ngForm" name="update_basic"
+        (ngSubmit)="(user.valid && update_basic.submitted)?update_user():''">
+        <div mat-dialog-content>
+
+            <mat-form-field class="example-full-width wp100 cs-field">
+                <mat-select name="user" #user="ngModel" [(ngModel)]="data.value"
+                    [ngClass]="{'has-error' : user.invalid } " required="true">
+                    <mat-option disabled value="">Select Sales Sales Code</mat-option>
+                    <mat-option *ngFor="let rsm of sales_code" value="{{rsm.sales_team_code}}">{{rsm.sales_team_code}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+            <div>
+                <button type="submit" color="accent" mat-button>Save</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
 
 <div class="edit-modal" *ngIf="data.type=='name'">
     <p class="heading">Update User Name</p>

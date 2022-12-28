@@ -29,7 +29,7 @@
                         <mat-select name="user_type" placeholder="Sales User Type" [(ngModel)]="data.user_type"
                           #user_type="ngModel" [ngClass]="{'has-error' : user_type.invalid } " required=true>
                           <mat-option disabled value="">Select Sales User Type</mat-option>
-                          <mat-option value="Market" (click)="get_sales_user_type('Market')">Market</mat-option>
+                          <mat-option value="Market" (click)="get_sales_user_type('Market');get_sales_Codes()">Market</mat-option>
                           <mat-option value="Office" (click)="get_sales_user_type('Office')">Office</mat-option>
                           <mat-option value="Showroom" (click)="get_sales_user_type('Showroom')">Showroom</mat-option>
                           <mat-option value="Warehouse"
@@ -64,7 +64,23 @@
                     </div>
                   </div>
                 </div>
-
+                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'" *ngIf="sales_type && data.user_type && data.user_type=='Market' ">
+                  <div class="from-fields">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-select name="sales_team_code" placeholder="Sales Codes" [(ngModel)]="data.sales_team_code"
+                          #sales_team_code="ngModel" [ngClass]="{'has-error' : sales_team_code.invalid } " required=true>
+                          <mat-option disabled value="">Select Sales Sales Code</mat-option>
+                          <mat-option *ngFor="let rsm of sales_code" value="{{rsm.sales_team_code}}"
+                           >{{rsm.sales_team_code}}</mat-option>
+                        </mat-select>
+                        <div class="alert alert-danger" *ngIf="!sales_team_code.valid && f.submitted">
+                          Sales Code is required...
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
                 <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'"
                   *ngIf="data.userrole && data.userrole!='' && data.userrole == '16'">
                   <div class="from-fields">

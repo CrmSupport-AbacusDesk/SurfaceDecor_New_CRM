@@ -49,6 +49,7 @@ export class UserEmailModalComponent implements OnInit {
     this.role_list()
     this.getStateList();
     this.get_warehouse_data();
+    this.get_sales_Codes();
   }
   
   ngOnInit() {
@@ -92,6 +93,20 @@ export class UserEmailModalComponent implements OnInit {
       
     })
     
+  }
+
+  sales_code:any=[];
+  get_sales_Codes() {
+
+
+    this.serve.fetchData({}, "User/user_sales_code").subscribe((response => {
+      console.log(response);
+      console.log(response['sales']);
+
+      this.sales_code = response['data'];
+      console.log(this.sales_code);
+
+    }));
   }
   
   getBrandList()

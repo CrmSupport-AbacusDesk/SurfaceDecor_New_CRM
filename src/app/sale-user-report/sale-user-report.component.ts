@@ -5,6 +5,10 @@ import { DatabaseService } from 'src/_services/DatabaseService';
 import { PearlService } from 'src/app/pearl.service';
 import { from } from 'rxjs';
 import * as XLSX from 'xlsx';
+import html2canvas from 'html2canvas';
+
+// import * as htmlToImage from 'html-to-image';
+// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 @Component({
   selector: 'app-sale-user-report',
@@ -41,7 +45,7 @@ export class SaleUserReportComponent implements OnInit {
   constructor(public serve: PearlService) {
     this.search_val.active_tab = 'Market';
     this.getReportIncentive();
-    this.getCategoryList();
+    // this.getCategoryList();
   }
 
   ngOnInit() {
@@ -195,28 +199,68 @@ export class SaleUserReportComponent implements OnInit {
       //   this.excel_data.push(excel_object)
 
       // }
-      // for (let x = 0; x < this.ReportIncentiveList.length; x++) {
+      for (let x = 0; x < this.ReportIncentiveList.length; x++) {
 
-      //   let brandlist = this.ReportIncentiveList[x]['brandData'];
+        let brandlist = this.ReportIncentiveList[x]['brandData'];
 
-      //   for (let y = 0; y < brandlist.length; y++) {
-      //     this.excel_data.push({
-      //       'Name': this.ReportIncentiveList[x].name,
-      //       'Total Qty': this.ReportIncentiveList[x].total_qty,
-      //       'Total Points': this.ReportIncentiveList[x].total_points,
-      //       'Brand Name': brandlist[y].brand_name,
-      //       'Incentive Points': brandlist[y].incentivePoints,
-      //       'Qty': brandlist[y].total_qty,
-      //     })
-      //   }
+        for (let y = 0; y < brandlist.length; y++) {
+          this.excel_data.push({
+            'Name': this.ReportIncentiveList[x].name,
+            'Total Qty': this.ReportIncentiveList[x].total_qty,
+            'BIRTHDAY POINT': this.ReportIncentiveList[x].birthday_point,
+            'WORK EFFICIENCY POINT': this.ReportIncentiveList[x].work_effeciency_point,
+            'ANNIVERSARY POINT': this.ReportIncentiveList[x].aniversary_points,
+            'Total Points': this.ReportIncentiveList[x].total_points,
+            'ART LAM 1.00MM':`'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'BELAVISTA 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'COLORISTA 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'CONCEPT 1.00MM':`'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'CONCEPT COLOURS 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'CRAFTLAM 1.00MM':`'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'CRAFTWOOD': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'DECO LAM 0.90MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'DUNHILL TREND 1.00MM':`'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'FABRIC COLLECTION': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'FABRIC SLIMLAM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'FOLDER': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'GOLD MICA 0.90': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'HALLMARK 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'HALLMARK PRO 0.85MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'HOME STYLE': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'IMPERIO 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'LAYERS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'LINER': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'MICA LAM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'MIX LINER': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'OTHERS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SELECTION 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SIZZLER PLUS 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SLIM LAM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SLIM LAM COLOURS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SLIM LAM FABRIC': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'STAR MICA0.85MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'STONEMART 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE ACRYLIC': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE ADHESIVE': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE CORE 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE EDGE BEND': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE FABRIC': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE GLAMOUROUS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE LOUVERS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE PROJECT 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE TXTR 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'SURFACE UNI FAB 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'TIS': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            'ZERO GRAVITY 1.00MM': `'Incentive Points': ${brandlist[y].incentivePoints},'Qty':${brandlist[y].total_qty},`,
+            // 'Incentive Points': brandlist[y].incentivePoints,
+            // 'Qty': brandlist[y].total_qty,
+          })
+        }
 
-      // }
-
-      for (let x = 0; x < this.download_User_Report_excel_data.length; x++) {
-        var brandlist = this.ReportIncentiveList[x]['brandData'];
       }
 
-  
+
+
 
 
       console.log(this.excel_data);
@@ -237,7 +281,7 @@ export class SaleUserReportComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
     /* save to file */
-    XLSX.writeFile(wb, 'User.xlsx');
+    XLSX.writeFile(wb, 'User Report Sheet.xlsx');
 
   }
 
@@ -257,4 +301,105 @@ export class SaleUserReportComponent implements OnInit {
 
   //   }));
   // }
+
+  exportAsPDF(div_id) {
+    let data = document.getElementById(div_id);
+    html2canvas(data).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png')
+
+      // let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
+      // pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);
+      // pdf.save('Filename.pdf');
+    });
+  }
+
+
+  printPdf(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    window.close();
+
+    document.body.innerHTML = originalContents;
+    // this.router.navigate(['coupon-code-list'])
+  }
+  printPdf2(divName) {
+    var divContents = document.getElementById(divName).innerHTML;
+    var a = window.open('', '', `height=700, width:500`);
+    a.document.write('<html>');
+    a.document.write('<body>');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    a.print();
+  }
+
+  // exportPDF(div_id) {
+  //   this.loading_list = true;
+  //   this.showDivpdf = true;
+  //   this.imgFile = []
+
+  //   var imgWidth = 0;
+  //   var pageHeight = 0;
+  //   var imgHeight = 0;
+  //   var heightLeft = 0;
+  //   var position = 0;
+  //   let pdf = null;
+  //   let coponId = this.getData.id;
+  //   var element: HTMLElement = null;
+
+  //   setTimeout(() => {
+
+  //     if (this.showDivpdf == true) {
+  //       element = document.getElementById(div_id);
+
+  //       htmlToImage.toPng(element).then(function (dataUrl) {
+
+  //         console.log(dataUrl);
+
+  //         const imgFile = dataUrl;
+
+  //         imgWidth = 200;
+  //         pageHeight = 295;
+  //         imgHeight = element.offsetHeight * imgWidth / element.offsetWidth;
+  //         heightLeft = imgHeight;
+
+  //         pdf = new jspdf('p', 'mm');
+  //         position = 5;
+  //         console.log('image width 1 ' + imgWidth)
+  //         console.log('image imgHeight 1 ' + imgHeight)
+
+  //         pdf.addImage(imgFile, 'PNG', 5, position, imgWidth, imgHeight);
+  //         heightLeft -= pageHeight;
+
+  //         while (heightLeft >= 0) {
+
+  //           position = heightLeft - imgHeight + 5;
+
+  //           pdf.addPage();
+  //           pdf.addImage(imgFile, 'PNG', 5, position, imgWidth, imgHeight);
+  //           heightLeft -= pageHeight;
+  //         }
+
+  //         pdf.save(`Coupon${coponId}.pdf`);
+  //       });
+
+
+  //     }
+  //     this.loading_list = false;
+
+  //   }, 1000);
+
+  //   setTimeout(() => {
+  //     this.loading_list = false;
+
+
+  //   }, 5000);
+
+
+  // }
+
 }

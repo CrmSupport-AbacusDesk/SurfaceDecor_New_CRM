@@ -74,7 +74,7 @@
 
 
 
-  <div class="cs-table cs-table-scroll no-tab" #table>
+  <div class="cs-table cs-table-scroll no-tab">
     <div class="stickyTableHead" style="width: fit-content;">
       <div class="table-head">
         <table>
@@ -277,7 +277,85 @@
   </div> -->
   <div class="fix-btn">
     <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
-      (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
+      (click)="ExportToExcel()"><img src="assets/img/excel.svg"></a>
     <!-- <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button -->
     <!-- (click)="addIncentiveMaster()"><i class="material-icons">add</i></a> -->
+  </div>
+
+
+
+
+  <div #table class="excel-table" style="display: none;">
+
+    <table hidden>
+      <tr>
+        <th class="w50 text-center">&nbsp;</th>
+        <th class="w200 text-center">Sale User</th>
+        <th class="w120 text-center">Birthday Point</th>
+        <th class="w120 text-center">Work Efficiency Point</th>
+        <th class="w120 text-center">Anniversary Point</th>
+        <th class="w120 text-center">Total Qty</th>
+        <th class="w120 text-center">Total Points</th>
+        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">{{data.brand_name}} </th>
+
+
+      </tr>
+
+
+
+
+
+      <tr *ngFor="let data of ReportIncentiveList;let i = index">
+        <td class="w50">{{start+i+1}}</td>
+        <td class="w200">
+          {{data.name}}
+        </td>
+        <td class="w120">
+          {{data.birthday_point}}
+        </td>
+        <td class="w120">
+          {{data.work_effeciency_point}}
+        </td>
+        <td class="w120">
+          {{data.aniversary_points}}
+        </td>
+        <td class="w120">
+          {{data.total_qty}}
+        </td>
+        <td class="w120">
+          {{data.total_points}}
+        </td>
+        <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
+           Qty : {{row1.total_qty}} | Points : {{row1.incentivePoints}}
+          <!-- <table>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table> -->
+        </td>
+        <!-- <td>
+            <table>
+              <tr>
+                <td>{{data.ho1_point}}</td>
+                <td>{{data.salesman_point}}</td>
+                <td>{{data.collection_points}}</td>
+              </tr>
+            </table>
+          </td> -->
+        <!-- <td>
+            <table>
+              <tr>
+                <td>{{data.telephone_op_point}}</td>
+                <td>{{data.warehouse_keep_point}}</td>
+                <td>{{data.dispatch_point}}</td>
+                <td>{{data.labour_points}}</td>
+              </tr>
+            </table>
+          </td> -->
+      </tr>
+
+
+
+    </table>
   </div>
