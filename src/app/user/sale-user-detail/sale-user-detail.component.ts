@@ -73,9 +73,9 @@ export class SaleUserDetailComponent implements OnInit {
       this.detail = result['user_detail']['data'];
       this.assign_module_data = result['user_detail']['assignModule'];
       this.dr_brand_list = this.detail['assign_brand']
-   
 
-    
+
+
       // this.user_profile=['user_detail']['data']['user_profile']
 
       this.access_level = this.detail.access_level;
@@ -182,6 +182,27 @@ export class SaleUserDetailComponent implements OnInit {
 
   category = "user";
   openEditDialog(value, type): void {
+    const dialogRef = this.dialog.open(UserEmailModalComponent, {
+      width: '350px',
+      data: {
+        value,
+        type,
+        user_id: this.user_id,
+        category: this.category
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      console.log('The dialog was closed');
+
+      this.userDetail();
+
+
+    });
+  }
+  ;
+  openEditDialog2(value, type): void {
+    value = value.split(",");
     const dialogRef = this.dialog.open(UserEmailModalComponent, {
       width: '350px',
       data: {

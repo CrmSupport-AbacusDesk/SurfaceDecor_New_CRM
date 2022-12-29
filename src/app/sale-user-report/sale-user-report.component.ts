@@ -28,6 +28,7 @@ export class SaleUserReportComponent implements OnInit {
   start: any = 0
   category_list: any = [];
   brand;
+  search:any={};
   tmp_category: any = [];
   category;
   tmp_subcategory: any = [];
@@ -94,7 +95,7 @@ export class SaleUserReportComponent implements OnInit {
       start: this.start,
       pagelimit: this.page_limit
     };
-    this.serve.fetchData({ 'search': this.search_val }, 'User/userPointMaster').pipe(
+    this.serve.fetchData({ 'search': this.search_val, 'searchData':this.search  }, 'User/userPointMaster').pipe(
       retry(3)
     ).subscribe((res) => {
       console.log(res);

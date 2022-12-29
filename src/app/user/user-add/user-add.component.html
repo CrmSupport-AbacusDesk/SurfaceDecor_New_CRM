@@ -68,7 +68,7 @@
                   <div class="from-fields">
                     <div class="control-field">
                       <mat-form-field class="cs-input">
-                        <mat-select name="sales_team_code" placeholder="Sales Codes" [(ngModel)]="data.sales_team_code"
+                        <mat-select name="sales_team_code" placeholder="Sales Codes" [(ngModel)]="data.sales_team_code" multiple
                           #sales_team_code="ngModel" [ngClass]="{'has-error' : sales_team_code.invalid } " required=true>
                           <mat-option disabled value="">Select Sales Sales Code</mat-option>
                           <mat-option *ngFor="let rsm of sales_code" value="{{rsm.sales_team_code}}"

@@ -397,7 +397,7 @@
         <div mat-dialog-content>
 
             <mat-form-field class="example-full-width wp100 cs-field">
-                <mat-select name="user" #user="ngModel" [(ngModel)]="data.value"
+                <mat-select name="user" #user="ngModel" [(ngModel)]="data.value" multiple
                     [ngClass]="{'has-error' : user.invalid } " required="true">
                     <mat-option disabled value="">Select Sales Sales Code</mat-option>
                     <mat-option *ngFor="let rsm of sales_code" value="{{rsm.sales_team_code}}">{{rsm.sales_team_code}}</mat-option>

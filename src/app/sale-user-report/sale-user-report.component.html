@@ -73,21 +73,21 @@
   </div>
 
 
-
-  <div class="cs-table cs-table-scroll no-tab">
+  <div class="cs-table cs-table-scroll no-tab" style="display:none;">
     <div class="stickyTableHead" style="width: fit-content;">
       <div class="table-head">
         <table>
           <tr>
             <th class="w50 text-center">&nbsp;</th>
             <th class="w200 text-center">Sale User</th>
+            <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
+              uppercase}} </th>
             <th class="w120 text-center">Birthday Point</th>
             <th class="w120 text-center">Work Efficiency Point</th>
             <th class="w120 text-center">Anniversary Point</th>
             <th class="w120 text-center">Total Qty</th>
             <th class="w120 text-center">Total Points</th>
-            <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
-              uppercase}} </th>
+            <th class="w120 text-center">Grand Points</th>
             <!-- <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
             <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th> -->
 
@@ -101,6 +101,14 @@
             <th class="w200">
 
             </th>
+            <th class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+              <table>
+                <tr>
+                  <th>Qty</th>
+                  <th>Points</th>
+                </tr>
+              </table>
+            </th>
             <th class="w120">
 
             </th>
@@ -112,16 +120,7 @@
             </th>
             <th class="w120 text-center"></th>
             <th class="w120 text-center"> </th>
-
-            <th class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
-              <table>
-                <tr>
-                  <th>Qty</th>
-                  <th>Points</th>
-                </tr>
-              </table>
-            </th>
-
+            <th class="w120 text-center"> </th>
             <!-- <th>
               <table>
                 <tr>
@@ -160,6 +159,14 @@
               <td class="w200">
                 {{data.name}}
               </td>
+              <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
+                <table>
+                  <tr>
+                    <td>{{row1.total_qty}}</td>
+                    <td>{{row1.incentivePoints}}</td>
+                  </tr>
+                </table>
+              </td>
               <td class="w120">
                 {{data.birthday_point}}
               </td>
@@ -175,13 +182,8 @@
               <td class="w120">
                 {{data.total_points}}
               </td>
-              <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
-                <table>
-                  <tr>
-                    <td>{{row1.total_qty}}</td>
-                    <td>{{row1.incentivePoints}}</td>
-                  </tr>
-                </table>
+              <td class="w120">
+                {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
               </td>
               <!-- <td>
                 <table>
@@ -214,12 +216,7 @@
               <td class="w200">
                 <div>&nbsp;</div>
               </td><!-- Sale User -->
-              <td class="w120">
-                <div>&nbsp;</div>
-              </td><!-- Total Qty-->
-              <td class="w120">
-                <div>&nbsp;</div>
-              </td><!-- Total Points-->
+              >
               <td class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
                 <table>
                   <tr>
@@ -233,8 +230,23 @@
                   </tr>
                 </table>
               </td><!-- Sale Qty -->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Birthday Point-->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Work Efficiency Point -->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!--Anniversary Point -->
 
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Total Qty -->
 
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Grand Points-->
 
 
             </tr>
@@ -272,6 +284,106 @@
 
 
   </div>
+
+
+  <div class="scroll-tables">
+    <table>
+      <tr>
+        <td class="w400">
+          <table>
+            <tr>
+              <th class="w50">S.no</th>
+              <th style="height: 45px;">Sale User</th>
+
+            </tr>
+            <tr>
+              <th class="w50"></th>
+              <th style="height: 67px;">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+
+                    <input matInput placeholder="Sale User. . ." type="text" name="name" [(ngModel)]="search.name"
+                      (keyup.enter)="getReportIncentive()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+            </tr>
+            <tr *ngFor="let data of ReportIncentiveList;let i = index">
+              <td class="w50">{{start+i+1}}</td>
+              <td class="ellipsis" style="height: 50px;" matTooltipPosition="above" matTooltipClass="tooltip"
+                matTooltip="{{data.name}}">
+                {{data.name}}</td>
+            </tr>
+          </table>
+        </td>
+
+        <td style=" overflow: auto;">
+          <table>
+            <tr>
+
+              <th class="w200 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                {{data.brand_name | uppercase}}
+              </th>
+              <th class="w120 text-center" >Birthday Point</th>
+              <th class="w120 text-center">Work Efficiency Point</th>
+              <th class="w120 text-center">Anniversary Point</th>
+              <th class="w120 text-center">Total Qty</th>
+              <th class="w120 text-center">Total Points</th>
+              <th class="w120 text-center">Grand Points</th>
+            </tr>
+            <tr>
+              <th class="w200" style="height: 67px;" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                <table>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Points</th>
+                  </tr>
+                </table>
+
+              </th>
+              <th class="w120 text-center"></th>
+              <th class="w120 text-center"></th>
+              <th class="w120 text-center"></th>
+              <th class="w120 text-center"></th>
+              <th class="w120 text-center"></th>
+              <th class="w120 text-center"></th>
+            </tr>
+            <tr *ngFor="let data of ReportIncentiveList;let i=index">
+              <td class="w200" *ngFor="let row1 of data.brandData;let i = index">
+                <table>
+                  <tr>
+                    <td>{{row1.total_qty}}</td>
+                    <td>{{row1.incentivePoints}}</td>
+                  </tr>
+                </table>
+
+              </td>
+              <td class="w120">
+                {{data.birthday_point}}
+              </td>
+              <td class="w120">
+                {{data.work_effeciency_point}}
+              </td>
+              <td class="w120">
+                {{data.aniversary_points}}
+              </td>
+              <td class="w120">
+                {{data.total_qty}}
+              </td>
+              <td class="w120">
+                {{data.total_points}}
+              </td>
+              <td class="w120">
+                {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <!-- <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
     [infiniteScrollThrottle]="10" (scrolled)="getReportIncentive()">
   </div> -->
@@ -291,17 +403,30 @@
       <tr>
         <th class="w50 text-center">&nbsp;</th>
         <th class="w200 text-center">Sale User</th>
+        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">{{data.brand_name}} </th>
         <th class="w120 text-center">Birthday Point</th>
         <th class="w120 text-center">Work Efficiency Point</th>
         <th class="w120 text-center">Anniversary Point</th>
         <th class="w120 text-center">Total Qty</th>
         <th class="w120 text-center">Total Points</th>
-        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">{{data.brand_name}} </th>
-
+        <th class="w120 text-center">Grand Points</th>
 
       </tr>
 
+      <tr>
+        <th class="w50 text-center"></th>
+        <th class="w200 text-center"></th>
+        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">
+          Qty | Points
+        </th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
 
+      </tr>
 
 
 
@@ -309,6 +434,16 @@
         <td class="w50">{{start+i+1}}</td>
         <td class="w200">
           {{data.name}}
+        </td>
+
+        <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
+          {{row1.total_qty}} | {{row1.incentivePoints}}
+          <!-- <table>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table> -->
         </td>
         <td class="w120">
           {{data.birthday_point}}
@@ -325,14 +460,9 @@
         <td class="w120">
           {{data.total_points}}
         </td>
-        <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
-           Qty : {{row1.total_qty}} | Points : {{row1.incentivePoints}}
-          <!-- <table>
-            <tr>
-              <td></td>
-              <td></td>
-            </tr>
-          </table> -->
+        <td class="w120">
+          {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
+
         </td>
         <!-- <td>
             <table>
