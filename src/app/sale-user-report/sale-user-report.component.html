@@ -325,12 +325,12 @@
               <th class="w200 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">
                 {{data.brand_name | uppercase}}
               </th>
-              <th class="w120 text-center" >Birthday Point</th>
-              <th class="w120 text-center">Work Efficiency Point</th>
-              <th class="w120 text-center">Anniversary Point</th>
-              <th class="w120 text-center">Total Qty</th>
-              <th class="w120 text-center">Total Points</th>
-              <th class="w120 text-center">Grand Points</th>
+              <th class="w120 text-center stock-alert">Birthday Point</th>
+              <th class="w120 text-center" style="color:#009c13">Work Efficiency Point</th>
+              <th class="w120 text-center" style="color:#999a0a">Anniversary Point</th>
+              <th class="w120 text-center stock-alert">Total Qty</th>
+              <th class="w120 text-center" style="color:#009c13">Total Points</th>
+              <th class="w120 text-center" style="color:#999a0a">Grand Points</th>
             </tr>
             <tr>
               <th class="w200" style="height: 67px;" *ngFor="let data of ReportIncentiveBrandList; let i=index">
@@ -342,12 +342,12 @@
                 </table>
 
               </th>
-              <th class="w120 text-center"></th>
-              <th class="w120 text-center"></th>
-              <th class="w120 text-center"></th>
-              <th class="w120 text-center"></th>
-              <th class="w120 text-center"></th>
-              <th class="w120 text-center"></th>
+              <th class="w120 text-center  stock-alert"></th>
+              <th class="w120 text-center stock-green"></th>
+              <th class="w120 text-center stock-pending"></th>
+              <th class="w120 text-center stock-alert"></th>
+              <th class="w120 text-center stock-green"></th>
+              <th class="w120 text-center stock-pending"></th>
             </tr>
             <tr *ngFor="let data of ReportIncentiveList;let i=index">
               <td class="w200" *ngFor="let row1 of data.brandData;let i = index">
@@ -359,22 +359,22 @@
                 </table>
 
               </td>
-              <td class="w120">
+              <td class="w120 stock-alert">
                 {{data.birthday_point}}
               </td>
-              <td class="w120">
+              <td class="w120 stock-green">
                 {{data.work_effeciency_point}}
               </td>
-              <td class="w120">
+              <td class="w120 stock-pending">
                 {{data.aniversary_points}}
               </td>
-              <td class="w120">
+              <td class="w120 stock-alert">
                 {{data.total_qty}}
               </td>
-              <td class="w120">
+              <td class="w120 stock-green">
                 {{data.total_points}}
               </td>
-              <td class="w120">
+              <td class="w120 stock-pending">
                 {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
               </td>
             </tr>

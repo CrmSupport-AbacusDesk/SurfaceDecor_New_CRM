@@ -1,0 +1,227 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading w250">
+
+      <img src="assets/img/calender.svg" class="h-icon h16">
+      <div class="heading-text">
+        <h2>User Gift</h2>
+      </div>
+
+      <div class="left-auto ml10">
+        <div class="from-fields cs-flex">
+          <!-- <div class="control-field mr10">
+            <mat-form-field class="cs-input date-column infix-bodr">
+              <input matInput [matDatepicker]="picker1" max="{{today_date}}" placeholder="From" name="date_from"
+                [(ngModel)]="data.date_from" (dateChange)="onDateBetween($event,'date_from')" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div> -->
+
+          <!-- <div class="control-field mr10">
+            <mat-form-field class="cs-input date-column infix-bodr">
+              <input matInput [matDatepicker]="pickers" placeholder="To" max="{{today_date}}" min="{{data.date_from}}"
+                name="date_to" [(ngModel)]="data.date_to" (dateChange)="onDateBetween($event,'date_to')" readonly>
+              <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+              <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+          </div> -->
+        </div>
+
+        <!-- <div class="cs-flex" *ngIf="data.date_from && data.date_to">
+          <button mat-raised-button style="background-color: #275478; color: #fff"
+            (click)="attendance_list('getAttendance',2)">
+            Go
+          </button>
+        </div> -->
+
+        <!-- <div class="cs-flex" *ngIf="data.date_from == '' && data.date_to == '' ">
+          <button mat-raised-button style="background-color: #275478; color: #fff">
+            Go
+          </button>
+        </div> -->
+
+      </div>
+
+    </div>
+
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons">
+              refresh</i></a>
+        </li>
+      </ul>
+      <!-- <div class="tabs">
+        <ul>
+          <li><a class="pr50" [ngClass]="show_today ? 'active' : ''" (click)="change_tab('getattendance_today',1)">Today
+              <span class="counter">{{count_1}}</span></a></li>
+          <li><a class="pr50" [ngClass]="!show_today ? 'active' : ''" (click)="change_tab('getAttendance',2)">All <span
+                class="counter">{{count_2}}</span></a></li>
+        </ul>
+      </div> -->
+    </div>
+
+
+  </div>
+  <!-- <div class="container-outer"> -->
+
+
+  <div class="container tab-container">
+    <div class="row">
+      <!-- <div class="col s12"> -->
+      <div class="cs-table cs-table-scroll">
+        <div class="stickyTableHead">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w50">S. No.</th>
+                <th class="w130">Gift Name</th>
+                <th class="w100">Gift Point </th>
+                <th class="w130">Gift Image</th>
+                <th class="w170">Gift Description</th>
+
+              </tr>
+            </table>
+          </div>
+
+          <!-- <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w120">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input picker-icon">
+                      <input matInput [matDatepicker]="picker" placeholder="Date"
+                        (dateChange)="attendance_list('getAttendance',2)" name="date_created"
+                        [(ngModel)]="data.date_created" readonly>
+
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+
+                <th class="w90"></th>
+
+                <th class="w180">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Name...."
+                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                        [(ngModel)]="data.name">
+                    </mat-form-field>
+                  </div>
+                </th>
+
+                <th class="w90"></th>
+                <th>&nbsp;</th>
+                <th class="w90"></th>
+                <th>&nbsp;</th>
+                <th class="W120">
+                  <div class="th-search">
+                    <select name="work_type" [(ngModel)]="data.work_type"
+                      (change)="show_today ?attendance_list('getattendance_today',1) : attendance_list('getAttendance',2);">
+                      <option value="All">All</option>
+                      <option value="Working">Working</option>
+                      <option value="Travel">Travel</option>
+                    </select>
+                  </div>
+                </th>
+                <th class="W200">&nbsp;</th>
+              </tr>
+            </table>
+          </div> -->
+        </div>
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let p of userGiftlist">
+                <td class="w50">S. No.</td>
+                <td class="w130">Gift Name</td>
+                <td class="w100">Gift Point </td>
+                <td class="w130">Gift Image</td>
+                <td class="w170">Gift Description</td>
+
+
+                <!-- <td class="w90"> -->
+                <!-- <a class="img-avtar">
+                    <img
+                      src="{{p.user_profile && p.user_profile!= null && p.user_profile!= '' ? p.user_profile : 'assets/img/NoPopNGift.png'}}"
+                      (click)="p.user_profile && p.user_profile != null && p.user_profile!= '' ? imageModel(p.user_profile) : '' ">
+                  </a> -->
+                <!-- </td> -->
+
+
+
+              </tr>
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading" *ngIf="loader">
+                  <td class="w50">
+                    <div>&nbsp;</div>
+                  </td> 
+                  <!-- s.no -->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift name -->
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <!-- gift point -->
+                  <td class="w130"><div>&nbsp;</div></td>
+                  <!-- gift image -->
+                  <td class="w170"><div>&nbsp;</div></td>
+                  <!-- gift description -->
+
+                
+                </tr>
+              </ng-container>
+            </table>
+            <!-- <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+              [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10"
+              (scrolled)="attendance_list('getAttendance',2)">
+            </div> -->
+
+          </div>
+        </div>
+        <div class="data-not-available" *ngIf="data_not_found==true">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+                <div class="description">
+                  <div class="cs-heading">
+                    <!-- <h2>Sales Location List</h2> -->
+                    <h2>Attendence List</h2>
+
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>Data not Found</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="fix-btn">
+    <a  class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
+      routerLink="/user-gift-Add"><i class="material-icons">add</i></a>
+    <!-- <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a> -->
+  </div>
+
+  <div>
+  </div>
+</div>
+<div class="h60"></div>

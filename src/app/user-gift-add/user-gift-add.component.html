@@ -1,0 +1,126 @@
+<div class="main-container" [@routerTransition]>
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Gift</h2>
+        <p>Add New User Gift</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <!-- <app-master-tab></app-master-tab> -->
+    <div class="container tab-container">
+      <div class="row">
+        <form>
+
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>USER GIFT</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="from-fields">
+                <div class="row">
+                  <div class="col s8 pl0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <input matInput placeholder="GIFT NAME*" name="giftName" #giftName="ngModel"
+                          [(ngModel)]="data.giftName" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col s4 pr0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <input matInput placeholder="POINT" name="giftPoint" #giftPoint="ngModel"
+                          [(ngModel)]="data.giftPoint" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="left-right-15 mt20 mb10"></mat-divider>
+              <div class="cs-heading">
+                <h2>DESCRIPTION</h2>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+
+              <div class="row">
+                <div class="col s8">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input" style="width:100%">
+                      <textarea matInput placeholder="Gift Description ..." class="h200" name="gift_description"
+                        #gift_description="ngModel" [(ngModel)]="data.gift_description"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+                <div class="col s4">
+                  <div class="cs-file">
+                    <p>Upload Image</p>
+                    <ul>
+                      <li>
+                        <label>
+                          <img src="assets/img/product.png">
+                        </label>
+                      </li>
+                      <li>
+                        <div class="cs-file">
+                          <label>
+                            <input type="file" style="display:none;">
+                            <i class="material-icons add-file-icon">add</i>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col s12">
+                  <div class="cs-file">
+                    <p>Upload Image</p>
+                    <ul>
+                      <li>
+                        <label>
+                          <img src="assets/img/product.png">
+                        </label>
+                      </li>
+                      <li>
+                        <div class="cs-file">
+                          <label>
+                            <input type="file" style="display:none;">
+                            <i class="material-icons add-file-icon">add</i>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+
+          <div class="col s12">
+            <div class="cs-btn fixedd mt32 text-right">
+              <div class="in-btn">
+                <button mat-raised-button color="accent">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="h50"></div>

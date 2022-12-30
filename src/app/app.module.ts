@@ -165,6 +165,8 @@ import { IncentiveMasterListComponent } from './incentive-master-list/incentive-
 import { IncentiveMasterAddComponent } from './incentive-master-add/incentive-master-add.component';
 import { ReportIncentiveListComponent } from './report-incentive-list/report-incentive-list.component';
 import { SaleUserReportComponent } from './sale-user-report/sale-user-report.component';
+import { UserGiftListComponent } from './user-gift-list/user-gift-list.component';
+import { UserGiftAddComponent } from './user-gift-add/user-gift-add.component';
 
 
 const routes: Routes = [
@@ -287,6 +289,8 @@ const routes: Routes = [
   {path : 'complain-list',component:ComplainListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'enquiry-from-app-listing',component:EnquiryFromAppListingComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'enquiry-showroom-listing',component:ShowroomEnquiryListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'user-gift-list',component:UserGiftListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'user-gift-Add',component:UserGiftAddComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
 
   { path: 'enquiry-from-app-detail/:id', component: EnquiryFromAppDetailComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
 
@@ -435,6 +439,8 @@ const routes: Routes = [
     IncentiveMasterAddComponent,
     ReportIncentiveListComponent,
     SaleUserReportComponent,
+    UserGiftListComponent,
+    UserGiftAddComponent,
 
   ],
   imports: [
