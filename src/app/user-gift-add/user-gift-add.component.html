@@ -1,4 +1,11 @@
-<div class="main-container" [@routerTransition]>
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
   <div class="middle-container">
     <div class="page-heading">
       <img src="assets/img/leads_icon.svg" class="h-icon">
@@ -13,7 +20,7 @@
     <!-- <app-master-tab></app-master-tab> -->
     <div class="container tab-container">
       <div class="row">
-        <form>
+        <form #f="ngForm" (ngSubmit)="f.valid && addNewUserGift()">
 
           <div class="col s12">
             <div class="sprate-box">
@@ -28,16 +35,16 @@
                   <div class="col s8 pl0">
                     <div class="control-field">
                       <mat-form-field class="cs-input">
-                        <input matInput placeholder="GIFT NAME*" name="giftName" #giftName="ngModel"
-                          [(ngModel)]="data.giftName" required>
+                        <input matInput placeholder="GIFT NAME" name="gift_title" #gift_title="ngModel"
+                          [(ngModel)]="data.gift_title" required>
                       </mat-form-field>
                     </div>
                   </div>
                   <div class="col s4 pr0">
                     <div class="control-field">
                       <mat-form-field class="cs-input">
-                        <input matInput placeholder="POINT" name="giftPoint" #giftPoint="ngModel"
-                          [(ngModel)]="data.giftPoint" required>
+                        <input matInput placeholder="POINT" name="points" #points="ngModel" [(ngModel)]="data.points"
+                          onkeypress="return  event.charCode >=48 && event.charCode<=57" required>
                       </mat-form-field>
                     </div>
                   </div>
@@ -54,28 +61,28 @@
                 <div class="col s8">
                   <div class="control-field">
                     <mat-form-field class="cs-input" style="width:100%">
-                      <textarea matInput placeholder="Gift Description ..." class="h200" name="gift_description"
-                        #gift_description="ngModel" [(ngModel)]="data.gift_description"></textarea>
+                      <textarea matInput placeholder="Gift Description ..." class="h200" name="gift_specification"
+                        #gift_specification="ngModel" [(ngModel)]="data.gift_specification"></textarea>
                     </mat-form-field>
                   </div>
 
                 </div>
                 <div class="col s4">
                   <div class="cs-file">
-                    <p>Upload Image</p>
-                    <ul>
-                      <li>
-                        <label>
-                          <img src="assets/img/product.png">
+                    <p>User Profile Image</p>
+                    <ul class="product-images">
+                      <li class="multi-images">
+                        <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                          <img [src]="val" alt="your image">
+                          <span class="cancel-icon">
+                            <a class="close"><i class="material-icons dp48" (click)="delete_img(i)">clear</i></a>
+                          </span>
                         </label>
-                      </li>
-                      <li>
-                        <div class="cs-file">
-                          <label>
-                            <input type="file" style="display:none;">
-                            <i class="material-icons add-file-icon">add</i>
-                          </label>
-                        </div>
+                        <label class="cs-file-img default" *ngIf="urls.length == 0">
+                          <i class="material-icons">cloud_upload</i>
+                          <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg"
+                            style="display: none;" (change)="insertImage($event)" required>
+                        </label>
                       </li>
                     </ul>
                   </div>
@@ -112,6 +119,7 @@
             <div class="cs-btn fixedd mt32 text-right">
               <div class="in-btn">
                 <button mat-raised-button color="accent">Save</button>
+                <!-- <button mat-raised-button color="accent" type="reset" color="accent">Reset</button> -->
               </div>
             </div>
           </div>

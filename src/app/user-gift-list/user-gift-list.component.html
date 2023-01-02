@@ -75,11 +75,12 @@
           <div class="table-head">
             <table>
               <tr>
-                <th class="w50">S. No.</th>
+                <th class="w100">Date Created</th>
                 <th class="w130">Gift Name</th>
                 <th class="w100">Gift Point </th>
                 <th class="w130">Gift Image</th>
                 <th class="w170">Gift Description</th>
+                <th class="w130">Action</th>
 
               </tr>
             </table>
@@ -137,11 +138,25 @@
           <div class="table-content">
             <table>
               <tr *ngFor="let p of userGiftlist">
-                <td class="w50">S. No.</td>
-                <td class="w130">Gift Name</td>
-                <td class="w100">Gift Point </td>
-                <td class="w130">Gift Image</td>
-                <td class="w170">Gift Description</td>
+                <td class="w100">{{p.date_created}}</td>
+                <td class="w130">{{p.gift_title}}</td>
+                <td class="w100">{{p.points}}</td>
+                <td class="w130">
+                  <img *ngIf="p.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{p.image}}"
+                    (click)="openDialog2(p.image)" />
+                  <img *ngIf="p.image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
+                </td>
+                <td class="w170">{{p.gift_specification}}</td>
+                <td class="w130">
+                  <div class="acton-btn">
+                    <button mat-button class="delete-mat" (click)="editUserGiftList(p)"><i
+                        class="material-icons green-clr">edit</i>
+                    </button>
+                    <button mat-button class="delete-mat" (click)="deleteUserGift(p.id)"><i
+                      class="material-icons red-clr">delete</i>
+                  </button>
+                  </div>
+                </td>
 
 
                 <!-- <td class="w90"> -->
@@ -157,33 +172,42 @@
               </tr>
               <ng-container *ngFor="let lead of skelton">
                 <tr class="sk-loading" *ngIf="loader">
-                  <td class="w50">
+                  <td class="w100">
                     <div>&nbsp;</div>
-                  </td> 
-                  <!-- s.no -->
+                  </td>
+                  <!-- Date Created-->
                   <td class="w130">
                     <div>&nbsp;</div>
                   </td>
                   <!-- gift name -->
-                  <td class="w100"><div>&nbsp;</div></td>
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
                   <!-- gift point -->
-                  <td class="w130"><div>&nbsp;</div></td>
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
                   <!-- gift image -->
-                  <td class="w170"><div>&nbsp;</div></td>
+                  <td class="w170">
+                    <div>&nbsp;</div>
+                  </td>
                   <!-- gift description -->
 
-                
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Action -->
+
                 </tr>
               </ng-container>
             </table>
-            <!-- <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
-              [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10"
-              (scrolled)="attendance_list('getAttendance',2)">
-            </div> -->
+            <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+              [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="getUserGiftList()">
+            </div>
 
           </div>
         </div>
-        <div class="data-not-available" *ngIf="data_not_found==true">
+        <div class="data-not-available" *ngIf="userGiftlist.length<1">
           <div class="outer">
             <div class="iinear">
               <div class="figure" matRipple>
@@ -192,8 +216,7 @@
                 </div>
                 <div class="description">
                   <div class="cs-heading">
-                    <!-- <h2>Sales Location List</h2> -->
-                    <h2>Attendence List</h2>
+                    <h2>User Gift List</h2>
 
                   </div>
                   <div class="img">
@@ -215,7 +238,7 @@
 
 
   <div class="fix-btn">
-    <a  class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
+    <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
       routerLink="/user-gift-Add"><i class="material-icons">add</i></a>
     <!-- <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
       (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a> -->
