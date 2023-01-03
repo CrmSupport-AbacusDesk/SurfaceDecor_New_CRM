@@ -164,6 +164,11 @@ import { PointMasterAddComponent } from './point-master-add/point-master-add.com
 import { IncentiveMasterListComponent } from './incentive-master-list/incentive-master-list.component';
 import { IncentiveMasterAddComponent } from './incentive-master-add/incentive-master-add.component';
 import { ReportIncentiveListComponent } from './report-incentive-list/report-incentive-list.component';
+import { SaleUserReportComponent } from './sale-user-report/sale-user-report.component';
+import { UserGiftListComponent } from './user-gift-list/user-gift-list.component';
+import { UserGiftAddComponent } from './user-gift-add/user-gift-add.component';
+import { RedeemRequestComponent } from './redeem-request/redeem-request.component';
+import { RedeemRequestStatusModalComponent } from './redeem-request-status-modal/redeem-request-status-modal.component';
 
 
 const routes: Routes = [
@@ -228,6 +233,7 @@ const routes: Routes = [
   { path: 'pointMaster', component: PointMasterComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'IncentiveMaster', component: IncentiveMasterListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'ReportIncentiveList', component: ReportIncentiveListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
+  { path: 'UserIncentiveReportList', component: SaleUserReportComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'IncentiveMasterAdd', component: IncentiveMasterAddComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'plumber-lead-list', component: PlumberLeadListComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
   { path: 'dwr', component: DwrComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
@@ -285,6 +291,9 @@ const routes: Routes = [
   {path : 'complain-list',component:ComplainListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'enquiry-from-app-listing',component:EnquiryFromAppListingComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'enquiry-showroom-listing',component:ShowroomEnquiryListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'user-gift-list',component:UserGiftListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'user-gift-Add',component:UserGiftAddComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'redeem-request',component:RedeemRequestComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
 
   { path: 'enquiry-from-app-detail/:id', component: EnquiryFromAppDetailComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
 
@@ -432,6 +441,11 @@ const routes: Routes = [
     IncentiveMasterListComponent,
     IncentiveMasterAddComponent,
     ReportIncentiveListComponent,
+    SaleUserReportComponent,
+    UserGiftListComponent,
+    UserGiftAddComponent,
+    RedeemRequestComponent,
+    RedeemRequestStatusModalComponent,
 
   ],
   imports: [
@@ -472,7 +486,7 @@ const routes: Routes = [
 
   entryComponents: [
 TargetaddComponent,BillingdocumentComponent,
-    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent,PointMasterAddComponent
+    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent,PointMasterAddComponent, RedeemRequestStatusModalComponent 
   ],
 
   exports: [RouterModule],

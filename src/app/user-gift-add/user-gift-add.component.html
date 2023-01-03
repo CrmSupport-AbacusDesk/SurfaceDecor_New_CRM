@@ -1,0 +1,134 @@
+<div class="main-container">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container">
+    <div class="page-heading">
+      <img src="assets/img/leads_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>Gift</h2>
+        <p>Add New User Gift</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-outer">
+    <!-- <app-master-tab></app-master-tab> -->
+    <div class="container tab-container">
+      <div class="row">
+        <form #f="ngForm" (ngSubmit)="f.valid && addNewUserGift()">
+
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>USER GIFT</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+              <div class="from-fields">
+                <div class="row">
+                  <div class="col s8 pl0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <input matInput placeholder="GIFT NAME" name="gift_title" #gift_title="ngModel"
+                          [(ngModel)]="data.gift_title" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col s4 pr0">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <input matInput placeholder="POINT" name="points" #points="ngModel" [(ngModel)]="data.points"
+                          onkeypress="return  event.charCode >=48 && event.charCode<=57" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="left-right-15 mt20 mb10"></mat-divider>
+              <div class="cs-heading">
+                <h2>DESCRIPTION</h2>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+
+              <div class="row">
+                <div class="col s8">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input" style="width:100%">
+                      <textarea matInput placeholder="Gift Description ..." class="h200" name="gift_specification"
+                        #gift_specification="ngModel" [(ngModel)]="data.gift_specification"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+                <div class="col s4">
+                  <div class="cs-file">
+                    <p>User Profile Image</p>
+                    <ul class="product-images">
+                      <li class="multi-images">
+                        <label class="cs-file-img" *ngFor="let val of urls; let i = index">
+                          <img [src]="val" alt="your image">
+                          <span class="cancel-icon">
+                            <a class="close"><i class="material-icons dp48" (click)="delete_img(i)">clear</i></a>
+                          </span>
+                        </label>
+                        <label class="cs-file-img default" *ngIf="urls.length == 0">
+                          <i class="material-icons">cloud_upload</i>
+                          <input type="file" name="image" placeholder="Upload file" accept=".png,.jpg,.jpeg"
+                            style="display: none;" (change)="insertImage($event)" required>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col s12">
+                  <div class="cs-file">
+                    <p>Upload Image</p>
+                    <ul>
+                      <li>
+                        <label>
+                          <img src="assets/img/product.png">
+                        </label>
+                      </li>
+                      <li>
+                        <div class="cs-file">
+                          <label>
+                            <input type="file" style="display:none;">
+                            <i class="material-icons add-file-icon">add</i>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+
+          <div class="col s12">
+            <div class="cs-btn fixedd mt32 text-right">
+              <div class="in-btn">
+                <button mat-raised-button color="accent">Save</button>
+                <!-- <button mat-raised-button color="accent" type="reset" color="accent">Reset</button> -->
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="h50"></div>

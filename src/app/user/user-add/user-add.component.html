@@ -29,7 +29,7 @@
                         <mat-select name="user_type" placeholder="Sales User Type" [(ngModel)]="data.user_type"
                           #user_type="ngModel" [ngClass]="{'has-error' : user_type.invalid } " required=true>
                           <mat-option disabled value="">Select Sales User Type</mat-option>
-                          <mat-option value="Market" (click)="get_sales_user_type('Market')">Market</mat-option>
+                          <mat-option value="Market" (click)="get_sales_user_type('Market');get_sales_Codes()">Market</mat-option>
                           <mat-option value="Office" (click)="get_sales_user_type('Office')">Office</mat-option>
                           <mat-option value="Showroom" (click)="get_sales_user_type('Showroom')">Showroom</mat-option>
                           <mat-option value="Warehouse"
@@ -64,7 +64,23 @@
                     </div>
                   </div>
                 </div>
-
+                <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'" *ngIf="sales_type && data.user_type && data.user_type=='Market' ">
+                  <div class="from-fields">
+                    <div class="control-field">
+                      <mat-form-field class="cs-input">
+                        <mat-select name="sales_team_code" placeholder="Sales Codes" [(ngModel)]="data.sales_team_code" multiple
+                          #sales_team_code="ngModel" [ngClass]="{'has-error' : sales_team_code.invalid } " required=true>
+                          <mat-option disabled value="">Select Sales Sales Code</mat-option>
+                          <mat-option *ngFor="let rsm of sales_code" value="{{rsm.sales_team_code}}"
+                           >{{rsm.sales_team_code}}</mat-option>
+                        </mat-select>
+                        <div class="alert alert-danger" *ngIf="!sales_team_code.valid && f.submitted">
+                          Sales Code is required...
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
                 <div class="col" [ngClass]="data.userrole && data.userrole!='' && data.userrole == '16' ? 's4' : 's6'"
                   *ngIf="data.userrole && data.userrole!='' && data.userrole == '16'">
                   <div class="from-fields">
@@ -164,15 +180,37 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="col s3 pr0">
+                <div class="col s3 pr0" *ngIf="data.user_type && data.user_type!='Office'">
                   <div class="control-field">
                     <mat-form-field class="cs-input">
-                      <input type="text" matInput placeholder="Incentive Point"
+                      <input type="text" matInput placeholder="Incentive Point Percentage"
                         onkeypress="return event.charCode >=48 && event.charCode<=57" name="incentive_point"
                         #incentive_point="ngModel" [(ngModel)]="data.incentive_point"
                         [ngClass]="{'has-error' : incentive_point.invalid }" required>
                       <mat-autocomplete #auto="matAutocomplete">
                       </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s6 pr0" *ngIf="data.user_type && data.user_type!='Office'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker1" max="{{today_date}}"
+                        placeholder="Select Your Date Of Birth" name="birthday_date" [(ngModel)]="data.birthday_date"
+                        readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col s6 pr0" *ngIf="data.user_type && data.user_type!='Office'">
+                  <div class="control-field">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker2" max="{{today_date}}"
+                        placeholder="Select Your Anniversary Date" name="aniversary_date"
+                        [(ngModel)]="data.aniversary_date" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </div>

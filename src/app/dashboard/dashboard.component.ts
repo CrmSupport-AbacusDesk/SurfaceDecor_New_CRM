@@ -22,56 +22,56 @@ import { UserTargetComponent } from '../user/user-target/user-target.component';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  count:any=[];
-  orderdata:any=[];
-  today_date:any;
-  month:any=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  monthName:any;
-  year:any;
-  primary_today_count={};
-  primary_today_sum={};
-  primary_yesterday_count={};
-  primary_yesterday_sum={};
-  primary_daybeforeyesterday_sum={};
-  primary_daybeforeyesterday_count={};
-  secondry_today_count={};
-  secondry_today_sum={};
-  secondry_yesterday_count={};
-  secondry_yesterday_sum={};
-  secondry_daybeforeyesterday_sum={};
-  secondry_daybeforeyesterday_count={};
+  count: any = [];
+  orderdata: any = [];
+  today_date: any;
+  month: any = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  monthName: any;
+  year: any;
+  primary_today_count = {};
+  primary_today_sum = {};
+  primary_yesterday_count = {};
+  primary_yesterday_sum = {};
+  primary_daybeforeyesterday_sum = {};
+  primary_daybeforeyesterday_count = {};
+  secondry_today_count = {};
+  secondry_today_sum = {};
+  secondry_yesterday_count = {};
+  secondry_yesterday_sum = {};
+  secondry_daybeforeyesterday_sum = {};
+  secondry_daybeforeyesterday_count = {};
   public barChartLabels: Label = [];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
-  login_data:any={};
+  login_data: any = {};
   public barChartData: ChartDataSets[] = [];
   overall_target_vs_achievemnt_data: any;
   assign_area_detail_data: any;
   total_area_detail_data: any;
-  user_attendence_summary:any=[]
-  company_target:any=[]
-  company_sales_target:any=[]
-  loader:boolean=false;
-  attendence_type:any='All';
-  filter_days_type:any='Today';
-  total_today_achievement_amount:any=0;
-  total_today_achivement:any=0;
-  today_remaining_achievement:any=0;
-  total_month_sal_amt:any=0;
-  total_month_qty:any=0;
-  total_today_target:any=0;
+  user_attendence_summary: any = []
+  company_target: any = []
+  company_sales_target: any = []
+  loader: boolean = false;
+  attendence_type: any = 'All';
+  filter_days_type: any = 'Today';
+  total_today_achievement_amount: any = 0;
+  total_today_achivement: any = 0;
+  today_remaining_achievement: any = 0;
+  total_month_sal_amt: any = 0;
+  total_month_qty: any = 0;
+  total_today_target: any = 0;
 
-  total_month_target:any=0;
-  today_total_sales_amt:any=0;
-  total_sales_today_target:any=0;
-  total_month_achievement_amount:any=0;
-  total_month_achivement:any=0;
-  total_month_remaining_achievement:any=0;
+  total_month_target: any = 0;
+  today_total_sales_amt: any = 0;
+  total_sales_today_target: any = 0;
+  total_month_achievement_amount: any = 0;
+  total_month_achivement: any = 0;
+  total_month_remaining_achievement: any = 0;
 
-  filter_wise_dashboard_order_data:any={};
+  filter_wise_dashboard_order_data: any = {};
 
 
-  constructor(public route:ActivatedRoute,public serve:PearlService,public dialog2: MatDialog,public dialog: MatDialog ,private renderer: Renderer2,public session:LocalStorage) {
+  constructor(public route: ActivatedRoute, public serve: PearlService, public dialog2: MatDialog, public dialog: MatDialog, private renderer: Renderer2, public session: LocalStorage) {
     this.count_data();
     this.order_dashboard();
     this.target_vs_achievemnt_data();
@@ -81,36 +81,34 @@ export class DashboardComponent implements OnInit {
     this.companysalestarget_data()
     this.today_date = moment(new Date()).format("MMMM Do YYYY");
     console.log(this.today_date);
-    this.monthName=this.month[new Date().getMonth()];
-    this.year=new Date().getFullYear();
+    this.monthName = this.month[new Date().getMonth()];
+    this.year = new Date().getFullYear();
 
 
   }
 
   ngOnInit() {
     this.session.getSession()
-    .subscribe(resp=>{
-      console.log(resp);
-      this.login_data = resp.data;
-      if(this.login_data.type == '1' && this.login_data.lead_type == 'Dr' )
-      {
-        this.renderer.addClass(document.body, 'chanel-patner');
-      }
-      else
-      {
-        this.renderer.removeClass(document.body, 'chanel-patner');
-      }
-    })
+      .subscribe(resp => {
+        console.log(resp);
+        this.login_data = resp.data;
+        if (this.login_data.type == '1' && this.login_data.lead_type == 'Dr') {
+          this.renderer.addClass(document.body, 'chanel-patner');
+        }
+        else {
+          this.renderer.removeClass(document.body, 'chanel-patner');
+        }
+      })
 
   }
 
 
 
-  status:boolean = false;
+  status: boolean = false;
   toggleDropdown() {
     this.status = !this.status;
 
-    if(this.status) {
+    if (this.status) {
       this.renderer.addClass(event.target, 'active');
       this.renderer.removeClass(document.body, 'active');
     }
@@ -123,62 +121,62 @@ export class DashboardComponent implements OnInit {
   toggleHeader() {
     console.log(this.status);
     this.status = !this.status;
-    if(!this.status) {
+    if (!this.status) {
       this.renderer.addClass(document.body, 'nav-active');
     }
     else {
       this.renderer.removeClass(document.body, 'nav-active');
     }
   }
-  targetmodal(id){
-        
-      console.log("targetModal method calls");
-      
-      const dialogRef = this.dialog2.open(UserTargetComponent, {
-        width: '2000px',
-        data: {
-          id,'company_target':'company_target',
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        
-      });
-      
+  targetmodal(id) {
+
+    console.log("targetModal method calls");
+
+    const dialogRef = this.dialog2.open(UserTargetComponent, {
+      width: '2000px',
+      data: {
+        id, 'company_target': 'company_target',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
-  targetsalemodal(id){
-        
-      console.log("targetModal method calls");
-      
-      const dialogRef = this.dialog2.open(UserTargetComponent, {
-        width: '1024px',
-        data: {
-          id,'company_target':'company_sale_target',
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        
-      });
-      
+  targetsalemodal(id) {
+
+    console.log("targetModal method calls");
+
+    const dialogRef = this.dialog2.open(UserTargetComponent, {
+      width: '1024px',
+      data: {
+        id, 'company_target': 'company_sale_target',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
-  status1:boolean = false;
+  status1: boolean = false;
   toggleNav() {
     this.status1 = !this.status1;
-    if(this.status1) {
+    if (this.status1) {
       this.renderer.addClass(document.body, 'active');
     }
     else {
       this.renderer.removeClass(document.body, 'active');
     }
   }
-  count_data(){
+  count_data() {
     console.log('test');
     this.loader = true;
-    this.serve.fetchData({},"Distributors/count_data").subscribe((result=>{
+    this.serve.fetchData({}, "Distributors/count_data").subscribe((result => {
       console.log(result);
-      this.count=result;
+      this.count = result;
       console.log(this.count);
       setTimeout(() => {
-        this.loader=false;
+        this.loader = false;
       }, 1000);
 
 
@@ -197,29 +195,29 @@ export class DashboardComponent implements OnInit {
       // this.secondry_daybeforeyesterday_count=this.count['sec_day_before_yesterday_count'];
     }))
   }
-  tmp:any=[];
-  user_list:any=[];
-  user_filter(){
+  tmp: any = [];
+  user_list: any = [];
+  user_filter() {
     console.log(this.count);
-    for(let i=0;i<this.count['user_data'].length;i++){
-      this.tmp=this.count.user_data[i]['user_type'];
+    for (let i = 0; i < this.count['user_data'].length; i++) {
+      this.tmp = this.count.user_data[i]['user_type'];
 
-      if(this.tmp.includes('MARKET') || this.tmp.includes('Market'))
-      {
+      if (this.tmp.includes('MARKET') || this.tmp.includes('Market')) {
         this.user_list.push(this.count.user_data[i]);
       }
     }
   }
-  order_data:any=[];
-  order_dashboard(){
-    this.loader=true;
+  order_data: any = [];
+  order_dashboard() {
+    this.loader = true;
     console.log('test');
-    this.serve.fetchData({},"Order/dashboard_order").subscribe((result=>{
+    this.serve.fetchData({}, "Order/dashboard_order").subscribe((result => {
       console.log(result);
-      this.orderdata=result;
+      this.orderdata = result;
+      this.loader = false;
 
-      this.order_data.cat=this.orderdata.cat.slice(1,2,3,4,5,6,7,8,9);
-      this.order_data.amount=this.orderdata.amount.slice(1,2,3,4,5,6,7,8,9);
+      this.order_data.cat = this.orderdata.cat.slice(1, 2, 3, 4, 5, 6, 7, 8, 9);
+      this.order_data.amount = this.orderdata.amount.slice(1, 2, 3, 4, 5, 6, 7, 8, 9);
       console.log(this.order_data);
 
       this.barChartLabels = this.orderdata.cat;
@@ -232,7 +230,7 @@ export class DashboardComponent implements OnInit {
 
       ];
       setTimeout(() => {
-          this.loader=false;
+        this.loader = false;
       }, 1000);
     }))
   }
@@ -276,20 +274,20 @@ export class DashboardComponent implements OnInit {
     this.barChartData[0].data = data;
   }
 
-  formatTime(time){
+  formatTime(time) {
     var parts = time.split(':');
     var time_ = new Date(0, 0, 0, parts[0], parts[1], parts[2]);
     return new Date(time_ || 'h:mm a');
   }
 
 
-  target_vs_achievemnt_data(){
+  target_vs_achievemnt_data() {
     console.log('target_vs_achievemnt_data method calls');
     this.loader = true;
-    this.serve.fetchData({},"User/area_target_dashboard_data").subscribe((result=>{
+    this.serve.fetchData({}, "User/area_target_dashboard_data").subscribe((result => {
       console.log(result);
       setTimeout(() => {
-        this.loader=false;
+        this.loader = false;
       }, 1000);
       this.overall_target_vs_achievemnt_data = result['assign_all_dr_target_detail']
       this.assign_area_detail_data = result['assign_area_detail']
@@ -299,13 +297,13 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  open_targt_vs_achievement_model(type : any = ''){
+  open_targt_vs_achievement_model(type: any = '') {
     console.log("open_targt_vs_achievement_model method calls");
     console.log(type);
     const dialogRef = this.dialog.open(StatusModalComponent, {
-      width: '1050', data:{
-        'data_type' : type,
-        'from' : 'dashboard'
+      width: '1050', data: {
+        'data_type': type,
+        'from': 'dashboard'
       },
       panelClass: "mat-dialog-height-transition"
 
@@ -318,63 +316,66 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  absent_executive_data(){
+  absent_executive_data() {
     console.log('absent_executive_data method calls');
-    this.serve.fetchData({'attendence_type' : this.attendence_type},"Attendance/today_absent_user").subscribe((result=>{
+    this.loader = true;
+    this.serve.fetchData({ 'attendence_type': this.attendence_type }, "Attendance/today_absent_user").subscribe((result => {
       console.log(result);
+      this.loader = false;
+
       this.user_attendence_summary = result['user_attendence_summary']
 
 
     }))
   }
-  companytarget_data(){
+  companytarget_data() {
     console.log('absent_executive_data method calls');
     // 'type' : this.filter_days_type
     this.loader = true;
-    this.serve.fetchData({},"User/dashboardCompanyTargetSumarry").subscribe((result=>{
+    this.serve.fetchData({}, "User/dashboardCompanyTargetSumarry").subscribe((result => {
       console.log(result);
 
-      this.company_target=result['companyList'];
-      this.today_remaining_achievement=result['today_remaining_achievement'];
-      this.total_today_achievement_amount=result['total_today_achievement_amount'];
-      this.total_today_achivement=result['total_today_achivement'];
-      this.total_today_target=result['total_today_target'];
+      this.company_target = result['companyList'];
+      this.today_remaining_achievement = result['today_remaining_achievement'];
+      this.total_today_achievement_amount = result['total_today_achievement_amount'];
+      this.total_today_achivement = result['total_today_achivement'];
+      this.total_today_target = result['total_today_target'];
 
-      this.total_month_target=result['total_month_target'];
-      this.total_month_achievement_amount=result['total_month_achievement_amount'];
-      this.total_month_achivement=result['total_month_achivement'];
-      this.total_month_remaining_achievement=result['total_month_remaining_achievement'];
- setTimeout(() => {
-        this.loader=false;
+      this.total_month_target = result['total_month_target'];
+      this.total_month_achievement_amount = result['total_month_achievement_amount'];
+      this.total_month_achivement = result['total_month_achivement'];
+      this.total_month_remaining_achievement = result['total_month_remaining_achievement'];
+      setTimeout(() => {
+        this.loader = false;
       }, 1000);
 
     }))
   }
-  companysalestarget_data(){
+  companysalestarget_data() {
     console.log('absent_executive_data method calls');
     // 'type' : this.filter_days_type
     this.loader = true;
-    this.serve.fetchData({},"User/dashboardCompanySalesSumarry").subscribe((result=>{
+    this.serve.fetchData({}, "User/dashboardCompanySalesSumarry").subscribe((result => {
       console.log(result);
-      this.company_sales_target=result['companyList'];
-      this.today_total_sales_amt=result['today_total_sal_amt'];
-      this.total_sales_today_target=result['today_total_sal_qty'];
-      this.total_month_qty=result['total_month_qty'];
-      this.total_month_sal_amt=result['total_month_sal_amt'];
+      this.company_sales_target = result['companyList'];
+      this.today_total_sales_amt = result['today_total_sal_amt'];
+      this.total_sales_today_target = result['today_total_sal_qty'];
+      this.total_month_qty = result['total_month_qty'];
+      this.total_month_sal_amt = result['total_month_sal_amt'];
 
       setTimeout(() => {
-        this.loader=false;
+        this.loader = false;
       }, 1000);
     }))
   }
 
-  order_data_method(){
+  order_data_method() {
     this.loader = true;
     console.log('order_data_method method calls');
-    this.serve.fetchData({'type' : this.filter_days_type},"Order/filter_wise_order_data_for_dashboard").subscribe((result=>{
+    this.serve.fetchData({ 'type': this.filter_days_type }, "Order/filter_wise_order_data_for_dashboard").subscribe((result => {
       console.log(result);
       setTimeout(() => {
-        this.loader=false;
+        this.loader = false;
       }, 1000);
       this.filter_wise_dashboard_order_data = result['dashboard_order_data']
 
@@ -382,60 +383,60 @@ export class DashboardComponent implements OnInit {
     }))
   }
 
-  openDialog(){
-    const dialogRef = this.dialog.open(StatusModalComponent ,{
-      width:'700px',
-      data:{
-        'from':'dashboard_outstanding_tab'
+  openDialog() {
+    const dialogRef = this.dialog.open(StatusModalComponent, {
+      width: '1000px',
+      data: {
+        'from': 'dashboard_outstanding_tab'
       }
     })
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-     
+
     });
 
-    }
-    openDialog2(){
-      const dialogRef = this.dialog.open(StatusModalComponent ,{
-        width:'700px',
-        data:{
-          'from':'dashboard_dispatch_value_tab'
-        }
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-       
-      });
-  
-    }
-    
-    openDialog3(){
-      const dialogRef = this.dialog.open(StatusModalComponent ,{
-        width:'700px',
-        data:{
-          'from':'dashboard_dispatch_quantity_tab'
-        }
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-       
-      });
-  
-    }
+  }
+  openDialog2() {
+    const dialogRef = this.dialog.open(StatusModalComponent, {
+      width: '700px',
+      data: {
+        'from': 'dashboard_dispatch_value_tab'
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
 
-    openDialog4(){
-      const dialogRef = this.dialog.open(StatusModalComponent ,{
-        width:'700px',
-        data:{
-          'from':'dashboard_overdue_tab'
-        }
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-       
-      });
-  
-    }
+    });
+
+  }
+
+  openDialog3() {
+    const dialogRef = this.dialog.open(StatusModalComponent, {
+      width: '700px',
+      data: {
+        'from': 'dashboard_dispatch_quantity_tab'
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+
+  }
+
+  openDialog4() {
+    const dialogRef = this.dialog.open(StatusModalComponent, {
+      width: '700px',
+      data: {
+        'from': 'dashboard_overdue_tab'
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+
+  }
 
 
 }

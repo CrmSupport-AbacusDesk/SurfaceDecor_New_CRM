@@ -226,9 +226,9 @@
       </div>
 
 
-      
+
       <div class="top-pagination">
-        
+
         <div class="update-block" style="margin-right: 310px;">
           <p>Stock Quantity</p>
 
@@ -305,6 +305,7 @@
                     <th class="w100 text-right">Showroom Price</th>
                     <th class="w100 text-center">Status</th>
                     <th class="w100 text-center">Discontinue</th>
+                    <th class="w120 text-center">Allocated Point</th>
                     <th class="w70 text-center">On/Off</th>
 
                   </tr>
@@ -432,13 +433,25 @@
                     </th>
                     <th class="w100">
                       <div class="th-search">
-                        <select (change)="start=0; getProductList();" name="discontinues" [(ngModel)]="data.discontinues">
+                        <select (change)="start=0; getProductList();" name="discontinues"
+                          [(ngModel)]="data.discontinues">
                           <option value="All">All</option>
                           <option value="Yes">Yes</option>
                           <option value="No">No</option>
 
                         </select>
                       </div>
+                    </th>
+                    <th class="w120">
+                      <!-- <div class="th-search">
+                        <select (change)="start=0; getProductList();" name="discontinues"
+                          [(ngModel)]="data.discontinues">
+                          <option value="All">All</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+
+                        </select>
+                      </div> -->
                     </th>
                     <th class="w70 text-center">
                       <div class="th-search">
@@ -514,6 +527,7 @@
                     <td class="w100 text-right">{{p.status_code == 'DIS' || p.status_code == 'DIS AIM' || p.status_code
                       == 'WRONG' || p.status_code == 'NONE' || p.status_code == 'LAX' || p.status_code == 'MTO' ?
                       'Yes':'No'}}</td>
+                    <td class="w120 text-right">{{p.points}}</td>
 
                     <td *ngIf="view_edit" class="w70 text-center">
                       <mat-slide-toggle [checked]="p.status == '1'" (click)="update_product_status(p.id)">

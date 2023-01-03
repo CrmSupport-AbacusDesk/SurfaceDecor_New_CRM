@@ -61,7 +61,7 @@
                                         <th class="w150" *ngIf="active_tab != 'distributor_user'">Reporting Manager</th>
                                         <th class="w150" *ngIf="active_tab == 'Market'">Sale</th>
                                         <th class="w60" *ngIf="active_tab == 'Market'">Target</th>
-                                        <th class="w100">Incentive Point Percentage</th>
+                                        <th class="w100" *ngIf="active_tab!='Office'">Incentive Point Percentage</th>
                                         <th *ngIf="view_edit && active_tab != 'Office'" class="w70 text-center">Status
                                         </th>
                                         <!-- <th *ngIf="view_delete" class="w70 text-center" >Delete</th> -->
@@ -126,7 +126,7 @@
 
                                         <th class="w150" *ngIf="active_tab == 'Market'"></th>
                                         <th class="w60" *ngIf="active_tab == 'Market'"></th>
-                                        <th class="w100"></th>
+                                        <th class="w100"  *ngIf="active_tab!='Office'" ></th>
 
                                         <th *ngIf="view_edit && active_tab != 'Office'" class="w70">
                                             <div class="th-search">
@@ -219,7 +219,8 @@
                                             style="cursor: pointer"
                                             (click)="u.user_type=='Market' || u.user_type=='MARKET' ? targetModal(u.id) : ''">
                                             {{u.user_type=='Market' || u.user_type=='MARKET' ? 'View' : '--'}}</td>
-                                        <td class="w100">{{u.incentive_percent && u.incentive_percent!='' ? u.incentive_percent : '--'}}</td>
+                                        <td class="w100" *ngIf="active_tab!='Office'">{{u.incentive_percent && u.incentive_percent!='' ?
+                                            u.incentive_percent : '--'}}</td>
 
                                         <td *ngIf="view_edit && active_tab != 'Office'" class="w70 text-center">
                                             <mat-slide-toggle [checked]="u.status "

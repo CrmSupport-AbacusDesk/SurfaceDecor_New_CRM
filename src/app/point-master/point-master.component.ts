@@ -49,10 +49,11 @@ export class PointMasterComponent implements OnInit {
       this.search.active_tab = 'Brand_Wise'
 
     }
-
+    this.loader=true;
     this.serve.fetchData({ 'search': this.search }, 'Announcement/brand_points_list').subscribe((result) => {
       console.log(result);
       this.pointMasterList = result['data'];
+      this.loader=false;
 
 
     });
@@ -99,6 +100,7 @@ export class PointMasterComponent implements OnInit {
       panelClass: 'rightmodal',
       data: {
         value,
+        'tab':this.search.active_tab,
         from: 'editPointMaster'
       }
     });
@@ -113,6 +115,7 @@ export class PointMasterComponent implements OnInit {
     this.loader = true;
     this.data.points_id = id;
     this.data.login_id = this.login_id;
+    this.data.active_tab = this.search.active_tab;
     this.dialog.confirm('You Want To Delete This ?').then((result) => {
       if (result) {
         this.serve.fetchData({ 'data': this.data }, 'Announcement/delete_brands_point').subscribe((res) => {

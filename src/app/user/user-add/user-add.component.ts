@@ -15,6 +15,7 @@ export class UserAddComponent implements OnInit {
   constructor(public serve: PearlService, public rout: Router,public dialog: DialogComponent) {
     this.getStateList();
     this.get_module_data();
+   
   }
   submit = false;
 
@@ -23,6 +24,7 @@ export class UserAddComponent implements OnInit {
   rsm_list: any;
   data: any = {};
   district_list: any = [];
+  today_date:any=new Date();
   city_list: any = [];
   area_list: any = [];
   pinCode_list: any = [];
@@ -178,6 +180,21 @@ export class UserAddComponent implements OnInit {
 
     }));
   }
+
+  sales_code:any=[];
+  get_sales_Codes() {
+
+
+    this.serve.fetchData({}, "User/user_sales_code").subscribe((response => {
+      console.log(response);
+      console.log(response['sales']);
+
+      this.sales_code = response['data'];
+      console.log(this.sales_type);
+
+    }));
+  }
+
   reporting_sales_type: any = [];
   getreporting_users(user_type) {
     console.log(user_type);

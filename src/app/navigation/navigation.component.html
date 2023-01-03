@@ -326,6 +326,18 @@
                             <i class="material-icons">chevron_right </i>
                         </a>
                     </li>
+                    <li >
+                        <a routerLink="/user-gift-list" routerLinkActive="active">
+                            User Gift
+                            <i class="material-icons">chevron_right </i>
+                        </a>
+                    </li>
+                    <li >
+                        <a routerLink="/redeem-request" routerLinkActive="active">
+                            Redeem Requests
+                            <i class="material-icons">chevron_right </i>
+                        </a>
+                    </li>
 
                     <!-- <li *ngIf="false && login_data.view_area_target=='1'">
                         <a routerLink="/area-target" routerLinkActive="active">
@@ -369,7 +381,15 @@
             <li *ngIf="true">
                 <a routerLink="/ReportIncentiveList" routerLinkActive="active">
                     <i class="material-icons nav-icon">report</i>
-                   Report Incentive
+                   Brand Report Incentive
+                   <!-- <span class="nav-counter orange-count">{{serve.navigationCount.pending_complaint__count}}</span> -->
+                   
+                </a>
+            </li>
+            <li *ngIf="true">
+                <a routerLink="/UserIncentiveReportList" routerLinkActive="active">
+                    <i class="material-icons nav-icon">report</i>
+                  User Report Incentive
                    <!-- <span class="nav-counter orange-count">{{serve.navigationCount.pending_complaint__count}}</span> -->
                    
                 </a>

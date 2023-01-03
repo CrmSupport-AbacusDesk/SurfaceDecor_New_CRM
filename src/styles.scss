@@ -646,6 +646,18 @@ a.mat-raised-button.mat-accent {
 {
     overflow: hidden !important;
 }
+
+.blue
+{
+    color: $blue !important;
+    text-decoration: none;
+    
+    &:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
 .bdr-b
 {
     border-bottom: 1px solid #ccc !important;

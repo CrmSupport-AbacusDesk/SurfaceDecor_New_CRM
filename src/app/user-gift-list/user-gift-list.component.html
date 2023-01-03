@@ -1,0 +1,246 @@
+<div class="main-container">
+  <div class="middle-container mb0">
+    <div class="page-heading w250">
+
+      <img src="assets/img/calender.svg" class="h-icon h16">
+      <div class="heading-text">
+        <h2>User Gift</h2>
+      </div>
+
+      <div class="left-auto ml10">
+        <div class="from-fields cs-flex">
+          <!-- <div class="control-field mr10">
+            <mat-form-field class="cs-input date-column infix-bodr">
+              <input matInput [matDatepicker]="picker1" max="{{today_date}}" placeholder="From" name="date_from"
+                [(ngModel)]="data.date_from" (dateChange)="onDateBetween($event,'date_from')" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div> -->
+
+          <!-- <div class="control-field mr10">
+            <mat-form-field class="cs-input date-column infix-bodr">
+              <input matInput [matDatepicker]="pickers" placeholder="To" max="{{today_date}}" min="{{data.date_from}}"
+                name="date_to" [(ngModel)]="data.date_to" (dateChange)="onDateBetween($event,'date_to')" readonly>
+              <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+              <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+          </div> -->
+        </div>
+
+        <!-- <div class="cs-flex" *ngIf="data.date_from && data.date_to">
+          <button mat-raised-button style="background-color: #275478; color: #fff"
+            (click)="attendance_list('getAttendance',2)">
+            Go
+          </button>
+        </div> -->
+
+        <!-- <div class="cs-flex" *ngIf="data.date_from == '' && data.date_to == '' ">
+          <button mat-raised-button style="background-color: #275478; color: #fff">
+            Go
+          </button>
+        </div> -->
+
+      </div>
+
+    </div>
+
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons">
+              refresh</i></a>
+        </li>
+      </ul>
+      <!-- <div class="tabs">
+        <ul>
+          <li><a class="pr50" [ngClass]="show_today ? 'active' : ''" (click)="change_tab('getattendance_today',1)">Today
+              <span class="counter">{{count_1}}</span></a></li>
+          <li><a class="pr50" [ngClass]="!show_today ? 'active' : ''" (click)="change_tab('getAttendance',2)">All <span
+                class="counter">{{count_2}}</span></a></li>
+        </ul>
+      </div> -->
+    </div>
+
+
+  </div>
+  <!-- <div class="container-outer"> -->
+
+
+  <div class="container tab-container">
+    <div class="row">
+      <!-- <div class="col s12"> -->
+      <div class="cs-table cs-table-scroll">
+        <div class="stickyTableHead">
+          <div class="table-head">
+            <table>
+              <tr>
+                <th class="w100">S.no.</th>
+                <th class="w100">Date Created</th>
+                <th class="w130">Gift Name</th>
+                <th class="w100">Gift Point </th>
+                <th class="w130">Gift Image</th>
+                <th class="w170">Gift Description</th>
+                <th class="w130">Action</th>
+
+              </tr>
+            </table>
+          </div>
+
+          <div class="table-head bdrt">
+            <table>
+              <tr>
+                <th class="w100">
+
+                </th>
+
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="cs-input date-column infix-bodr">
+                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
+                        [(ngModel)]="search_val.date_created" (dateChange)="onDateChange(search_val.date_created)" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </th>
+
+                <th class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Enter Gift Title...." (keyup.enter)="getUserGiftList()"
+                        [(ngModel)]="search_val.gift_title">
+                    </mat-form-field>
+                  </div>
+                </th>
+
+                <th class="w100"></th>
+                <th class="w130">&nbsp;</th>
+                <th class="w170"></th>
+                <th class="w130">&nbsp;</th>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="table-container">
+          <div class="table-content">
+            <table>
+              <tr *ngFor="let p of userGiftlist; let i=index">
+                <td class="w100">{{i+1}}</td>
+                <td class="w100">{{p.date_created | date : 'd MMM y'}}</td>
+                <td class="w130">{{p.gift_title}}</td>
+                <td class="w100">{{p.points}}</td>
+                <td class="w130">
+                  <img *ngIf="p.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.gift_image_url+p.image}}"
+                    (click)="openDialog2(serve.gift_image_url+p.image)" />
+                  <img *ngIf="p.image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
+                </td>
+                <td class="w170">{{p.gift_specification}}</td>
+                <td class="w130">
+                  <div class="acton-btn">
+                    <button mat-button class="delete-mat" (click)="editUserGiftList(p)"><i
+                        class="material-icons green-clr">edit</i>
+                    </button>
+                    <mat-slide-toggle [checked]="p.status"
+                    (click)="userGiftStatus(i,p.id)"></mat-slide-toggle>
+                    <button mat-button class="delete-mat" (click)="deleteUserGift(p.id)"><i
+                        class="material-icons red-clr">delete</i>
+                    </button>
+                  </div>
+                </td>
+
+
+                <!-- <td class="w90"> -->
+                <!-- <a class="img-avtar">
+                    <img
+                      src="{{p.user_profile && p.user_profile!= null && p.user_profile!= '' ? p.user_profile : 'assets/img/NoPopNGift.png'}}"
+                      (click)="p.user_profile && p.user_profile != null && p.user_profile!= '' ? imageModel(p.user_profile) : '' ">
+                  </a> -->
+                <!-- </td> -->
+
+
+
+              </tr>
+              <ng-container *ngFor="let lead of skelton">
+                <tr class="sk-loading" *ngIf="loader">
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- S no -->
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Date Created-->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift name -->
+                  <td class="w100">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift point -->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift image -->
+                  <td class="w170">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift description -->
+
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Action -->
+
+                </tr>
+              </ng-container>
+            </table>
+            <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1"
+              [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="getUserGiftList()">
+            </div>
+
+          </div>
+        </div>
+        <div class="data-not-available" *ngIf="userGiftlist.length<1">
+          <div class="outer">
+            <div class="iinear">
+              <div class="figure" matRipple>
+                <div class="header">
+                  <img src="assets/img/data-not-available-header.svg" alt="">
+                </div>
+                <div class="description">
+                  <div class="cs-heading">
+                    <h2>User Gift List</h2>
+
+                  </div>
+                  <div class="img">
+                    <i class="material-icons">error_outline</i>
+                  </div>
+                  <div class="psc">
+                    <p>Data not Found</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="fix-btn">
+    <a class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button
+      routerLink="/user-gift-Add"><i class="material-icons">add</i></a>
+    <!-- <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a> -->
+  </div>
+
+  <div>
+  </div>
+</div>
+<div class="h60"></div>

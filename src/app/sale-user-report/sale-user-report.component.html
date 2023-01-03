@@ -1,0 +1,491 @@
+<div class="main-container pb0">
+  <div *ngIf="loader">
+    <mat-spinner class="loader">
+      <div>
+        <p>Loading....</p>
+      </div>
+    </mat-spinner>
+  </div>
+  <div class="middle-container mb0">
+    <div class="page-heading">
+      <img src="assets/img/distribution_icon.svg" class="h-icon">
+      <div class="heading-text">
+        <h2>User Report Incentive</h2>
+      </div>
+    </div>
+
+    <div class="left-auto">
+
+      <div class="tabs ml15">
+        <ul>
+          <!-- <li><a class="" [ngClass]="search_val.active_tab == 'Office' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Office';getReportIncentive();">Office User </a></li> -->
+          <li><a class="" [ngClass]="search_val.active_tab == 'Market' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Market'; ReportIncentiveList=[]; getReportIncentive();">Market User </a>
+          </li>
+          <li><a class="" [ngClass]="search_val.active_tab == 'Showroom' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Showroom';ReportIncentiveList=[]; getReportIncentive();">Showroom User
+            </a></li>
+          <li><a class="" [ngClass]="search_val.active_tab == 'Warehouse' ? 'active' : ''"
+              (click)="search_val.active_tab = 'Warehouse';ReportIncentiveList=[]; getReportIncentive();">Warehouse User
+            </a></li>
+
+          <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Distributor User </a></li> -->
+          <!-- <li><a class="" [ngClass]="active_tab == 'distributor_user' ? 'active' : ''" (click)="active_tab = 'distributor_user';getUserList(0,10);">Dealer User </a></li> -->
+        </ul>
+      </div>
+
+    </div>
+    <div class="uppr-one m-right-data">
+      <ul>
+        <li class="refresh-area mr0 after-none">
+          <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons">
+              refresh</i></a>
+        </li>
+      </ul>
+      <div class="top-pagination">
+        <ul>
+          <li>
+            <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+            <button mat-button class="left-btn" (click)="start=start-page_limit; getReportIncentive()"
+              [disabled]="pagenumber <= 1">
+              <i class="material-icons">keyboard_arrow_left</i>
+            </button>
+          </li>
+          <li>
+            <input type="text" placeholder="GO TO" name="pagenumber"
+              (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getReportIncentive()" [(ngModel)]="pagenumber"
+              min="1" max={{total_page}}>
+          </li>
+
+          <li>
+            <button mat-button class="right-btn" (click)="start=start+page_limit; getReportIncentive()"
+              [disabled]="pagenumber >= total_page">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="cs-table cs-table-scroll no-tab" style="display:none;">
+    <div class="stickyTableHead" style="width: fit-content;">
+      <div class="table-head">
+        <table>
+          <tr>
+            <th class="w50 text-center">&nbsp;</th>
+            <th class="w200 text-center">Sale User</th>
+            <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">{{data.brand_name |
+              uppercase}} </th>
+            <th class="w120 text-center">Birthday Point</th>
+            <th class="w120 text-center">Work Efficiency Point</th>
+            <th class="w120 text-center">Anniversary Point</th>
+            <th class="w120 text-center">Total Qty</th>
+            <th class="w120 text-center">Total Points</th>
+            <th class="w120 text-center">Grand Points</th>
+            <!-- <th class="text-center">Market ({{ReportIncentiveList.sales_point}})% </th>
+            <th class="text-center">Warehouse ({{ReportIncentiveList.warehouse_points}})% </th> -->
+
+          </tr>
+        </table>
+      </div>
+      <div class="table-head bdrt">
+        <table class="sno-border">
+          <tr>
+            <th class="w50"></th>
+            <th class="w200">
+
+            </th>
+            <th class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+              <table>
+                <tr>
+                  <th>Qty</th>
+                  <th>Points</th>
+                </tr>
+              </table>
+            </th>
+            <th class="w120">
+
+            </th>
+            <th class="w120">
+
+            </th>
+            <th class="w120">
+
+            </th>
+            <th class="w120 text-center"></th>
+            <th class="w120 text-center"> </th>
+            <th class="w120 text-center"> </th>
+            <!-- <th>
+              <table>
+                <tr>
+                  <th>HO1 ({{ReportIncentiveList.ho1_point}})% </th>
+                  <th>SALESMAN ({{ReportIncentiveList.salesman_point}})% </th>
+                  <th>COLLECTION ({{ReportIncentiveList.collection_points}})% </th>
+                </tr>
+              </table>
+
+            </th> -->
+
+            <!-- <th>
+              <table>
+                <tr>
+                  <th>TELEPHONE OP ({{ReportIncentiveList.telephone_op_point}})% </th>
+                  <th>WAREHOUSE KEEP ({{ReportIncentiveList.warehouse_keep_point}})% </th>
+                  <th>DISPATCH ({{ReportIncentiveList.dispatch_point}})% </th>
+                  <th>LABOUR ({{ReportIncentiveList.labour_points}})% </th>
+                </tr>
+              </table>
+            </th> -->
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-container mb60">
+      <div class="table-content" style="width: fit-content;">
+        <table>
+          <ng-container *ngFor="let data of ReportIncentiveList;let i = index">
+
+
+
+            <tr>
+              <td class="w50">{{start+i+1}}</td>
+              <td class="w200">
+                {{data.name}}
+              </td>
+              <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
+                <table>
+                  <tr>
+                    <td>{{row1.total_qty}}</td>
+                    <td>{{row1.incentivePoints}}</td>
+                  </tr>
+                </table>
+              </td>
+              <td class="w120">
+                {{data.birthday_point}}
+              </td>
+              <td class="w120">
+                {{data.work_effeciency_point}}
+              </td>
+              <td class="w120">
+                {{data.aniversary_points}}
+              </td>
+              <td class="w120">
+                {{data.total_qty}}
+              </td>
+              <td class="w120">
+                {{data.total_points}}
+              </td>
+              <td class="w120">
+                {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
+              </td>
+              <!-- <td>
+                <table>
+                  <tr>
+                    <td>{{data.ho1_point}}</td>
+                    <td>{{data.salesman_point}}</td>
+                    <td>{{data.collection_points}}</td>
+                  </tr>
+                </table>
+              </td> -->
+              <!-- <td>
+                <table>
+                  <tr>
+                    <td>{{data.telephone_op_point}}</td>
+                    <td>{{data.warehouse_keep_point}}</td>
+                    <td>{{data.dispatch_point}}</td>
+                    <td>{{data.labour_points}}</td>
+                  </tr>
+                </table>
+              </td> -->
+            </tr>
+
+          </ng-container>
+
+          <ng-container *ngFor="let lead of skelton">
+            <tr class="sk-loading" *ngIf="loader">
+              <td class="w50">
+                <div>&nbsp;</div>
+              </td>
+              <td class="w200">
+                <div>&nbsp;</div>
+              </td><!-- Sale User -->
+              >
+              <td class="w130" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                <table>
+                  <tr>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+                    <th>
+                      <div>&nbsp;</div>
+                    </th>
+
+                  </tr>
+                </table>
+              </td><!-- Sale Qty -->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Birthday Point-->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Work Efficiency Point -->
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!--Anniversary Point -->
+
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Total Qty -->
+
+              <td class="w120">
+                <div>&nbsp;</div>
+              </td><!-- Grand Points-->
+
+
+            </tr>
+          </ng-container>
+          <ng-container>
+            <div class="data-not-available" *ngIf="ReportIncentiveList.length==0">
+              <div class="outer">
+                <div class="iinear">
+                  <div class="figure" matRipple>
+                    <div class="header">
+                      <img src="assets/img/data-not-available-header.svg" alt="">
+                    </div>
+
+                    <div class="description">
+                      <div class="cs-heading">
+                        <h2>Report Incentive List</h2>
+                      </div>
+                      <div class="img">
+                        <i class="material-icons">error_outline</i>
+                      </div>
+                      <div class="psc">
+                        <p>data not Found</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </table>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="scroll-tables">
+    <table>
+      <tr>
+        <td class="w400">
+          <table>
+            <tr>
+              <th class="w50">S.no</th>
+              <th style="height: 45px;">Sale User</th>
+
+            </tr>
+            <tr>
+              <th class="w50"></th>
+              <th style="height: 67px;">
+                <div class="th-search-acmt">
+                  <mat-form-field class="example-full-width cs-input select-input">
+
+                    <input matInput placeholder="Sale User. . ." type="text" name="name" [(ngModel)]="search.name"
+                      (keyup.enter)="getReportIncentive()">
+                  </mat-form-field>
+                </div>
+              </th>
+
+            </tr>
+            <tr *ngFor="let data of ReportIncentiveList;let i = index">
+              <td class="w50">{{start+i+1}}</td>
+              <td class="ellipsis" style="height: 50px;" matTooltipPosition="above" matTooltipClass="tooltip"
+                matTooltip="{{data.name}}">
+                {{data.name}}</td>
+            </tr>
+          </table>
+        </td>
+
+        <td style=" overflow: auto;">
+          <table>
+            <tr>
+
+              <th class="w200 text-center" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                {{data.brand_name | uppercase}}
+              </th>
+              <th class="w120 text-center stock-alert">Birthday Point</th>
+              <th class="w120 text-center" style="color:#009c13">Work Efficiency Point</th>
+              <th class="w120 text-center" style="color:#999a0a">Anniversary Point</th>
+              <th class="w120 text-center stock-alert">Total Qty</th>
+              <th class="w120 text-center" style="color:#009c13">Total Points</th>
+              <th class="w120 text-center" style="color:#999a0a">Grand Points</th>
+            </tr>
+            <tr>
+              <th class="w200" style="height: 67px;" *ngFor="let data of ReportIncentiveBrandList; let i=index">
+                <table>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Points</th>
+                  </tr>
+                </table>
+
+              </th>
+              <th class="w120 text-center  stock-alert"></th>
+              <th class="w120 text-center stock-green"></th>
+              <th class="w120 text-center stock-pending"></th>
+              <th class="w120 text-center stock-alert"></th>
+              <th class="w120 text-center stock-green"></th>
+              <th class="w120 text-center stock-pending"></th>
+            </tr>
+            <tr *ngFor="let data of ReportIncentiveList;let i=index">
+              <td class="w200" *ngFor="let row1 of data.brandData;let i = index">
+                <table>
+                  <tr>
+                    <td>{{row1.total_qty}}</td>
+                    <td>{{row1.incentivePoints}}</td>
+                  </tr>
+                </table>
+
+              </td>
+              <td class="w120 stock-alert">
+                {{data.birthday_point}}
+              </td>
+              <td class="w120 stock-green">
+                {{data.work_effeciency_point}}
+              </td>
+              <td class="w120 stock-pending">
+                {{data.aniversary_points}}
+              </td>
+              <td class="w120 stock-alert">
+                {{data.total_qty}}
+              </td>
+              <td class="w120 stock-green">
+                {{data.total_points}}
+              </td>
+              <td class="w120 stock-pending">
+                {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <div class="search-results" data-infinite-scroll debounce [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
+    [infiniteScrollThrottle]="10" (scrolled)="getReportIncentive()">
+  </div> -->
+  <div class="fix-btn">
+    <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button
+      (click)="ExportToExcel()"><img src="assets/img/excel.svg"></a>
+    <!-- <a *ngIf="true" class="bottom-btn" matTooltip="Add New" matTooltipPosition="above" mat-raised-button -->
+    <!-- (click)="addIncentiveMaster()"><i class="material-icons">add</i></a> -->
+  </div>
+
+
+
+
+  <div #table class="excel-table" style="display: none;">
+
+    <table hidden>
+      <tr>
+        <th class="w50 text-center">&nbsp;</th>
+        <th class="w200 text-center">Sale User</th>
+        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">{{data.brand_name}} </th>
+        <th class="w120 text-center">Birthday Point</th>
+        <th class="w120 text-center">Work Efficiency Point</th>
+        <th class="w120 text-center">Anniversary Point</th>
+        <th class="w120 text-center">Total Qty</th>
+        <th class="w120 text-center">Total Points</th>
+        <th class="w120 text-center">Grand Points</th>
+
+      </tr>
+
+      <tr>
+        <th class="w50 text-center"></th>
+        <th class="w200 text-center"></th>
+        <th class="w130 text-center" *ngFor="let data of ReportIncentiveBrandList">
+          Qty | Points
+        </th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+        <th class="w120 text-center"></th>
+
+      </tr>
+
+
+
+      <tr *ngFor="let data of ReportIncentiveList;let i = index">
+        <td class="w50">{{start+i+1}}</td>
+        <td class="w200">
+          {{data.name}}
+        </td>
+
+        <td class="w130" *ngFor="let row1 of data.brandData;let i = index">
+          {{row1.total_qty}} | {{row1.incentivePoints}}
+          <!-- <table>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table> -->
+        </td>
+        <td class="w120">
+          {{data.birthday_point}}
+        </td>
+        <td class="w120">
+          {{data.work_effeciency_point}}
+        </td>
+        <td class="w120">
+          {{data.aniversary_points}}
+        </td>
+        <td class="w120">
+          {{data.total_qty}}
+        </td>
+        <td class="w120">
+          {{data.total_points}}
+        </td>
+        <td class="w120">
+          {{data.total_points + data.aniversary_points + data.work_effeciency_point +data.birthday_point}}
+
+        </td>
+        <!-- <td>
+            <table>
+              <tr>
+                <td>{{data.ho1_point}}</td>
+                <td>{{data.salesman_point}}</td>
+                <td>{{data.collection_points}}</td>
+              </tr>
+            </table>
+          </td> -->
+        <!-- <td>
+            <table>
+              <tr>
+                <td>{{data.telephone_op_point}}</td>
+                <td>{{data.warehouse_keep_point}}</td>
+                <td>{{data.dispatch_point}}</td>
+                <td>{{data.labour_points}}</td>
+              </tr>
+            </table>
+          </td> -->
+      </tr>
+
+
+
+    </table>
+  </div>

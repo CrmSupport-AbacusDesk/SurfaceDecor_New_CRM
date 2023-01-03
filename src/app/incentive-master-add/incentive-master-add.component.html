@@ -72,8 +72,8 @@
                           <mat-form-field class="cs-input">
                             <input type="text" matInput placeholder="SHOWROOM POINT" name="showroom_points"
                               #showroom_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57"
-                              [(ngModel)]="data.showroom_points"
-                              [ngClass]="{'has-error' : showroom_points.invalid } " required>
+                              [(ngModel)]="data.showroom_points" [ngClass]="{'has-error' : showroom_points.invalid } "
+                              required>
                             <mat-autocomplete #auto="matAutocomplete">
                             </mat-autocomplete>
                           </mat-form-field>
@@ -97,6 +97,64 @@
           </div>
         </div>
         <!-- Point Allocation -->
+
+        <!-- point Allocation -->
+        <div class="row">
+          <div class="col s12">
+            <div class="sprate-box">
+              <div class="cs-heading">
+                <h2>SPECIAL POINT ALLOCATION</h2>
+                <span class="required">Indicates required fields ( <sup>*</sup> )</span>
+              </div>
+              <mat-divider class="left-right-15 mt10"></mat-divider>
+
+              <div class="from-fields">
+                <div class="row pl10">
+                  <div class="col s12 pl0">
+                    <div class="row">
+                      <div class="col s4">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="Birthday Point"
+                              onkeypress="return event.charCode >=48 && event.charCode<=57" name="birthday_point"
+                              #birthday_point="ngModel" [(ngModel)]="data.birthday_point"
+                              [ngClass]="{'has-error' : birthday_point.invalid }" required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col s4">
+                        <div class="control-field">
+                          <mat-form-field class="cs-input">
+                            <input type="text" matInput placeholder="Aniversary Point" name="aniversary_points"
+                              #aniversary_points="ngModel" onkeypress="return event.charCode>=48 && event.charCode<=57"
+                              [(ngModel)]="data.aniversary_points"
+                              [ngClass]="{'has-error' : warehouse_points.invalid } " required>
+                            <mat-autocomplete #auto="matAutocomplete">
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="cs-btn fixedd mt32 text-right">
+                <div class="in-btn mr25">
+                  <button mat-raised-button (click)="(f.valid && f.submitted)? addIncentiveMaster():''"
+                    color="accent">Update</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Point Allocation -->
+
+
 
         <!-- Market SalePoint Allocation -->
         <!-- <div class="row">

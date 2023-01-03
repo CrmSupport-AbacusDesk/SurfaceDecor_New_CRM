@@ -1,0 +1,31 @@
+.scroll-tables table{
+    table-layout: fixed;
+    box-sizing: border-box;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.scroll-tables table tr td{
+    vertical-align: top;
+}
+
+.scroll-tables table tr td table tr td,
+.scroll-tables table tr td table tr th{
+    padding: 10px;
+    border-top: 0px;
+    border-bottom: 0px;
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+}
+.scroll-tables table tr td table tr th{
+    background: #f1f1f1;
+    text-align: left;
+}
+
+
+.scroll-tables table tr td table tr td:last-child,
+.scroll-tables table tr td table tr th:last-child{
+    border-right: 0px;
+}
