@@ -7,39 +7,36 @@ import { retry } from 'rxjs/operators';
 import { DialogComponent } from '../dialog.component';
 import { StatusModalComponent } from '../order/status-modal/status-modal.component';
 import { PearlService } from '../pearl.service';
+import { RedeemRequestStatusModalComponent } from '../redeem-request-status-modal/redeem-request-status-modal.component';
 
 @Component({
-  selector: 'app-user-gift-list',
-  templateUrl: './user-gift-list.component.html',
-  styleUrls: ['./user-gift-list.component.scss']
+  selector: 'app-redeem-request',
+  templateUrl: './redeem-request.component.html',
+  styleUrls: ['./redeem-request.component.scss']
 })
-export class UserGiftListComponent implements OnInit {
-  userGiftlist: any = []
+export class RedeemRequestComponent implements OnInit {
+  userRedeemRequestlist: any = []
   skelton: any = new Array(10);
   loader: any = false;
   data_not_found: any = false;
   search_val: any = {};
   pagelimit: any = 50;
-  datauser: any = {};
-
   constructor(public serve: PearlService, public dialog: MatDialog, public Dialog: DialogComponent, public toast: ToastrManager, public rout: Router) { }
 
   ngOnInit() {
-    this.datauser = JSON.parse(sessionStorage.getItem('st_user'));
-
-    this.getUserGiftList();
+    this.search_val.active_tab = 'All';
+    this.getUserRedeemRequestList();
   }
 
-  getUserGiftList() {
+  getUserRedeemRequestList() {
     this.loader = true;
     if (Object.getOwnPropertyNames(this.search_val).length != 0) {
-      this.userGiftlist = [];
+      this.userRedeemRequestlist = [];
       this.data_not_found = false
     }
-
-    this.serve.fetchData({ 'start': this.userGiftlist.length, 'pagelimit': this.pagelimit, 'search': this.search_val }, 'User/userGiftList').subscribe((res) => {
+    this.serve.fetchData({ 'start': this.userRedeemRequestlist.length, 'pagelimit': this.pagelimit, 'search': this.search_val }, 'User/RedeemRequestList').subscribe((res) => {
       this.loader = false;
-      this.userGiftlist = this.userGiftlist.concat(res['data']);
+      this.userRedeemRequestlist = this.userRedeemRequestlist.concat(res['data']);
     }, err => {
       this.loader = false;
     })
@@ -47,9 +44,11 @@ export class UserGiftListComponent implements OnInit {
 
 
   refresh() {
-    this.userGiftlist = [];
+    this.userRedeemRequestlist = [];
     this.search_val = {};
-    this.getUserGiftList();
+    this.search_val.active_tab = 'All';
+
+    this.getUserRedeemRequestList();
   }
 
   exportAsXLSX() {
@@ -63,6 +62,19 @@ export class UserGiftListComponent implements OnInit {
       panelClass: 'image-modal',
       data: {
         image,
+      }
+    }
+    )
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      console.log("this dialog box is closed");
+    })
+  }
+
+  openRedeemRequestStatusModal() {
+    const dialogRef = this.dialog.open(RedeemRequestStatusModalComponent, {
+      width: '400px',
+      data: {
       }
     }
     )
@@ -86,8 +98,8 @@ export class UserGiftListComponent implements OnInit {
           this.loader = false;
           if (res['msg'] == 'success') {
             this.toast.successToastr("Successfully Deleted");
-            this.userGiftlist = [];
-            this.getUserGiftList();
+            this.userRedeemRequestlist = [];
+            this.getUserRedeemRequestList();
           } else {
             this.toast.errorToastr("Something Went Wrong... Please Wait..");
           }
@@ -98,50 +110,7 @@ export class UserGiftListComponent implements OnInit {
 
   onDateChange(date_created) {
     this.search_val.date_created = moment(date_created).format("YYYY-MM-DD");
-    this.getUserGiftList();
-  }
-
-  userGiftStatus(index, id) {
-
-
-    console.log(id);
-    console.log(index);
-
-    console.log(this.userGiftlist[index].status);
-    if (this.userGiftlist[index].status == 'true') {
-      // this.userlist[index].status=0;
-      this.userGiftlist[index].status = 'false';
-      console.log(this.userGiftlist[index].status);
-    }
-    else {
-      // this.userlist[index].status=1;
-      this.userGiftlist[index].status = 'true';
-      console.log(this.userGiftlist[index].status);
-    }
-
-    let value = { "status": this.userGiftlist[index].status }
-    this.Dialog.confirm('You Want To Change Status Of This User').then((res) => {
-      if (res) {
-        this.loader = true;
-        this.serve.fetchData({ 'gift_id': id, 'data': value, 'last_updated_by': this.datauser['data']['id'], 'last_updated_by_name': this.datauser['data']['name'] }, "User/update_user_gift_status")
-          .subscribe(resp => {
-            console.log(resp);
-            this.loader = false;
-            if (resp['msg'] = 'success') {
-              this.toast.successToastr('Status Updated Successfully');
-              this.userGiftlist = [];
-              this.getUserGiftList();
-            }
-            else {
-              this.toast.errorToastr("Something Went Wrong")
-            }
-          },err=>{
-            this.loader = false;
-
-          })
-      }
-    })
-
+    this.getUserRedeemRequestList();
   }
 
 }

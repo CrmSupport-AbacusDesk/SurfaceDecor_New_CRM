@@ -66,6 +66,7 @@ export class PearlService {
   // new_product_image_url_for_pop_master="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/Popgift/"
   // pdf_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/bill_pdf/"
   // pdf_url2="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/"
+  // gift_image_url="https://apps.abacusdesk.com/surfacedekor/crm/api/uploads/userGift/"
   
 
   // new test link 
@@ -79,7 +80,7 @@ export class PearlService {
   new_product_image_url_for_pop_master="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/Popgift/"
   pdf_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/bill_pdf/"
   pdf_url2="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/"
-
+  gift_image_url="https://devcrm.abacusdesk.com/surfacedekortest/crm/api/uploads/userGift/"
 
   constructor(public http:HttpClient) {
 

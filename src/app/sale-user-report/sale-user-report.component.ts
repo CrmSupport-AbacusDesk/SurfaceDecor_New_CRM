@@ -37,7 +37,7 @@ export class SaleUserReportComponent implements OnInit {
   download_User_Report_excel_data: any = []
   new_array: any = [];
   excel_data: any = [];
-  page_limit: any = 20;
+  page_limit: any = 10;
 
   ReportIncentiveBrandList2: any = [];
 

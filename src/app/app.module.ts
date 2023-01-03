@@ -167,6 +167,8 @@ import { ReportIncentiveListComponent } from './report-incentive-list/report-inc
 import { SaleUserReportComponent } from './sale-user-report/sale-user-report.component';
 import { UserGiftListComponent } from './user-gift-list/user-gift-list.component';
 import { UserGiftAddComponent } from './user-gift-add/user-gift-add.component';
+import { RedeemRequestComponent } from './redeem-request/redeem-request.component';
+import { RedeemRequestStatusModalComponent } from './redeem-request-status-modal/redeem-request-status-modal.component';
 
 
 const routes: Routes = [
@@ -291,6 +293,7 @@ const routes: Routes = [
   {path : 'enquiry-showroom-listing',component:ShowroomEnquiryListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'user-gift-list',component:UserGiftListComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
   {path : 'user-gift-Add',component:UserGiftAddComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
+  {path : 'redeem-request',component:RedeemRequestComponent,canActivate:[AuthComponentGuard],data:{expectedRole:['1']}},
 
   { path: 'enquiry-from-app-detail/:id', component: EnquiryFromAppDetailComponent, canActivate: [AuthComponentGuard], data: { expectedRole: ['1']}},
 
@@ -441,6 +444,8 @@ const routes: Routes = [
     SaleUserReportComponent,
     UserGiftListComponent,
     UserGiftAddComponent,
+    RedeemRequestComponent,
+    RedeemRequestStatusModalComponent,
 
   ],
   imports: [
@@ -481,7 +486,7 @@ const routes: Routes = [
 
   entryComponents: [
 TargetaddComponent,BillingdocumentComponent,
-    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent,PointMasterAddComponent
+    DisExecutiveModelComponent, DisOtpVarificationComponent, DrDiscountComponent, UpdateAdminModelComponent, UserEmailModalComponent, ConfirmDialogComponent, EditAddressComponent, EditleadComponent, DistributionEditComponent, StatusModalComponent, ChangeStatusComponent, AddPrimaryOrderValueComponent, DistributionLegderModelComponent, ProductQrCodeModelComponent, ChangeSchemeStatusModelComponent, PlumberEditModelComponent, OrderEditModalComponent, OrderDispatchComponent,AddSubDealerModalComponent,PointMasterAddComponent, RedeemRequestStatusModalComponent 
   ],
 
   exports: [RouterModule],
