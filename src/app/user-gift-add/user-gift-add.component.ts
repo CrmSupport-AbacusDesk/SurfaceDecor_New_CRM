@@ -28,8 +28,9 @@ export class UserGiftAddComponent implements OnInit {
       this.data.gift_specification=data.gift_specification;
       this.data.gift_title=data.gift_title;
       this.data.points=data.points;
-      if(data.image){
+      if(this.id){
         this.urls.push(data.image);
+        console.log(this.urls);
 
       }else{
         this.urls=[];

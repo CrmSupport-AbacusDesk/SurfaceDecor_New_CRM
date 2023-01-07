@@ -21,22 +21,24 @@ export class RedeemRequestComponent implements OnInit {
   data_not_found: any = false;
   search_val: any = {};
   pagelimit: any = 50;
+  active_tab:any='All';
   constructor(public serve: PearlService, public dialog: MatDialog, public Dialog: DialogComponent, public toast: ToastrManager, public rout: Router) { }
 
   ngOnInit() {
-    this.search_val.active_tab = 'All';
     this.getUserRedeemRequestList();
   }
 
   getUserRedeemRequestList() {
     this.loader = true;
+    console.log(this.userRedeemRequestlist.length);
     if (Object.getOwnPropertyNames(this.search_val).length != 0) {
       this.userRedeemRequestlist = [];
       this.data_not_found = false
     }
-    this.serve.fetchData({ 'start': this.userRedeemRequestlist.length, 'pagelimit': this.pagelimit, 'search': this.search_val }, 'User/RedeemRequestList').subscribe((res) => {
+    this.serve.fetchData({ 'start': this.userRedeemRequestlist.length, 'pagelimit': this.pagelimit, 'search': this.search_val ,'active_tab':this.active_tab}, 'User/RedeemRequestList').subscribe((res) => {
       this.loader = false;
       this.userRedeemRequestlist = this.userRedeemRequestlist.concat(res['data']);
+
     }, err => {
       this.loader = false;
     })
@@ -71,10 +73,11 @@ export class RedeemRequestComponent implements OnInit {
     })
   }
 
-  openRedeemRequestStatusModal() {
+  openRedeemRequestStatusModal(data1) {
     const dialogRef = this.dialog.open(RedeemRequestStatusModalComponent, {
       width: '400px',
       data: {
+        data1
       }
     }
     )
@@ -83,30 +86,7 @@ export class RedeemRequestComponent implements OnInit {
       console.log("this dialog box is closed");
     })
   }
-
-
-  editUserGiftList(data) {
-    console.log(data);
-    this.rout.navigate(['/user-gift-Add', { 'gift_title': data.gift_title, 'id': data.id, 'points': data.points, 'image': data.image, 'gift_specification': data.gift_specification }]);
-  }
-
-  deleteUserGift(id) {
-    this.Dialog.confirm("You Want To Delete This ?").then((result) => {
-      if (result) {
-        this.loader = true;
-        this.serve.fetchData({ "data": { "id": id } }, 'User/userGiftDelete').pipe(retry(3)).subscribe((res) => {
-          this.loader = false;
-          if (res['msg'] == 'success') {
-            this.toast.successToastr("Successfully Deleted");
-            this.userRedeemRequestlist = [];
-            this.getUserRedeemRequestList();
-          } else {
-            this.toast.errorToastr("Something Went Wrong... Please Wait..");
-          }
-        })
-      }
-    })
-  }
+  
 
   onDateChange(date_created) {
     this.search_val.date_created = moment(date_created).format("YYYY-MM-DD");

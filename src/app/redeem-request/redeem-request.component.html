@@ -27,7 +27,7 @@
             </mat-form-field>
           </div> -->
         </div>
-       
+
         <!-- <div class="cs-flex" *ngIf="data.date_from && data.date_to">
           <button mat-raised-button style="background-color: #275478; color: #fff"
             (click)="attendance_list('getAttendance',2)">
@@ -56,17 +56,17 @@
         <ul>
           <!-- <li><a class="" [ngClass]="search_val.active_tab == 'Office' ? 'active' : ''"
               (click)="search_val.active_tab = 'Office';getReportIncentive();">Office User </a></li> -->
-          <li><a class="" [ngClass]="search_val.active_tab == 'All' ? 'active' : ''"
-              (click)="search_val.active_tab = 'All'; userRedeemRequestlist=[]; getUserRedeemRequestList();">All</a>
+          <li><a class="" [ngClass]="active_tab == 'All' ? 'active' : ''"
+              (click)="active_tab = 'All'; userRedeemRequestlist=[]; getUserRedeemRequestList();">All</a>
           </li>
-          <li><a class="" [ngClass]="search_val.active_tab == 'Pending' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Pending';userRedeemRequestlist=[]; getUserRedeemRequestList();">Pending
+          <li><a class="" [ngClass]="active_tab == 'Pending' ? 'active' : ''"
+              (click)="active_tab= 'Pending';userRedeemRequestlist=[]; getUserRedeemRequestList();">Pending
             </a></li>
-          <li><a class="" [ngClass]="search_val.active_tab == 'Approved' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Approved';userRedeemRequestlist=[]; getUserRedeemRequestList();">Approved
+          <li><a class="" [ngClass]="active_tab == 'Approved' ? 'active' : ''"
+              (click)="active_tab= 'Approved';userRedeemRequestlist=[]; getUserRedeemRequestList();">Approved
             </a></li>
-            <li><a class="" [ngClass]="search_val.active_tab == 'Reject' ? 'active' : ''"
-              (click)="search_val.active_tab = 'Reject';userRedeemRequestlist=[]; getUserRedeemRequestList();">Reject
+          <li><a class="" [ngClass]="active_tab == 'Reject' ? 'active' : ''"
+              (click)="active_tab= 'Reject';userRedeemRequestlist=[]; getUserRedeemRequestList();">Reject
             </a></li>
 
         </ul>
@@ -90,7 +90,7 @@
     <div class="row">
       <!-- <div class="col s12"> -->
       <div class="cs-table cs-table-scroll">
-        <div class="stickyTableHead">
+        <div class="stickyTableHead" style="width: fit-content;">
           <div class="table-head">
             <table>
               <tr>
@@ -98,12 +98,15 @@
                 <th class="w100">Date Created</th>
                 <th class="w130">User Name</th>
                 <th class="w100">Mobile</th>
-
                 <th class="w130">Req Id</th>
                 <th class="w100">Point</th>
+                <th class="w100">Redeem Point</th>
                 <th class="w130">Gift Name</th>
-                <th class="w170">Redeem Request Status</th>
-                <th class="w130">Action</th>
+                <th class="w130">Gift Description</th>
+                <th class="w130">Gift Image</th>
+                <th class="w170"  *ngIf="active_tab == 'Reject'">Reject Reason</th>
+                <th class="w170"  *ngIf="active_tab == 'All'">Redeem Request Status</th>
+                <th class="w130"   *ngIf="active_tab == 'All'">Action</th>
 
               </tr>
             </table>
@@ -112,12 +115,13 @@
           <div class="table-head bdrt">
             <table>
               <tr>
-                <th class="w100">S.no.</th>
+                <th class="w100"></th>
                 <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        [(ngModel)]="search_val.date_created" (dateChange)="onDateChange(search_val.date_created)" readonly>
+                        [(ngModel)]="search_val.date_created" (dateChange)="onDateChange(search_val.date_created)"
+                        readonly>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -126,21 +130,31 @@
                 <th class="w130">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
-                      <input matInput placeholder="Enter Gift Title...." (keyup.enter)="getUserRedeemRequestList()"
-                        [(ngModel)]="search_val.gift_title">
+                      <input matInput placeholder="Search...." (keyup.enter)="getUserRedeemRequestList()"
+                        [(ngModel)]="search_val.user_name">
                     </mat-form-field>
                   </div>
                 </th>
                 <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
-                      <input matInput placeholder="Enter Gift Title...." minlength="10" maxlength="10" onkeypress="return event.charCode >=48 && event.charCode<=57" (keyup.enter)="getUserRedeemRequestList()"
-                        [(ngModel)]="search_val.gift_title">
+                      <input matInput placeholder="Search...." minlength="10" maxlength="10"
+                        onkeypress="return event.charCode >=48 && event.charCode<=57"
+                        (keyup.enter)="getUserRedeemRequestList()" [(ngModel)]="search_val.contact_01">
                     </mat-form-field>
                   </div>
                 </th>
 
-                <th class="w130"></th>
+                <th class="w130">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Search...." minlength="10" maxlength="10"
+                        onkeypress="return event.charCode >=48 && event.charCode<=57"
+                        (keyup.enter)="getUserRedeemRequestList()" [(ngModel)]="search_val.id">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100"></th>
                 <th class="w100"></th>
                 <th class="w130">
                   <div class="th-search-acmt">
@@ -150,91 +164,48 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w170"></th>
                 <th class="w130"></th>
+                <th class="w130"></th>
+
+                <th class="w170"  *ngIf="active_tab == 'Reject'"></th>
+                <th class="w170"  *ngIf="active_tab == 'All'"></th>
+                <th class="w130"  *ngIf="active_tab == 'All'"></th>
               </tr>
-              <!-- <tr>
-                <th class="w100">
 
-                </th>
-
-                <th class="w100">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="cs-input date-column infix-bodr">
-                      <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created"
-                        [(ngModel)]="search_val.date_created" (dateChange)="onDateChange(search_val.date_created)" readonly>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                </th>
-
-                <th class="w130">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="example-full-width cs-input select-input">
-                      <input matInput placeholder="Enter Gift Title...." (keyup.enter)="getUserGiftList()"
-                        [(ngModel)]="search_val.gift_title">
-                    </mat-form-field>
-                  </div>
-                </th>
-
-                <th class="w100"></th>
-                <th class="w130">&nbsp;</th>
-                <th class="w170"></th>
-                <th class="w130">&nbsp;</th>
-
-              </tr> -->
             </table>
           </div>
         </div>
-        <div class="table-container">
+        <div class="table-container"  style="width: fit-content;">
           <div class="table-content">
             <table>
-              <tr>
-                <td class="w100">S.no.</td>
-                <td class="w100">Date Created</td>
-                <td class="w130">User Name</td>
-                <td class="w100">Mobile</td>
-
-                <td class="w130">Req Id</td>
-                <td class="w100">Point</td>
-                <td class="w130">Gift </td>
-                <td class="w170">Redeem Request</td>
+              <tr *ngFor="let p of userRedeemRequestlist; let i=index">
+                <td class="w100">{{i+1}}</td>
+                <td class="w100">{{p.date_created | date:'dd MMM yyyy'}}</td>
+                <td class="w130"  matTooltip="{{p.user_name}}" matTooltipPosition="above" >
+                  <p class="one-line"> {{p.user_name | titlecase}}</p>
+                 
+                </td>
+                <td class="w100">{{p.contact_01}}</td>
+                <td class="w130">#req-id-{{p.id}}</td>
+                <td class="w100">{{p.points}}</td>
+                <td class="w100">{{p.reedeem_points}}</td>
+                <td class="w130">{{p.gift_title}}</td>
+                <td class="w130">{{p.gift_specification}}</td>
                 <td class="w130">
-                  <a class="blue" (click)="openRedeemRequestStatusModal()">
+                  <img *ngIf="p.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{serve.gift_image_url+p.image}}"
+                    (click)="openDialog2(serve.gift_image_url+p.image)" />
+                  <img *ngIf="p.image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
+                </td>
+                <td class="w170"   *ngIf="active_tab == 'Reject'"   matTooltip="{{p.reject_reason}}" matTooltipPosition="above">   <p class="one-line"> {{p.reject_reason | titlecase}}</p></td>
+                <td class="w170" [ngClass]="p.reedem_req_status=='Approved' ? 'green-clr':p.reedem_req_status=='Reject' ? 'red-clr':''"  *ngIf="active_tab == 'All'">{{p.reedem_req_status}}</td>
+                <td class="w130"  *ngIf="active_tab == 'All'">
+                  <a class="blue"   *ngIf="p.reedem_req_status=='Pending'" (click)="openRedeemRequestStatusModal(p)">
                     Status
                   </a>
                 </td>
               </tr>
 
-              <!-- <tr *ngFor="let p of userGiftlist; let i=index">
-                <td class="w100">{{i+1}}</td>
-                <td class="w100">{{p.date_created | date : 'd MMM y'}}</td>
-                <td class="w130">{{p.gift_title}}</td>
-                <td class="w100">{{p.points}}</td>
-                <td class="w130">
-                  <img *ngIf="p.image!=''" height="40px" width="40px" style="cursor: zoom-in;" src="{{p.image}}"
-                    (click)="openDialog2(p.image)" />
-                  <img *ngIf="p.image==''" height="40px" width="40px" src="assets/img/no-data.gif" />
-                </td>
-                <td class="w170">{{p.gift_specification}}</td>
-                <td class="w130">
-                  <div class="acton-btn">
-                    <button mat-button class="delete-mat" (click)="editUserGiftList(p)"><i
-                        class="material-icons green-clr">edit</i>
-                    </button>
-                    <button mat-button class="delete-mat" (click)="deleteUserGift(p.id)"><i
-                        class="material-icons red-clr">delete</i>
-                    </button>
-                  </div>
-                </td>
-
-
-           
-
-
-
-              </tr> -->
+             
               <ng-container *ngFor="let lead of skelton">
                 <tr class="sk-loading" *ngIf="loader">
                   <td class="w100">
@@ -248,20 +219,39 @@
                   <td class="w130">
                     <div>&nbsp;</div>
                   </td>
-                  <!-- gift name -->
+                  <!-- User name -->
                   <td class="w100">
                     <div>&nbsp;</div>
                   </td>
-                  <!-- gift point -->
+                  <!-- Mobile -->
                   <td class="w130">
                     <div>&nbsp;</div>
                   </td>
-                  <!-- gift image -->
-                  <td class="w170">
+                  <!-- Req Id -->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Point-->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Redeem Points -->
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Gift Name -->
+                  <td class="w130">
                     <div>&nbsp;</div>
                   </td>
                   <!-- gift description -->
-
+                  <td class="w130">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- gift Image -->
+                  <td class="w170">
+                    <div>&nbsp;</div>
+                  </td>
+                  <!-- Redeem Request Status -->
                   <td class="w130">
                     <div>&nbsp;</div>
                   </td>

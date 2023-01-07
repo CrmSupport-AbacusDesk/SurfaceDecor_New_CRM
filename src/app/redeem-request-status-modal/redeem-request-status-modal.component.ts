@@ -13,6 +13,7 @@ import { PearlService } from '../pearl.service';
 })
 export class RedeemRequestStatusModalComponent implements OnInit {
   login_user: any;
+  loader:boolean=false;
   login_id: any;
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialog: MatDialog, public serve: PearlService, public session: SessionStorage, public alert: DialogComponent, public toastCtrl: ToastrManager) {
     this.login_user = JSON.parse(sessionStorage.getItem('login'));
@@ -21,12 +22,28 @@ export class RedeemRequestStatusModalComponent implements OnInit {
 
     // this.get_brand_list();
     console.log(data);
+    data.reedem_req_status=data.data1.reedem_req_status;
+    data.login_id=this.login_id 
    }
 
   ngOnInit() {
   }
   updateRedeemRequeststatus(){
-    
+      this.loader=true;
+      this.serve.fetchData({'data':this.data},'user/updateRedeemRequestStatus').subscribe((res)=>{
+        this.loader=false;
+        if(res['msg']='success'){
+          this.toastCtrl.successToastr("Successfully",'Updated');
+          this.dialog.closeAll();
+        }
+        else{
+          this.toastCtrl.errorToastr("Something Went Wrong... Please Wait..");
+        }
+      },err=>{
+        this.loader=false;
+
+      })
+
   }
 
 }
